@@ -1,0 +1,17 @@
+export const sidebar = {
+	sidebar: "var(--sidebar)",
+	sidebarColor: "var(--sidebar-color)",
+	sidebarBorder: "var(--sidebar-border)",
+	sideGroupTitleColor: "var(--side-group-title-color)",
+	sidebarItemColor: "var(--sidebar-item-color)",
+	sidebarItemHover: "var(--sidebar-item-hover)",
+	sidebarItemActive: "var(--sidebar-item-active)",
+	sidebarItemActiveColor: "var(--sidebar-item-active-color)",
+	sidebarItemDisabledColor: "var(--sidebar-item-disabled-color)",
+	sidebarItemIconColor: "var(--sidebar-item-icon-color)",
+	sidebarItemIconActiveColor: "var(--sidebar-item-icon-active-color)",
+	sidebarItemIconDisabledColor: "var(--sidebar-item-icon-disabled-color)",
+	sidebarItemExpandColor: "var(--sidebar-item-expand-color)",
+	sidebarItemChildrenBorder: "var(--sidebar-item-children-border)",
+	sidebarItemChildrenIndicator: "var(--sidebar-item-children-indicator)",
+};
