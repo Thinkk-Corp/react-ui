@@ -1,26 +1,25 @@
 {
  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./@types"],
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
+    "declaration": true, // TypeScript'in d.ts dosyaları oluşturmasını sağlar.
+    "emitDeclarationOnly": true, // Sadece d.ts dosyalarını oluşturur, JavaScript dosyaları oluşturmaz.
+    "outDir": "dist", // Çıktı dizini.
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "outDir": "dist",
-    "declaration": true,
     "esModuleInterop": true,
-
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
-
     "isolatedModules": true,
+    "noEmit": false,
     "moduleDetection": "force",
     "sourceMap": true,
-    "noEmit": true,
     "jsx": "react-jsx",
-
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

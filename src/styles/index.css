@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Inter', "Helvetica", sans-serif;
+    font-size: 1rem;
+}
+
 :root{
     --common-black: #000000;
     --common-white: #ffffff;
