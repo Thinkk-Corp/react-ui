@@ -1,18 +1,21 @@
 import type { ReactNode } from "react";
 
-export interface ISidebarMenu {
-	/** Menüde görüntülenecek metin */
+export type ISidebarMenuAction = string | (() => void);
+
+export interface ISidebarMenuItem {
 	text: string;
 
-	/** Menüdeki ikon, ReactNode olarak kabul edilerek esneklik sağlanır */
-	icon?: ReactNode;
+	icon: ReactNode;
 
-	/** Menü öğesinin bir etiket olup olmadığını belirtir */
-	isLabel?: boolean;
+	action?: ISidebarMenuAction;
 
-	/** Menü öğesinin tıklama eylemi; string bir rota veya işlev olabilir */
-	action?: string | (() => void);
-
-	/** Alt menü öğeleri için çocuk öğeler */
-	children?: ISidebarMenu[];
+	children?: Pick<ISidebarMenuItem, "text" | "action">[];
 }
+
+export interface ISidebarMenuLabel {
+	isLabel: true;
+
+	text: string;
+}
+
+export type ISidebarMenu = ISidebarMenuItem | ISidebarMenuLabel;

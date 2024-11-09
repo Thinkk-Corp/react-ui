@@ -2,7 +2,8 @@ import type { IRoot } from "@/interfaces/IRoot.ts";
 import { getI18nInstance, initI18n } from "@/plugins/I18n.ts";
 import { useRouterStore } from "@/stores/RouterStore.ts";
 import useThemeStore from "@/stores/ThemeStore.ts";
-import { promiseRejectionErrorHandler } from "@/utils/promiseRejectionErrorHandler.ts";
+import { useUIStore } from "@/stores/UIStore.ts";
+import { promiseRejectionErrorHandler } from "@/utils/PromiseRejectionErrorHandler.ts";
 import { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { I18nextProvider } from "react-i18next";
@@ -12,10 +13,12 @@ export const Root = ({ routes, languageTranslations }: IRoot) => {
 	const setRouter = useRouterStore((state) => state.setRouter);
 	const router = useRouterStore((state) => state.router);
 	const initTheme = useThemeStore((state) => state.initTheme);
+	const initSidebarCollapsedStatus = useUIStore((state) => state.initSidebarCollapsedStatus);
 
 	useEffect(() => {
 		const initializeApp = async () => {
 			initTheme();
+			initSidebarCollapsedStatus();
 			await initI18n(languageTranslations, "tr");
 			const newRouter = createBrowserRouter(routes);
 			setRouter(newRouter);
@@ -34,7 +37,7 @@ export const Root = ({ routes, languageTranslations }: IRoot) => {
 			window.removeEventListener("unhandledrejection", handlePromiseRejections);
 			window.removeEventListener("rejectionhandled", handlePromiseRejections);
 		};
-	}, [routes, languageTranslations, setRouter, initTheme]);
+	}, [routes, languageTranslations, setRouter, initTheme, initSidebarCollapsedStatus]);
 
 	return (
 		<I18nextProvider i18n={getI18nInstance()}>

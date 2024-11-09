@@ -9,7 +9,7 @@ import { shouldBypass } from "@/utils/ShouldBypass.ts";
  *
  * @returns {void} - Fonksiyon herhangi bir değer döndürmez.
  */
-export function redirectNative({ url, type = "external" }: { url: string; type?: "internal" | "external" }) {
+export function redirectNative({ url, type = "external" }: { url: string; type?: "internal" | "external" }): void {
 	const router = useRouterStore.getState().router;
 
 	if (shouldBypass([url], window.location.href)) return;

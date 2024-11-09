@@ -1,3 +1,4 @@
+import { screens } from "./src/styles/tailwind/Screens.ts";
 // tailwind.config.js
 import { action } from "./src/styles/tailwind/colors/Action.ts";
 import { color } from "./src/styles/tailwind/colors/Color.ts";
@@ -7,6 +8,7 @@ import { info } from "./src/styles/tailwind/colors/Info.ts";
 import { paper } from "./src/styles/tailwind/colors/Paper.ts";
 import { primary } from "./src/styles/tailwind/colors/Primary.ts";
 import { secondary } from "./src/styles/tailwind/colors/Secondary.ts";
+import { sidebar } from "./src/styles/tailwind/colors/Sidebar.ts";
 import { success } from "./src/styles/tailwind/colors/Success.ts";
 import { warning } from "./src/styles/tailwind/colors/Warning.ts";
 
@@ -35,13 +37,7 @@ export default {
 			fontFamily: {
 				sans: ["Inter", "Helvetica", "sans-serif"],
 			},
-			screens: {
-				sm: "640px",
-				md: "768px",
-				lg: "1024px",
-				xl: "1280px",
-				"2xl": "1536px",
-			},
+			screens,
 			colors: {
 				action,
 				color,
@@ -53,6 +49,7 @@ export default {
 				secondary,
 				success,
 				warning,
+				sidebar,
 			},
 			// Default text color ayarı
 			textColor: {

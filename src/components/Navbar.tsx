@@ -1,3 +1,3 @@
 export const Navbar = () => {
-	return <div>Navbar</div>;
+	return <div className={"h-full bg-red-500"}></div>;
 };
