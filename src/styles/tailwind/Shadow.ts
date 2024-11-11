@@ -1,4 +1,4 @@
-export const shadows = {
+export const shadow = {
 	0: "var(--shadows-0)",
 	1: "var(--shadows-1)",
 	2: "var(--shadows-2)",

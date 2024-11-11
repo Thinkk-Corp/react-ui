@@ -1,5 +1,5 @@
 import { screens } from "./src/styles/tailwind/Screens.ts";
-// tailwind.config.js
+import { shadow } from "./src/styles/tailwind/Shadow.ts";
 import { action } from "./src/styles/tailwind/colors/Action.ts";
 import { color } from "./src/styles/tailwind/colors/Color.ts";
 import { custom } from "./src/styles/tailwind/colors/Custom.ts";
@@ -51,6 +51,7 @@ export default {
 				warning,
 				sidebar,
 			},
+			shadow,
 			// Default text color ayarı
 			textColor: {
 				DEFAULT: "var(--primary)",

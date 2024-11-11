@@ -1,10 +1,15 @@
+export interface ISidebarCollapsed {
+	isLocked: boolean;
+	status: boolean;
+}
+
 export interface UIState {
-	sidebarCollapsed: boolean;
+	sidebarCollapsed: ISidebarCollapsed;
 }
 
 export interface UIActions {
 	initSidebarCollapsedStatus: () => void;
-	setSidebarCollapsed: (status: boolean) => void;
+	setSidebarCollapsed: (data: ISidebarCollapsed) => void;
 }
 
 export type UIStore = UIState & UIActions;

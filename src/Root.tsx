@@ -9,6 +9,13 @@ import { ErrorBoundary } from "react-error-boundary";
 import { I18nextProvider } from "react-i18next";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+/**
+ * Uygulamanın kök bileşeni. Temalar, dil seçenekleri ve yönlendirme gibi
+ * temel yapılandırmaları içerir.
+ *
+ * @param {IRoot} param0 - `routes` ve `languageTranslations` özelliklerini içeren yapılandırma nesnesi.
+ * @returns {JSX.Element} - Root bileşeni.
+ */
 export const Root = ({ routes, languageTranslations }: IRoot) => {
 	const setRouter = useRouterStore((state) => state.setRouter);
 	const router = useRouterStore((state) => state.router);
@@ -16,6 +23,9 @@ export const Root = ({ routes, languageTranslations }: IRoot) => {
 	const initSidebarCollapsedStatus = useUIStore((state) => state.initSidebarCollapsedStatus);
 
 	useEffect(() => {
+		/**
+		 * Uygulama başlatma işlevi. Temalar, dil yapılandırması ve yönlendirmeyi başlatır.
+		 */
 		const initializeApp = async () => {
 			initTheme();
 			initSidebarCollapsedStatus();
@@ -26,6 +36,7 @@ export const Root = ({ routes, languageTranslations }: IRoot) => {
 
 		initializeApp();
 
+		// Promise hatalarını yönetmek için event dinleyicisi ekler
 		const handlePromiseRejections = (event: PromiseRejectionEvent) => {
 			promiseRejectionErrorHandler(event);
 		};
@@ -41,7 +52,7 @@ export const Root = ({ routes, languageTranslations }: IRoot) => {
 
 	return (
 		<I18nextProvider i18n={getI18nInstance()}>
-			<ErrorBoundary fallback={<div>hata</div>}>{router ? <RouterProvider router={router} /> : null}</ErrorBoundary>
+			<ErrorBoundary fallback={<div>Bir hata oluştu</div>}>{router ? <RouterProvider router={router} /> : null}</ErrorBoundary>
 		</I18nextProvider>
 	);
 };
