@@ -54,7 +54,7 @@ export const DefaultLayout = ({ sidebar, navbar }: IDefaultLayout): JSX.Element 
 					{navbar}
 				</div>
 				{/* İçerik Alanı */}
-				<div className={"mt-[6.5rem] px-4 lg:px-10"}>
+				<div className={"mt-[6.5rem] bg-paper-default px-4 lg:px-10"}>
 					<Outlet />
 				</div>
 			</div>

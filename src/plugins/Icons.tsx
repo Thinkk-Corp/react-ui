@@ -4,17 +4,21 @@ import {
 	ArrowsPointingInIcon,
 	ArrowsPointingOutIcon,
 	Bars3Icon,
+	BellIcon,
 	ChevronDownIcon,
 	Cog6ToothIcon,
 	HomeIcon,
 	MagnifyingGlassIcon,
 	MinusCircleIcon,
+	MoonIcon,
 	PlusCircleIcon,
+	SunIcon,
 	XMarkIcon,
 } from "@heroicons/react/24/outline";
 
 export const icons = {
 	outline: {
+		bell: <BellIcon />,
 		search: <MagnifyingGlassIcon />,
 		chevron_down: <ChevronDownIcon />,
 		home: <HomeIcon />,
@@ -27,5 +31,7 @@ export const icons = {
 		arrows_pointing_out: <ArrowsPointingOutIcon />,
 		bars_3: <Bars3Icon />,
 		x: <XMarkIcon />,
+		sun: <SunIcon />,
+		moon: <MoonIcon />,
 	},
 };

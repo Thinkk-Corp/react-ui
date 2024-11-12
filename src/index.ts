@@ -6,7 +6,7 @@ import "@/styles/index.css";
 // Components
 export { DefaultLayout } from "@/components/layouts/DefaultLayout.tsx";
 export { Sidebar } from "@/components/sidebar/Sidebar.tsx";
-export { Navbar } from "@/components/Navbar.tsx";
+export { Navbar } from "@/components/navbar/Navbar.tsx";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";

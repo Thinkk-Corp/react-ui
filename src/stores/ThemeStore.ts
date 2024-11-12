@@ -10,6 +10,7 @@ const changeAttribute = (newTheme: string) => {
 	if (!html) return;
 	html.removeAttribute("data-mode");
 	html.setAttribute("data-mode", newTheme);
+	html.classList.add("bg-paper-default");
 };
 
 const getInitialTheme = (): ITheme => {
