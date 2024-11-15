@@ -1,7 +1,13 @@
 import path from "node:path";
+import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 
 import { peerDependencies } from "./package.json";
+
+const ReactCompilerConfig = {
+	/* ... */
+};
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,7 +22,7 @@ export default defineConfig({
 			external: [...Object.keys(peerDependencies)], // Defines external dependencies for Rollup bundling.
 		},
 		sourcemap: true, // Generates source maps for debugging.
-		emptyOutDir: true, // Clears the output directory before building.
+		emptyOutDir: true,
 	},
 
 	resolve: {
@@ -31,11 +37,15 @@ export default defineConfig({
 			},
 		],
 	},
-
 	server: {
 		port: 3000,
 	},
-	preview: {
-		port: 3000,
-	},
+	plugins: [
+		react({
+			babel: {
+				plugins: [["babel-plugin-react-compiler", ReactCompilerConfig]],
+			},
+		}),
+		dts(),
+	],
 });

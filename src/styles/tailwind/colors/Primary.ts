@@ -1,0 +1,15 @@
+export const primary = {
+	light: "var(--primary-light)",
+	"extra-light": "var(--primary-extra-light)",
+	main: "var(--primary-main)",
+	"main-gradient": "var(--primary-main-gradient)",
+	dark: "var(--primary-dark)",
+	"contrast-text": "var(--primary-contrast-text)",
+	activated: "var(--primary-activated)",
+	hovered: "var(--primary-hovered)",
+	selected: "var(--primary-selected)",
+	"main-channel": "var(--primary-main-channel)",
+	"light-channel": "var(--primary-light-channel)",
+	"dark-channel": "var(--primary-dark-channel)",
+	"contrast-text-channel": "var(--primary-contrast-textChannel)",
+};

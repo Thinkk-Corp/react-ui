@@ -1,51 +1,88 @@
-import { action } from "./src/styles/tailwind/colors/light/Action.js";
-import { color } from "./src/styles/tailwind/colors/light/Color.js";
-import { custom } from "./src/styles/tailwind/colors/light/Custom.js";
-import { error } from "./src/styles/tailwind/colors/light/Error.js";
-import { info } from "./src/styles/tailwind/colors/light/Info.js";
-import { paper } from "./src/styles/tailwind/colors/light/Paper.js";
-import { primary } from "./src/styles/tailwind/colors/light/Primary.js";
-import { secondary } from "./src/styles/tailwind/colors/light/Secondary.js";
-import { success } from "./src/styles/tailwind/colors/light/Success.js";
-import { warning } from "./src/styles/tailwind/colors/light/Warning.js";
+import { screens } from "./src/styles/tailwind/Screens.ts";
+import { shadow } from "./src/styles/tailwind/Shadow.ts";
+import { action } from "./src/styles/tailwind/colors/Action.ts";
+import { color } from "./src/styles/tailwind/colors/Color.ts";
+import { custom } from "./src/styles/tailwind/colors/Custom.ts";
+import { error } from "./src/styles/tailwind/colors/Error.ts";
+import { info } from "./src/styles/tailwind/colors/Info.ts";
+import { paper } from "./src/styles/tailwind/colors/Paper.ts";
+import { primary } from "./src/styles/tailwind/colors/Primary.ts";
+import { secondary } from "./src/styles/tailwind/colors/Secondary.ts";
+import { sidebar } from "./src/styles/tailwind/colors/Sidebar.ts";
+import { success } from "./src/styles/tailwind/colors/Success.ts";
+import { warning } from "./src/styles/tailwind/colors/Warning.ts";
 
 export default {
 	content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
 	darkMode: ["class", '[data-mode="dark"]'],
 	safelist: [
-		// Background color classes
 		{
 			pattern: /bg-(primary|secondary|info|error|warning|success)-(main|light|dark)/,
 		},
-		// Text color classes
 		{
 			pattern: /text-(primary|secondary|info|error|warning|success)-(main|light|dark)/,
 		},
-		// Border color classes
 		{
 			pattern: /border-(primary|secondary|info|error|warning|success)-(main|light|dark)/,
 		},
-		// Width classes (e.g., w-1/2, w-1/3)
 		{
 			pattern: /w-(\d+\/\d+|full|screen|auto)/,
 		},
-		// Height classes (e.g., h-1/2, h-1/3)
 		{
 			pattern: /h-(\d+\/\d+|full|screen|auto)/,
 		},
+		// Rem değerleri
+		"h-[1rem]",
+		"h-[1.5rem]",
+		"h-[2rem]",
+		"h-[2.5rem]",
+		"h-[3rem]",
+		"h-[3.5rem]",
+		"h-[4rem]",
+		"h-[4.5rem]",
+		"h-[5rem]",
+		"h-[6rem]",
+
+		// Pixel değerleri
+		"h-[10px]",
+		"h-[20px]",
+		"h-[30px]",
+		"h-[40px]",
+		"h-[50px]",
+		"h-[60px]",
+		"h-[70px]",
+		"h-[80px]",
+		"h-[90px]",
+		"h-[100px]",
+		"h-[120px]",
+		"h-[150px]",
+		"h-[200px]",
+		"h-[250px]",
+		"h-[300px]",
+
+		// Yüzdelik değerler
+		"h-[5%]",
+		"h-[10%]",
+		"h-[15%]",
+		"h-[20%]",
+		"h-[25%]",
+		"h-[30%]",
+		"h-[35%]",
+		"h-[40%]",
+		"h-[45%]",
+		"h-[50%]",
+		"h-[60%]",
+		"h-[70%]",
+		"h-[80%]",
+		"h-[90%]",
+		"h-[100%]",
 	],
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ["Inter", "Helvetica", "sans-serif"], // Set default font family here
+				sans: ["Inter", "Helvetica", "sans-serif"],
 			},
-			screens: {
-				sm: "640px",
-				md: "768px",
-				lg: "1024px",
-				xl: "1280px",
-				"2xl": "1536px",
-			},
+			screens,
 			colors: {
 				action,
 				color,
@@ -57,61 +94,28 @@ export default {
 				secondary,
 				success,
 				warning,
+				sidebar,
 			},
-			typography: {
-				DEFAULT: {
-					css: {
-						color: "var(--primary)",
-						weight: "medium",
-						lineHeight: "normal",
-						h1: {
-							fontSize: "6xl",
-						},
-						h2: {
-							fontSize: "5xl",
-						},
-						h3: {
-							fontSize: "4xl",
-						},
-						h5: {
-							fontSize: "2xl",
-						},
-						h6: {
-							fontSize: "lg",
-						},
-						"body-1": {
-							fontSize: "base",
-							weight: "normal",
-							lineHeight: 6,
-						},
-						"body-2": {
-							fontSize: "sm",
-							weight: "normal",
-							lineHeight: 6,
-						},
-						"subtitle-1": {
-							fontSize: "base",
-							lineHeight: 6,
-							weight: "medium",
-						},
-						"subtitle-2": {
-							fontSize: "sm",
-							weight: "medium",
-							lineHeight: 6,
-						},
-						overline: {
-							fontSize: "xs",
-							weight: "semibold",
-							lineHeight: 6,
-						},
-						caption: {
-							fontSize: "xs",
-							weight: "normal",
-							lineHeight: 6,
-						},
-					},
-				},
+			shadow,
+			// Default text color ayarı
+			textColor: {
+				DEFAULT: "var(--primary)",
+			},
+			fontSize: {
+				h1: "2.25rem", // 36px
+				h2: "1.875rem", // 30px
+				h3: "1.5rem", // 24px
+				h4: "1.25rem", // 20px
+				h5: "1rem", // 16px
+				h6: "0.875rem", // 14px
+				body1: "1rem", // 16px
+				body2: "0.875rem", // 14px
+				subtitle1: "1rem", // 16px
+				subtitle2: "0.875rem", // 14px
+				overline: "0.75rem", // 12px
+				caption: "0.75rem", // 12px
 			},
 		},
 	},
+	plugins: [],
 };
