@@ -1,5 +1,5 @@
-import type { ISize } from "@/interfaces/IMetrics.ts";
 import type { IAvatar } from "@/interfaces/components/IAvatar.ts";
+import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import classNames from "classnames";
 
 // Boyut haritası (Tailwind CSS sınıfları)
@@ -19,7 +19,7 @@ export const Avatar = ({ image, size = "md", alt = "Avatar", rounded = "full", c
 		<div
 			{...props}
 			className={classNames(
-				"overflow-hidden hidden lg:block",
+				"overflow-hidden",
 				avatarSize,
 				{
 					[`rounded-${rounded}`]: rounded !== "sm",

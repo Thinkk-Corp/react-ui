@@ -22,12 +22,12 @@ export const DefaultLayout = ({ sidebar, navbar }: IDefaultLayout): JSX.Element 
 			<div
 				data-sidebar-collapsed={sidebarCollapsed.status}
 				className={classNames(
-					"fixed top-0 left-0 z-50 h-full duration-300 transition-all",
+					"fixed top-0 overflow-hidden left-0 z-50 h-full duration-300 transition-all",
 					"data-[sidebar-collapsed='true']:-translate-x-full",
-					"data-[sidebar-collapsed='true']:lg:translate-x-0",
-					"data-[sidebar-collapsed='false']:lg:translate-x-0",
-					"w-screen data-[sidebar-collapsed='true']:lg:w-24",
-					"data-[sidebar-collapsed='false']:lg:w-72",
+					"data-[sidebar-collapsed='true']:md:translate-x-0",
+					"data-[sidebar-collapsed='false']:md:translate-x-0",
+					"w-screen data-[sidebar-collapsed='true']:md:w-[4.5rem]",
+					"data-[sidebar-collapsed='false']:md:w-72",
 				)}
 			>
 				{sidebar}
@@ -37,9 +37,9 @@ export const DefaultLayout = ({ sidebar, navbar }: IDefaultLayout): JSX.Element 
 			<div
 				data-sidebar-collapsed={sidebarCollapsed.status}
 				className={classNames(
-					"flex-1 ml-0 duration-300 transition-all px-5 lg:px-0 flex flex-col",
-					"data-[sidebar-collapsed='false']:lg:ml-72",
-					"data-[sidebar-collapsed='true']:lg:ml-24",
+					"flex-1 ml-0 duration-300 transition-all flex flex-col",
+					"data-[sidebar-collapsed='false']:md:ml-72",
+					"data-[sidebar-collapsed='true']:md:ml-[4.5rem]",
 				)}
 			>
 				{/* Navbar - Üst Menü */}
@@ -47,14 +47,14 @@ export const DefaultLayout = ({ sidebar, navbar }: IDefaultLayout): JSX.Element 
 					data-sidebar-collapsed={sidebarCollapsed.status}
 					className={classNames(
 						"fixed top-0 left-0 duration-300 transition-all right-0 h-16",
-						"data-[sidebar-collapsed='false']:lg:left-72",
-						"data-[sidebar-collapsed='true']:lg:left-24",
+						"data-[sidebar-collapsed='false']:md:left-72",
+						"data-[sidebar-collapsed='true']:md:left-[4.5rem]",
 					)}
 				>
 					{navbar}
 				</div>
 				{/* İçerik Alanı */}
-				<div className={"mt-[6.5rem] bg-paper-default px-4 lg:px-10"}>
+				<div className={"mt-[6.5rem] bg-paper-default px-4 lg:px-14"}>
 					<Outlet />
 				</div>
 			</div>

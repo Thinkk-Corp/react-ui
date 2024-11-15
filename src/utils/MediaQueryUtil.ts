@@ -1,4 +1,4 @@
-import type { ISize } from "@/interfaces/IMetrics.ts";
+import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import { screens } from "@/styles/tailwind/Screens.ts";
 
 /**

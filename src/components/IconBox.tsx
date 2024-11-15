@@ -1,5 +1,5 @@
-import type { ISize } from "@/interfaces/IMetrics.ts";
 import type { IIconBox } from "@/interfaces/components/IIconBox.ts";
+import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import classNames from "classnames";
 
 // IconBox bileşeni

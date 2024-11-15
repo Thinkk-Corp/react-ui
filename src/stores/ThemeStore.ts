@@ -24,7 +24,7 @@ const getInitialTheme = (): ITheme => {
 	return prefersDarkScheme ? "dark" : "light";
 };
 
-const useThemeStore = create<IThemeStore>((set) => ({
+export const useThemeStore = create<IThemeStore>((set) => ({
 	theme: getInitialTheme(),
 
 	initTheme: () => {
@@ -41,5 +41,3 @@ const useThemeStore = create<IThemeStore>((set) => ({
 			return { theme: newTheme };
 		}),
 }));
-
-export default useThemeStore;

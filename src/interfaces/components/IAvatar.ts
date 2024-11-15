@@ -1,4 +1,4 @@
-import type { IRounded, ISize } from "@/interfaces/IMetrics.ts";
+import type { IRounded, ISize } from "@/interfaces/types/IMetrics.ts";
 
 export interface IAvatar {
 	image: string;

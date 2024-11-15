@@ -1,6 +1,6 @@
 import { IconBox } from "@/components/IconBox.tsx";
 import { icons } from "@/plugins/Icons.tsx";
-import useThemeStore from "@/stores/ThemeStore.ts";
+import { useThemeStore } from "@/stores/ThemeStore.ts";
 
 export const ThemeChanger = () => {
 	const currentTheme = useThemeStore((s) => s.theme);

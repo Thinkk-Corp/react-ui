@@ -29,13 +29,16 @@
     "i18next-resources-to-backend": "^1.2.1",
     "lodash": "^4.17.21",
     "mitt": "^3.0.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "19.0.0-rc-8b08e99e-20240713",
+    "react-dom": "19.0.0-rc-8b08e99e-20240713",
     "react-error-boundary": "^4.1.2",
     "react-hook-form": "^7.53.1",
     "react-i18next": "^15.0.0",
     "react-router-dom": "^6.27.0",
-    "zustand": "^5.0.1"
+    "zustand": "^5.0.1",
+    "babel-plugin-react-compiler": "0.0.0-experimental-678214a-20241111",
+    "eslint-plugin-react-compiler": "0.0.0-experimental-678214a-20241111",
+    "framer-motion": "^11.0.10"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -76,8 +79,5 @@
     "library",
     "tailwind",
     "components"
-  ],
-  "dependencies": {
-    "framer-motion": "^11.0.10"
-  }
+  ]
 }

@@ -5,6 +5,10 @@ import dts from "vite-plugin-dts";
 
 import { peerDependencies } from "./package.json";
 
+const ReactCompilerConfig = {
+	/* ... */
+};
+
 // https://vitejs.dev/config/
 export default defineConfig({
 	build: {
@@ -18,7 +22,7 @@ export default defineConfig({
 			external: [...Object.keys(peerDependencies)], // Defines external dependencies for Rollup bundling.
 		},
 		sourcemap: true, // Generates source maps for debugging.
-		emptyOutDir: true, // Clears the output directory before building.
+		emptyOutDir: true,
 	},
 
 	resolve: {
@@ -36,5 +40,12 @@ export default defineConfig({
 	server: {
 		port: 3000,
 	},
-	plugins: [react(), dts()],
+	plugins: [
+		react({
+			babel: {
+				plugins: [["babel-plugin-react-compiler", ReactCompilerConfig]],
+			},
+		}),
+		dts(),
+	],
 });
