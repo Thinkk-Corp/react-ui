@@ -3,18 +3,11 @@ import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import classNames from "classnames";
 
 // IconBox bileşeni
-export const IconBox = ({
-	isHoverable = false,
-	size = "md",
-	color = "text-color-primary",
-	className,
-	children,
-	...props
-}: IIconBox) => {
+export const IconBox = ({ isHoverable = false, size = "md", color, className, children, ...props }: IIconBox) => {
 	// Tailwind CSS genişlik ve yükseklik değerleri için boyut haritası
 	const sizeMap: Record<ISize, string> = {
 		sm: "w-4 h-4", // Küçük boyut
-		md: "w-7 h-7", // Orta boyut
+		md: "w-6 h-6", // Orta boyut
 		lg: "w-10 h-10", // Büyük boyut
 		xl: "w-12 h-12", // Ekstra büyük boyut
 		"2xl": "w-14 h-14", // İki kat ekstra büyük boyut

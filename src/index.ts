@@ -12,9 +12,12 @@ export { UnderlinedInput } from "@/components/inputs/UnderlinedInput.tsx";
 export { Avatar } from "@/components/Avatar.tsx";
 export { IconBox } from "@/components/IconBox.tsx";
 export { Dropdown } from "@/components/dropdown/Dropdown";
+export { Button } from "@/components/Button.tsx";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
+export type { IUserMenuData } from "@/interfaces/components/navbar/IUserMenuData.ts";
+export type { IDropdownStyle } from "@/interfaces/components/dropdown/IDropdown";
 export type { ISize, IRounded } from "@/interfaces/types/IMetrics.ts";
 
 // Utils
