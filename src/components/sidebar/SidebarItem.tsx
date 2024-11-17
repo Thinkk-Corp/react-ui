@@ -1,3 +1,4 @@
+import { IconBox } from "@/components/IconBox.tsx";
 import type { ISidebarMenuAction, ISidebarMenuItem } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
 import { useUIStore } from "@/stores/UIStore.ts";
 import { redirectNative } from "@/utils/RedirectNative.ts";
@@ -58,7 +59,7 @@ export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild
 					"data-[menu-active='false']:hover:bg-sidebar-item-hover",
 				)}
 			>
-				{menu.icon && <span className="min-w-[1.5rem] min-h-[1.5rem]">{menu.icon}</span>}
+				{menu.icon && <IconBox>{menu.icon}</IconBox>}
 				<span
 					data-sidebar-collapsed={sidebarCollapsed.status}
 					className={classNames(

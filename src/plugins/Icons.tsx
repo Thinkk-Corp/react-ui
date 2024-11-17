@@ -7,6 +7,7 @@ import {
 	BellIcon,
 	ChevronDownIcon,
 	Cog6ToothIcon,
+	CurrencyDollarIcon,
 	HomeIcon,
 	MagnifyingGlassIcon,
 	MinusCircleIcon,
@@ -33,5 +34,6 @@ export const icons = {
 		x: <XMarkIcon />,
 		sun: <SunIcon />,
 		moon: <MoonIcon />,
+		dollar: <CurrencyDollarIcon />,
 	},
 };

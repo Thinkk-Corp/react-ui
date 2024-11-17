@@ -11,7 +11,7 @@ export const ThemeChanger = () => {
 	};
 
 	return (
-		<IconBox isHoverable onClick={handleThemeChange}>
+		<IconBox color={"text-color-primary"} isHoverable onClick={handleThemeChange}>
 			{currentTheme === "light" ? icons.outline.sun : icons.outline.moon}
 		</IconBox>
 	);
