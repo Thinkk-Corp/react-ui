@@ -1,19 +1,23 @@
 // Core
-export { Root } from "@/Root.tsx";
+export { Root } from "@/Root";
 
 import "@/styles/index.css";
 
 // Components
-export { DefaultLayout } from "@/components/layouts/DefaultLayout.tsx";
-export { Sidebar } from "@/components/sidebar/Sidebar.tsx";
-export { Navbar } from "@/components/navbar/Navbar.tsx";
-export { Input } from "@/components/inputs/Input.tsx";
-export { UnderlinedInput } from "@/components/inputs/UnderlinedInput.tsx";
-export { Avatar } from "@/components/Avatar.tsx";
-export { IconBox } from "@/components/IconBox.tsx";
+export { DefaultLayout } from "@/components/layouts/DefaultLayout";
+export { Sidebar } from "@/components/sidebar/Sidebar";
+export { Navbar } from "@/components/navbar/Navbar";
+export { Input } from "@/components/inputs/Input";
+export { UnderlinedInput } from "@/components/inputs/UnderlinedInput";
+export { Avatar } from "@/components/Avatar";
+export { IconBox } from "@/components/IconBox";
 export { Dropdown } from "@/components/dropdown/Dropdown";
-export { Button } from "@/components/Button.tsx";
-export { SplitLayout } from "@/components/layouts/SplitLayout.tsx";
+export { Button } from "@/components/Button";
+export { SplitLayout } from "@/components/layouts/SplitLayout";
+export { Modal } from "@/components/overlays/modal/Modal";
+export { ModalAction } from "@/components/overlays/modal/ModalAction";
+export { ModalBody } from "@/components/overlays/modal/ModalBody";
+export { ModalHeader } from "@/components/overlays/modal/ModalHeader";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
@@ -27,7 +31,11 @@ export { generateId } from "@/utils/GenerateId.ts";
 export { shouldBypass } from "@/utils/ShouldBypass.ts";
 
 // Plugins
-export { icons } from "@/plugins/Icons.tsx";
+export { icons } from "@/plugins/Icons";
+export { emitter } from "@/plugins/Mitt";
+
+// Events
+export { modalEvents } from "@/events/ModalEvents";
 
 // Stores
 export { useRouterStore } from "@/stores/RouterStore.ts";
