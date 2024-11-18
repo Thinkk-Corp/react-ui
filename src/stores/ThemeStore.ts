@@ -37,7 +37,7 @@ export const useThemeStore = create<IThemeStore>((set) => ({
 		set((state) => {
 			const newTheme = state.theme === "light" ? "dark" : "light";
 			changeAttribute(newTheme);
-			localStorage.setItem("theme", newTheme);
+			localStorage.setItem(storageTypes.THEME_STORAGE, newTheme);
 			return { theme: newTheme };
 		}),
 }));

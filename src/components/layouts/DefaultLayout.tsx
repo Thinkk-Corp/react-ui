@@ -1,11 +1,11 @@
-import type { IDefaultLayout } from "@/interfaces/components/layout/IDefaultLayout.ts";
+import type { IDefaultLayout } from "@/interfaces/components/layouts/IDefaultLayout.ts";
 import { useUIStore } from "@/stores/UIStore.ts";
 import classNames from "classnames";
 import { Outlet } from "react-router-dom";
 
 /**
- * DefaultLayout bileşeni, uygulamanın ana layout yapısını sağlar.
- * Bu layout, sabit bir Sidebar (kenar çubuğu) ve Navbar (üst menü) ile ana içeriği düzenler.
+ * DefaultLayout bileşeni, uygulamanın ana layouts yapısını sağlar.
+ * Bu layouts, sabit bir Sidebar (kenar çubuğu) ve Navbar (üst menü) ile ana içeriği düzenler.
  *
  * @param {IDefaultLayout} props - DefaultLayout bileşeni için gereken props.
  * @param {JSX.Element} props.sidebar - Kenar çubuğunu temsil eden JSX bileşeni.

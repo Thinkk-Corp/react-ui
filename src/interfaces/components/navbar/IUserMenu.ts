@@ -1,5 +1,7 @@
+import type { ReactNode } from "react";
+
 export interface IUserMenu {
-	icon: string;
+	icon: ReactNode | string;
 	text: string;
 	action: string | (() => void);
 }
