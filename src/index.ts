@@ -13,6 +13,7 @@ export { Avatar } from "@/components/Avatar.tsx";
 export { IconBox } from "@/components/IconBox.tsx";
 export { Dropdown } from "@/components/dropdown/Dropdown";
 export { Button } from "@/components/Button.tsx";
+export { SplitLayout } from "@/components/layouts/SplitLayout.tsx";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";

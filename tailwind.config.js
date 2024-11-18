@@ -97,7 +97,6 @@ export default {
 				sidebar,
 			},
 			shadow,
-			// Default text color ayarı
 			textColor: {
 				DEFAULT: "var(--primary)",
 			},
@@ -114,6 +113,10 @@ export default {
 				subtitle2: "0.875rem", // 14px
 				overline: "0.75rem", // 12px
 				caption: "0.75rem", // 12px
+			},
+			backgroundImage: {
+				"split-layout-light": "url('/public/media/split-layout/bg-light.jpeg')",
+				"split-layout-dark": "url('/public/media/split-layout/bg-dark.jpeg')",
 			},
 		},
 	},
