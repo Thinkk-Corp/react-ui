@@ -139,18 +139,23 @@ export const Modal = ({
 				createPortal(
 					<AnimatePresence>
 						{status && (
-							<motion.div
-								key="modal-overlay"
-								id="modal-overlay"
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								exit={{ opacity: 0 }}
-								transition={{ duration: 0.3 }}
-								className="fixed inset-0"
-							>
-								<div id={`modal-backdrop-${id}`} style={{ zIndex: 190 }} className="absolute inset-0 bg-black opacity-50" />
+							<div id="modal-overlay" className="fixed inset-0">
+								<motion.div
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 0.5 }}
+									exit={{ opacity: 0 }}
+									transition={{ duration: 0.3 }}
+									key={"backdrop"}
+									style={{ zIndex: 190 }}
+									className="absolute inset-0 bg-black"
+								/>
 								<div className="flex items-center justify-center inset-0 absolute">
-									<div
+									<motion.div
+										initial={{ opacity: 0, scale: 0.9 }}
+										animate={{ opacity: 1, scale: 1 }}
+										exit={{ opacity: 0, scale: 0.9 }}
+										transition={{ duration: 0.3 }}
+										key={"modal"}
 										ref={modalRef}
 										style={{ zIndex: 200 }}
 										className={classNames("bg-paper-level2 rounded-lg", sizeSchema[size])}
@@ -161,9 +166,9 @@ export const Modal = ({
 											}
 											return null;
 										})}
-									</div>
+									</motion.div>
 								</div>
-							</motion.div>
+							</div>
 						)}
 					</AnimatePresence>,
 					document.body,
