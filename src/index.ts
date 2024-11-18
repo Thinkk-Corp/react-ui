@@ -14,10 +14,10 @@ export { IconBox } from "@/components/IconBox";
 export { Dropdown } from "@/components/dropdown/Dropdown";
 export { Button } from "@/components/Button";
 export { SplitLayout } from "@/components/layouts/SplitLayout";
-export { Modal } from "@/components/overlays/modal/Modal";
-export { ModalAction } from "@/components/overlays/modal/ModalAction";
-export { ModalBody } from "@/components/overlays/modal/ModalBody";
-export { ModalHeader } from "@/components/overlays/modal/ModalHeader";
+export { Dialog } from "@/components/overlays/dialog/Dialog";
+export { DialogAction } from "@/components/overlays/dialog/DialogAction";
+export { DialogBody } from "@/components/overlays/dialog/DialogBody";
+export { DialogHeader } from "@/components/overlays/dialog/DialogHeader";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
@@ -35,7 +35,7 @@ export { icons } from "@/plugins/Icons";
 export { emitter } from "@/plugins/Mitt";
 
 // Events
-export { modalEvents } from "@/events/ModalEvents";
+export { dialogEvents } from "@/events/DialogEvents";
 
 // Stores
 export { useRouterStore } from "@/stores/RouterStore.ts";

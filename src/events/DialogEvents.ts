@@ -1,20 +1,20 @@
 import { emitter } from "@/plugins/Mitt.tsx";
 
-export const modalEvents = () => {
+export const dialogEvents = () => {
 	const open = (id: string) => {
-		emitter.emit("modal.open", { id });
+		emitter.emit("dialog.open", { id });
 	};
 
 	const close = (id: string) => {
-		emitter.emit("modal.close", { id });
+		emitter.emit("dialog.close", { id });
 	};
 
 	const toggle = (id: string) => {
-		emitter.emit("modal.toggle", { id });
+		emitter.emit("dialog.toggle", { id });
 	};
 
 	const closeAll = () => {
-		emitter.emit("modal.close.all");
+		emitter.emit("dialog.close.all");
 	};
 
 	return { open, closeAll, toggle, close };
