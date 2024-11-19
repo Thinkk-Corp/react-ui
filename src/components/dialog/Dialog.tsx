@@ -1,10 +1,10 @@
-import { DialogAction } from "@/components/overlays/dialog/DialogAction";
-import { DialogBody } from "@/components/overlays/dialog/DialogBody";
-import { DialogHeader } from "@/components/overlays/dialog/DialogHeader";
-import type { IDialog } from "@/interfaces/components/overlays/dialog/IDialog";
+import { DialogAction } from "@/components/dialog/DialogAction.tsx";
+import { DialogBody } from "@/components/dialog/DialogBody.tsx";
+import { DialogHeader } from "@/components/dialog/DialogHeader.tsx";
+import type { IDialog } from "@/interfaces/components/dialog/IDialog.ts";
 import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import { emitter } from "@/plugins/Mitt.tsx";
-import { mediaQueryUtil } from "@/utils/MediaQueryUtil";
+import { mediaQueryUtil } from "@/utils/MediaQueryUtil.ts";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import { Children, type ReactElement, cloneElement, isValidElement, useCallback, useEffect, useRef, useState } from "react";
