@@ -17,7 +17,8 @@ export { Dialog } from "@/components/dialog/Dialog";
 export { DialogAction } from "@/components/dialog/DialogAction";
 export { DialogBody } from "@/components/dialog/DialogBody";
 export { DialogHeader } from "@/components/dialog/DialogHeader";
-export { RadioBox } from "@/components/inputs/RadioBox.tsx";
+export { Radiobox } from "@/components/inputs/Radiobox.tsx";
+export { Checkbox } from "@/components/inputs/Checkbox.tsx";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";

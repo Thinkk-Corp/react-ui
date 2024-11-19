@@ -5,6 +5,7 @@ import {
 	ArrowsPointingOutIcon,
 	Bars3Icon,
 	BellIcon,
+	CheckIcon,
 	ChevronDownIcon,
 	Cog6ToothIcon,
 	CurrencyDollarIcon,
@@ -35,5 +36,6 @@ export const icons = {
 		sun: <SunIcon />,
 		moon: <MoonIcon />,
 		dollar: <CurrencyDollarIcon />,
+		check: <CheckIcon />,
 	},
 };

@@ -2,7 +2,7 @@ import type { IRadioBox } from "@/interfaces/components/inputs/IRadioBox.ts";
 import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import classNames from "classnames";
 
-export const RadioBox = ({ color = "primary-main", size = "md", className, ...props }: IRadioBox) => {
+export const Radiobox = ({ color = "primary-main", name, size = "md", className, ...props }: IRadioBox) => {
 	const sizeSchema: Record<ISize, string> = {
 		sm: "w-4 h-4",
 		md: "w-5 h-5",
@@ -13,6 +13,7 @@ export const RadioBox = ({ color = "primary-main", size = "md", className, ...pr
 	return (
 		<input
 			type="radio"
+			name={name}
 			{...props}
 			className={classNames(
 				"appearance-none border rounded-full border-custom-divider",
