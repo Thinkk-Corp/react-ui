@@ -14,7 +14,7 @@ export const DialogHeader = ({ setStatus, children, closeIcon = icons.outline.x 
 	};
 
 	return (
-		<div className={"p-4 flex items-center gap-4 mb-4 justify-between"}>
+		<div className={"flex items-center gap-4 justify-between"}>
 			<h4 className={"text-h4 text-color-primary"}>{children}</h4>
 			<IconBox color={"text-color-primary"} onClick={handleDialogClose} isHoverable>
 				{closeIcon}

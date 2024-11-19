@@ -28,6 +28,7 @@ const sizeSchema: Record<ISize, string> = {
  * @param {boolean} onCloseToClickOutside - dialog dışına tıklanarak kapanıp kapanamayacağını belirler.
  * @param {() => void} onOpened - dialog açıldığında çalışacak geri çağırma fonksiyonu.
  * @param {() => void} onClosed - dialog kapandığında çalışacak geri çağırma fonksiyonu.
+ * @param type
  * @param {ReactNode} children - dialog içeriği (başlık, gövde, aksiyonlar vb.).
  *
  * @returns {JSX.Element} dialog bileşenini render eder.
@@ -48,6 +49,7 @@ export const Dialog = ({
 	const [isMdScreen, setIsMdScreen] = useState<boolean>(true);
 
 	const dialogRef = useRef<HTMLDivElement>(null); // dialog elemanını referansla alıyoruz
+	const overlayRef = useRef<HTMLDivElement>(null);
 
 	// dialog alt bileşenleri (başlık, içerik, aksiyonlar)
 	const childList = [DialogHeader, DialogBody, DialogAction];
@@ -98,12 +100,36 @@ export const Dialog = ({
 
 	// Modal tetikleyicisi (dialog'u açmak için kullanılan buton)
 	useEffect(() => {
-		const dialogTrigger = document.querySelector(`[data-toggle-id="${id}"][data-toggle-mode="dialog"]`);
+		const attachListener = () => {
+			const dialogTrigger = document.querySelector(`[data-toggle-id="${id}"][data-toggle-mode="dialog"]`);
 
-		if (dialogTrigger) {
-			dialogTrigger.addEventListener("click", handleDialogToggle); // Tetikleyiciye tıklanırsa dialog'u toggle et
-			return () => dialogTrigger.removeEventListener("click", handleDialogToggle); // Temizleme
-		}
+			if (dialogTrigger) {
+				dialogTrigger.addEventListener("click", handleDialogToggle);
+				return () => dialogTrigger.removeEventListener("click", handleDialogToggle);
+			}
+			return null; // Eğer tetikleyici bulunamazsa null döndür
+		};
+
+		let detachListener = attachListener();
+
+		const config = { childList: true, subtree: true };
+
+		const callback = (mutationList: MutationRecord[]) => {
+			for (const mutation of mutationList) {
+				if (mutation.type === "childList") {
+					// İlk olarak eski listener'i kaldır
+					if (detachListener) {
+						detachListener();
+					}
+					// Sonrasında listener'i tekrar ekle
+					detachListener = attachListener();
+				}
+			}
+		};
+
+		const observer = new MutationObserver(callback);
+
+		observer.observe(document.body, config);
 
 		// Mitt üzerinden gelen event'ler ile dialog kontrolü
 		emitter.on("dialog.open", ({ id: emittedId }) => id === emittedId && handleDialogOpen());
@@ -112,6 +138,8 @@ export const Dialog = ({
 		emitter.on("dialog.close.all", handleDialogClose);
 
 		return () => {
+			observer.disconnect();
+			if (detachListener) detachListener();
 			emitter.off("dialog.open", ({ id: emittedId }) => id === emittedId && handleDialogOpen());
 			emitter.off("dialog.close", ({ id: emittedId }) => id === emittedId && handleDialogClose());
 			emitter.off("dialog.toggle", ({ id: emittedId }) => id === emittedId && handleDialogToggle());
@@ -121,12 +149,13 @@ export const Dialog = ({
 
 	// Modal dışına tıklanarak kapanmasını sağlamak için dışarıdan tıklama dinleyicisi
 	useEffect(() => {
-		if (!isVisible || !onCloseToClickOutside || !dialogRef.current) return;
+		if (!isVisible || !onCloseToClickOutside || !dialogRef.current || !overlayRef.current) return;
 
 		const dialog = dialogRef.current;
+		const overlay = overlayRef.current;
 
 		const listener = (e: MouseEvent) => {
-			if (dialog.contains(e.target as Node)) return; // Eğer dialog içinde bir yere tıklanırsa hiçbir şey yapma
+			if (dialog.contains(e.target as Node) || !overlay.contains(e.target as Node)) return; // Eğer dialog içinde bir yere tıklanırsa hiçbir şey yapma
 			handleDialogClose(); // Modal dışına tıklanırsa dialog'u kapat
 		};
 
@@ -174,7 +203,7 @@ export const Dialog = ({
 				createPortal(
 					<AnimatePresence>
 						{status && (
-							<div id="dialog-overlay" style={{ zIndex }} className="fixed inset-0">
+							<div id="dialog-overlay" ref={overlayRef} style={{ zIndex }} className="fixed inset-0">
 								<motion.div
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 0.5 }}
@@ -186,9 +215,9 @@ export const Dialog = ({
 									className="absolute inset-0 bg-black"
 								/>
 								<div
-									className={classNames("flex inset-0 absolute", {
+									className={classNames("flex h-screen inset-0 absolute", {
 										"items-center justify-center": type === "modal",
-										"justify-end h-full": type === "drawer",
+										"justify-end": type === "drawer",
 									})}
 								>
 									<motion.div
@@ -199,14 +228,14 @@ export const Dialog = ({
 										style={{ zIndex: zIndex + 1 }}
 										id="dialog"
 										className={classNames(
-											"bg-paper-level2",
+											"bg-paper-level2 p-4 flex flex-col gap-8",
 											{ "rounded-lg": type === "modal" },
 											isMdScreen ? sizeSchema[size] : type === "modal" ? "w-full mx-4" : "w-full ",
 										)}
 									>
 										{Children.toArray(children).map((child) => {
 											if (isValidElement(child) && childList.includes((child as ReactElement).type as any)) {
-												return cloneElement(child as ReactElement, { setStatus });
+												return cloneElement(child as ReactElement, { setStatus, type });
 											}
 											return null;
 										})}
