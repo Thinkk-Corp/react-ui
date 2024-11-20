@@ -3,7 +3,7 @@ import { icons } from "@/plugins/Icons.tsx";
 
 export const Notifications = () => {
 	return (
-		<IconBox color={"text-color-primary"} isHoverable>
+		<IconBox color={"color-primary"} isHoverable>
 			{icons.outline.bell}
 		</IconBox>
 	);

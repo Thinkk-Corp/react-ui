@@ -23,7 +23,7 @@ export const IconBox = ({ isHoverable = false, size = "md", color, className, ch
 				{
 					"transition-transform transform hover:bg-action-hover p-2": isHoverable, // Hover efekti
 				},
-				color,
+				`text-${color}`,
 				className, // Ek kullanıcı sınıfları
 			)}
 			{...props}

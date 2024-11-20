@@ -25,12 +25,12 @@ export const Navbar = ({ extraComponents, isThemeSwitcherActive = true, userMenu
 				"border-b border-custom-divider": currentTheme === "dark",
 			})}
 		>
-			<IconBox isHoverable color={"text-color-primary"} onClick={handleMobileMenuTriggerClick} className={"block md:hidden "}>
+			<IconBox isHoverable color={"color-primary"} onClick={handleMobileMenuTriggerClick} className={"block md:hidden "}>
 				{icons.outline.bars_3}
 			</IconBox>
 			<div className={"hidden md:flex items-center gap-5 w-1/2"}>
 				<label htmlFor={"search-input"}>
-					<IconBox color={"text-color-primary"} isHoverable>
+					<IconBox color={"color-primary"} isHoverable>
 						{icons.outline.search}
 					</IconBox>
 				</label>
