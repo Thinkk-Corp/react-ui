@@ -2,6 +2,21 @@ import type { IRadioBox } from "@/interfaces/components/inputs/IRadioBox.ts";
 import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import classNames from "classnames";
 
+/**
+ * `Radiobox` componenti, özelleştirilebilir bir radyo düğmesi sağlar.
+ * - `appearance-none` sınıfı kullanılarak tarayıcı varsayılan stilleri kaldırılır.
+ * - Seçili durumda (checked) arka plan rengi ve gölge efekti özelleştirilebilir.
+ *
+ * @param {IRadioBox} props - Radiobox bileşeni için gereken tüm özellikler.
+ * @param {string} [props.color="primary-main"] - Radiobox seçili durumunda uygulanacak renk (Tailwind renk sınıfları ile uyumlu).
+ * @param {string} props.name - Radiobox'un `name` özelliği (aynı gruptaki radioboxlar için aynı olmalıdır).
+ * @param {ISize} [props.size="md"] - Radiobox boyutu (`sm`, `md`, `lg`, `xl`, `2xl`).
+ * @param {string} [props.className] - Ekstra Tailwind sınıfları eklemek için kullanılır.
+ * @param {React.InputHTMLAttributes<HTMLInputElement>} props - HTML input elementine ait diğer özellikler.
+ *
+ * @returns {JSX.Element} Özelleştirilmiş bir radiobox bileşeni.
+ */
+
 export const Radiobox = ({ color = "primary-main", name, size = "md", className, ...props }: IRadioBox) => {
 	const sizeSchema: Record<ISize, string> = {
 		sm: "w-4 h-4",

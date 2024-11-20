@@ -1,3 +1,4 @@
+import type { ISizeSchema } from "@/components/inputs/Toggle.tsx";
 import type { IInput } from "@/interfaces/components/inputs/IInput.ts";
 import classNames from "classnames";
 import type { FC } from "react";
@@ -13,10 +14,18 @@ export const Input: FC<IInput> = ({
 	id,
 	value,
 	name,
-	height = "2.5rem",
+	customSize = "md",
 	className,
 	...props
 }) => {
+	const sizeSchema: ISizeSchema = {
+		sm: "h-9",
+		md: "h-10",
+		lg: "h-11",
+		xl: "h-12",
+		"2xl": "h-14",
+	};
+
 	return (
 		<input
 			data-is-invalid={isInvalid}
@@ -30,11 +39,11 @@ export const Input: FC<IInput> = ({
 			id={id}
 			name={name}
 			className={classNames(
-				"w-full rounded-lg shadow-sm bg-paper-level2 text-body1 px-3",
-				`h-[${height}]`,
+				"rounded-lg shadow-sm bg-paper-level2 text-body1 px-3",
 				"border-custom-divider border text-color-primary hover:border-primary-main focus:border-primary-main focus:outline-0",
 				"data-[is-invalid='true']:border-error-main",
 				className,
+				sizeSchema[customSize],
 			)}
 			{...props}
 		/>

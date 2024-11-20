@@ -7,6 +7,21 @@ import { useState } from "react";
 
 export type ISizeSchema = Record<ISize, string>;
 
+/**
+ * `Toggle` componenti, özelleştirilebilir bir anahtar (toggle) düğmesi sağlar.
+ *
+ * - Seçili durumda (checked) arka plan rengi ve ikon değişimi yapılabilir.
+ * - Kullanıcı etkileşimleri için bir checkbox (input) elemanını temel alır.
+ *
+ * @param {IRadioBox} props - Toggle bileşeni için gereken tüm özellikler.
+ * @param {string} [props.color="primary-main"] - Toggle seçili durumunda uygulanacak renk (Tailwind renk sınıfları ile uyumlu).
+ * @param {ISize} [props.size="md"] - Toggle boyutu (`sm`, `md`, `lg`, `xl`, `2xl`).
+ * @param {string} props.name - Toggle'un `name` özelliği (form grupları için).
+ * @param {string} [props.className] - Ekstra Tailwind sınıfları eklemek için kullanılır.
+ * @param {React.InputHTMLAttributes<HTMLInputElement>} props - HTML input elementine ait diğer özellikler.
+ *
+ * @returns {JSX.Element} Özelleştirilmiş bir toggle bileşeni.
+ */
 export const Toggle = ({ size = "md", color = "primary-main", name, className, ...props }: IRadioBox) => {
 	const [isChecked, setIsChecked] = useState(false);
 

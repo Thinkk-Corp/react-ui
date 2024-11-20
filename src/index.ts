@@ -20,6 +20,7 @@ export { DialogHeader } from "@/components/dialog/DialogHeader";
 export { Radiobox } from "@/components/inputs/Radiobox.tsx";
 export { Checkbox } from "@/components/inputs/Checkbox.tsx";
 export { Toggle } from "@/components/inputs/Toggle.tsx";
+export { Select } from "@/components/inputs/Select.tsx";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";

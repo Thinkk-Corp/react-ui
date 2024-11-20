@@ -34,7 +34,7 @@ export const Navbar = ({ extraComponents, isThemeSwitcherActive = true, userMenu
 						{icons.outline.search}
 					</IconBox>
 				</label>
-				<Input id={"search-input"} placeholder={"Arama yap..."} />
+				<Input id={"search-input"} className={"w-full"} placeholder={"Arama yap..."} />
 			</div>
 			<div className={"flex items-center gap-2 md:gap-5 border-l border-custom-divider pl-4"}>
 				{isThemeSwitcherActive && <ThemeChanger />}
