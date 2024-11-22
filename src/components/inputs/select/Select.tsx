@@ -5,6 +5,7 @@ import type { IOption, ISelect } from "@/interfaces/components/inputs/ISelect.ts
 import { icons } from "@/plugins/Icons.tsx";
 import classNames from "classnames";
 import type React from "react";
+import { useRef } from "react";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
 
@@ -20,157 +21,181 @@ export const Select = ({
 	onBlur,
 	isSearchable = false,
 }: ISelect) => {
+	const defaultOption = { value: "", label: "Seçiniz" };
 	const [isOpen, setIsOpen] = useState(false);
-	const [options, setOptions] = useState<IOption[]>([{ value: "", label: "Seçiniz" }]);
-	const [selectedValue, setSelectedValue] = useState<string>("");
-	const [isSearched, setIsSearched] = useState<boolean>(false);
+	const [options, setOptions] = useState<IOption[]>([defaultOption]);
+	const [selectedValue, setSelectedValue] = useState<string>(defaultValue || "");
 	const [searchValue, setSearchValue] = useState<string>("");
-	const [filteredOptions, setFilteredOptions] = useState<IOption[]>([]);
+	const [filteredOptions, setFilteredOptions] = useState<IOption[]>(options);
 
-	// Helper function to find label by value
+	const selectInputRef = useRef<HTMLDivElement>(null);
+
+	// Helper: Label Bul
 	const findLabelByValue = useCallback(
-		(value: string) => {
-			const option = options.find((option) => option.value === value);
-			return option ? option.label : "";
-		},
+		(value: string) => options.find((option) => option.value === value)?.label || "",
 		[options],
 	);
 
+	// Seçim Yapma
 	const handleSelect = (value: string) => {
 		setSelectedValue(value);
-		setSearchValue(findLabelByValue(value)); // Update label on selection
 		onChange?.(value);
 		setIsOpen(false);
 	};
 
-	const handleClick = () => {
-		onClick?.();
+	// Listeyi Aç/Kapat
+	const toggleDropdown = () => {
 		setIsOpen((prev) => !prev);
+		onClick?.();
 	};
 
-	const handleBlur = () => {
-		setSearchValue(findLabelByValue(selectedValue));
-		setIsSearched(false);
-		setTimeout(() => setIsOpen(false), 100);
-		onBlur?.();
-	};
-
+	// Arama Girdisi
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
 		setSearchValue(value);
-		setIsSearched(true);
-		if (isOpen) return;
-		setIsOpen(true);
+		if (value.trim()) {
+			setFilteredOptions(options.filter((option) => option.label.toLowerCase().includes(value.toLowerCase())));
+		} else {
+			setFilteredOptions(options);
+		}
+		if (!isOpen) setIsOpen(true);
 	};
 
-	// Load options from endpoint if not passed via props
+	// Blur Olayı
+	const handleBlur = () => {
+		if (searchValue !== findLabelByValue(selectedValue)) setSearchValue(findLabelByValue(selectedValue));
+		setFilteredOptions(options);
+		onBlur?.();
+		setTimeout(() => setIsOpen(false), 100);
+	};
+
+	const iconRenderer = () => (
+		<IconBox size={"sm"} color={"color-primary"}>
+			{icons.outline[isOpen ? "chevron_up" : "chevron_down"]}
+		</IconBox>
+	);
+
+	const handleOutsideClick = useCallback(
+		(e: MouseEvent) => {
+			if (!selectInputRef.current || selectInputRef.current.contains(e.target as Node)) return;
+			setIsOpen(false);
+			onBlur?.();
+		},
+		[onBlur],
+	);
+
+	useEffect(() => {
+		window.addEventListener("click", handleOutsideClick);
+		return () => {
+			window.removeEventListener("click", handleOutsideClick);
+		};
+	}, [handleOutsideClick]);
+
+	// Props ile Gelen Seçenekleri Yükleme
 	useEffect(() => {
 		if (optionsProp && optionsProp.length > 0) {
-			setOptions((prev) => [...prev, ...optionsProp]);
+			setOptions([defaultOption, ...optionsProp]);
+			setFilteredOptions([defaultOption, ...optionsProp]);
 		} else if (endpoint) {
 			const fetchOptions = async () => {
-				const optionsData = await getOptionsAction(endpoint);
-				if (optionsData) setOptions((prev) => [...prev, ...optionsData]);
+				const data = await getOptionsAction(endpoint);
+				if (data) {
+					setOptions([defaultOption, ...data]);
+					setFilteredOptions([defaultOption, ...data]);
+				} else {
+					setOptions([]);
+					setFilteredOptions([]);
+				}
 			};
 			fetchOptions();
+		} else if (!optionsProp || optionsProp.length === 0) {
+			setOptions([]);
+			setFilteredOptions([]);
 		}
-	}, [endpoint, optionsProp]);
+	}, [optionsProp, endpoint]);
 
-	// Update the selected value if the defaultValue changes
+	// Default Değer Güncellenirse
 	useEffect(() => {
-		if (options.length === 0 || defaultValue === selectedValue || !defaultValue) return;
-		setSelectedValue(defaultValue);
-		if (!isSearchable) return;
-		setSearchValue(findLabelByValue(defaultValue));
-	}, [options, defaultValue]);
-
-	// Apply filtering when searchValue or options change
-	useEffect(() => {
-		if (!searchValue || !isSearched) {
-			setFilteredOptions(options); // Show all options when search is empty
-		} else {
-			const filtered = options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()));
-			setFilteredOptions(filtered);
+		if (defaultValue && defaultValue !== selectedValue) {
+			setSelectedValue(defaultValue);
 		}
-	}, [options, searchValue, isSearched]);
+	}, [defaultValue]);
 
-	if (options.length === 0) return null;
+	useEffect(() => {
+		if (selectedValue === findLabelByValue(searchValue)) return;
+		setSearchValue(findLabelByValue(selectedValue));
+	}, [selectedValue]);
 
 	return (
-		<span
+		<div
 			data-toggle={isOpen}
-			data-testid={"select-container"}
-			className={classNames("relative min-w-48 inline-block group", className)}
+			data-testid="select-container"
+			className={classNames("relative group min-w-60 inline-block", className)}
 		>
+			{/* Seçim veya Arama Alanı */}
 			{!isSearchable ? (
-				<span
+				<div
+					ref={selectInputRef}
 					data-testid={"select-input"}
 					onKeyDown={() => {}}
+					onClick={toggleDropdown}
 					onBlur={handleBlur}
-					onClick={handleClick}
 					id={id}
 					data-invalid={isInvalid}
 					className={classNames(
-						"h-10 w-full flex gap-4 hover:primary items-center justify-between px-3 rounded-lg cursor-pointer",
+						"h-10 w-full flex items-center justify-between px-3 rounded-lg cursor-pointer",
 						"bg-paper-level2 border border-custom-divider",
 						"data-[invalid='true']:border-error-main",
+						"data-[invalid='false']:hover:border-primary-main",
 						"data-[invalid='false']:group-data-[toggle='true']:border-primary-main",
-						"hover:data-[invalid='false']:border-primary-main",
 					)}
 				>
-					<span className="text-body1 text-color-primary">{findLabelByValue(searchValue)}</span>
-					<IconBox color={"color-primary"} size={"sm"}>
-						{icons.outline[isOpen ? "chevron_up" : "chevron_down"]}
-					</IconBox>
-				</span>
+					<span className="text-body1">{filteredOptions.length === 0 ? "Seçiniz" : searchValue}</span>
+					{iconRenderer()}
+				</div>
 			) : (
 				<Input
 					data-testid={"select-input"}
-					icon={
-						<IconBox color={"color-primary"} size={"sm"}>
-							{icons.outline[isOpen ? "chevron_up" : "chevron_down"]}
-						</IconBox>
-					}
-					onBlur={handleBlur}
-					onClick={handleClick}
+					icon={iconRenderer()}
 					isInvalid={isInvalid}
-					value={searchValue}
-					className={"w-full"}
+					value={filteredOptions.length === 0 ? "Seçiniz" : searchValue}
 					onChange={handleSearchChange}
+					onClick={toggleDropdown}
+					onBlur={handleBlur}
+					className="w-full"
 				/>
 			)}
 
+			{/* Seçenek Listesi */}
 			<ul
-				data-testid={"select-menu"}
+				data-testid="select-menu"
 				className={classNames(
 					"absolute overflow-hidden w-full mt-1 rounded-lg shadow-md border divide-y",
 					"bg-paper-level2 divide-custom-divider border-custom-divider",
-					"group-data-[toggle='false']:hidden",
+					{ hidden: !isOpen },
 				)}
 			>
-				{filteredOptions.length > 0 ? (
-					filteredOptions.map((option, index) => (
+				{filteredOptions.length ? (
+					filteredOptions.map((option) => (
 						<li
 							data-testid={"select-option"}
 							onKeyDown={() => {}}
-							key={index.toString()}
-							data-active={selectedValue === option.value}
-							className={classNames(
-								"px-3 py-2 text-body2 cursor-pointer",
-								"data-[active='false']:hover:bg-action-hover data-[active='false']:text-color-primary",
-								"data-[active='true']:bg-primary-main data-[active='true']:text-white",
-							)}
+							key={option.value}
 							onClick={() => handleSelect(option.value)}
+							className={classNames("px-3 py-2 cursor-pointer", {
+								"bg-primary-main text-white": selectedValue === option.value,
+								"hover:bg-action-hover text-color-primary": selectedValue !== option.value,
+							})}
 						>
 							{option.label}
 						</li>
 					))
 				) : (
-					<li data-testid={"select-no-option"} className={classNames("px-3 py-2 text-body2")}>
-						{"İçerik Bulunamadı"}
+					<li data-testid={"select-no-option"} className="px-3 py-2 text-body2">
+						İçerik Bulunamadı
 					</li>
 				)}
 			</ul>
-		</span>
+		</div>
 	);
 };

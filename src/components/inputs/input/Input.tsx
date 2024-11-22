@@ -1,4 +1,3 @@
-import { IconBox } from "@/components/iconbox/IconBox.tsx";
 import type { ISizeSchema } from "@/components/inputs/toggle/Toggle.tsx";
 import type { IInput } from "@/interfaces/components/inputs/IInput.ts";
 import classNames from "classnames";
@@ -10,7 +9,7 @@ export const Input: FC<IInput> = ({
 	type,
 	defaultValue,
 	onClick,
-	isInvalid,
+	isInvalid = false,
 	onChange,
 	onBlur,
 	placeholder,
@@ -34,7 +33,7 @@ export const Input: FC<IInput> = ({
 	return (
 		// Ana sarmalayıcı (wrapper) element.
 		// Girdi alanını ve opsiyonel ikonu içerir.
-		<span
+		<div
 			data-testid={"input-wrapper"} // Testlerde kullanılmak üzere `data-testid` özelliği eklendi.
 			data-invalid={isInvalid} // Hata durumunu belirtmek için `data-invalid` özelliği kullanılır.
 			className={classNames(
@@ -43,8 +42,8 @@ export const Input: FC<IInput> = ({
 				className, // Kullanıcı tarafından sağlanan ek sınıflar
 				"border-custom-divider border text-color-primary", // Kenarlık ve metin renk stilleri
 				"data-[invalid='true']:border-error-dark", // Hata durumunda kenarlık rengi
-				"hover:data-[invalid='false']:border-primary-main", // Hata durumu yokken hover stili
-				"focus-within:data-[invalid='false']:border-primary-main", // Fokus stili
+				"data-[invalid='false']:hover:border-primary-main", // Hata durumu yokken hover stili
+				"data-[invalid='false']:focus-within:border-primary-main", // Fokus stili
 			)}
 		>
 			{/* Girdi alanı (input) */}
@@ -60,18 +59,14 @@ export const Input: FC<IInput> = ({
 				id={id} // Benzersiz kimlik
 				name={name} // Form alanı ismi
 				className={classNames(
-					"text-body1 px-3 border-none shadow-none bg-transparent focus:outline-0 w-full h-full", // Input özel stilleri
+					"appearance-none text-body1 px-3 border-none shadow-none bg-transparent focus:outline-0 w-full h-full", // Input özel stilleri
 				)}
 				{...props} // Ekstra özellikler (örneğin, `aria-*` veya `data-*`)
 			/>
 			{/* Opsiyonel ikon alanı */}
-			<IconBox
-				data-testid={"input-icon"} // Testlerde kullanılmak üzere `data-testid` özelliği eklendi.
-				className={"absolute top-1/2 -translate-y-1/2 right-3"} // İkonun pozisyonlandırma stilleri
-				size={"sm"} // İkon kutusu boyutu
-			>
-				{icon} {/* Kullanıcı tarafından sağlanan ikon */}
-			</IconBox>
-		</span>
+			<div data-testid={"input-icon"} className={"absolute top-1/2 -translate-y-1/2 right-3"}>
+				{icon}
+			</div>
+		</div>
 	);
 };
