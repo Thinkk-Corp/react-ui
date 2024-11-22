@@ -4,7 +4,7 @@ import { icons } from "@/plugins/Icons.tsx";
 import classNames from "classnames";
 import { useState } from "react";
 
-export const Checkbox = ({ color = "primary-main", name, size = "md", className, ...props }: IRadioBox) => {
+export const Checkbox = ({ color = "primary-main", name, isInvalid = false, size = "md", className, ...props }: IRadioBox) => {
 	const [isChecked, setIsChecked] = useState(false);
 
 	const sizeSchema: Record<ISize, string> = {
@@ -30,18 +30,22 @@ export const Checkbox = ({ color = "primary-main", name, size = "md", className,
 
 	return (
 		<label
+			data-testid={"checkbox-label"}
+			data-invalid={isInvalid}
 			htmlFor={name}
 			className={classNames(
 				"relative inline-block border rounded border-custom-divider",
 				{
 					[`bg-${color}`]: isChecked,
-					"border-custom-divider": !isChecked,
+					"data-[invalid='false']:border-custom-divider": !isChecked,
 				},
+				"data-[invalid='true']:border-error-dark",
 				sizeSchema[size],
 				className,
 			)}
 		>
 			<input
+				data-testid={"checkbox-input"}
 				type="checkbox"
 				name={name}
 				{...props}
@@ -50,7 +54,10 @@ export const Checkbox = ({ color = "primary-main", name, size = "md", className,
 				className={classNames("appearance-none sr-only absolute inset-0")}
 			/>
 			{isChecked && (
-				<div className={classNames("absolute inset-0 flex justify-center items-center transition-all ")}>
+				<div
+					data-testid={"checkbox-check"}
+					className={classNames("absolute inset-0 flex justify-center items-center transition-all ")}
+				>
 					<div className={classNames("text-white", iconSizeScheme[size])}>{icons.outline.check}</div>
 				</div>
 			)}

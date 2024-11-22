@@ -26,16 +26,9 @@ export default defineConfig({
 	},
 
 	resolve: {
-		alias: [
-			{
-				find: /^~(.+)/,
-				replacement: path.join(process.cwd(), "node_modules/$1"),
-			},
-			{
-				find: /^@\/(.+)/,
-				replacement: path.join(process.cwd(), "src/$1"),
-			},
-		],
+		alias: {
+			"@": path.resolve(__dirname, "./src"),
+		},
 	},
 	server: {
 		port: 3000,

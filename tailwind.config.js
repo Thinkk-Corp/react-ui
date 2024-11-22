@@ -139,6 +139,10 @@ export default {
 			textColor: {
 				DEFAULT: "var(--primary)",
 			},
+			zIndex: {
+				60: 60,
+				70: 70,
+			},
 			fontSize: {
 				h1: "2.25rem", // 36px
 				h2: "1.875rem", // 30px

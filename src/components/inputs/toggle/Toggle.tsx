@@ -1,4 +1,4 @@
-import { IconBox } from "@/components/IconBox.tsx";
+import { IconBox } from "@/components/iconbox/IconBox.tsx";
 import type { IRadioBox } from "@/interfaces/components/inputs/IRadioBox.ts";
 import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import { icons } from "@/plugins/Icons.tsx";
@@ -14,6 +14,7 @@ export type ISizeSchema = Record<ISize, string>;
  * - Kullanıcı etkileşimleri için bir checkbox (input) elemanını temel alır.
  *
  * @param {IRadioBox} props - Toggle bileşeni için gereken tüm özellikler.
+ * @param checked
  * @param {string} [props.color="primary-main"] - Toggle seçili durumunda uygulanacak renk (Tailwind renk sınıfları ile uyumlu).
  * @param {ISize} [props.size="md"] - Toggle boyutu (`sm`, `md`, `lg`, `xl`, `2xl`).
  * @param {string} props.name - Toggle'un `name` özelliği (form grupları için).
@@ -22,8 +23,15 @@ export type ISizeSchema = Record<ISize, string>;
  *
  * @returns {JSX.Element} Özelleştirilmiş bir toggle bileşeni.
  */
-export const Toggle = ({ size = "md", color = "primary-main", name, className, ...props }: IRadioBox) => {
-	const [isChecked, setIsChecked] = useState(false);
+export const Toggle = ({
+	size = "md",
+	checked = false,
+	color = "primary-main",
+	name,
+	className,
+	...props
+}: IRadioBox): JSX.Element => {
+	const [isChecked, setIsChecked] = useState(checked);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setIsChecked(e.target.checked);
@@ -56,6 +64,7 @@ export const Toggle = ({ size = "md", color = "primary-main", name, className, .
 
 	return (
 		<label
+			data-testid={"toggle-label"}
 			htmlFor={props.id}
 			className={classNames(
 				"relative inline-block cursor-pointer rounded-full bg-custom-divider transition [-webkit-tap-highlight-color:_transparent]",
@@ -64,15 +73,28 @@ export const Toggle = ({ size = "md", color = "primary-main", name, className, .
 				className,
 			)}
 		>
-			<input type="checkbox" checked={isChecked} onChange={handleChange} {...props} className="sr-only" />
+			<input
+				data-testid={"toggle-input"}
+				type="checkbox"
+				checked={isChecked}
+				onChange={handleChange}
+				{...props}
+				className="sr-only"
+			/>
 			<span
+				data-testid={"toggle-iconbox"}
 				className={classNames(
 					"absolute inset-y-0 z-10 m-1 inline-flex items-center justify-center rounded-full bg-white transition-transform",
 					{ "translate-x-full": isChecked, "translate-x-0": !isChecked },
 					iconBoxSizeSchema[size],
 				)}
 			>
-				<IconBox className={iconSizeSchema[size]} color={"color-disabled"}>
+				<IconBox
+					data-testid={"toggle-icon"}
+					data-icon={isChecked ? "check" : "x"}
+					className={iconSizeSchema[size]}
+					color={"color-disabled"}
+				>
 					{icons.outline[isChecked ? "check" : "x"]}
 				</IconBox>
 			</span>

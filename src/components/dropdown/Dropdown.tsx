@@ -94,7 +94,7 @@ export const Dropdown = ({
 			{internalIsOpen && (
 				<div
 					className={classNames(
-						"absolute z-10",
+						"absolute",
 						{
 							"bg-paper-level2 divide-y divide-custom-divider rounded-lg border border-custom-divider shadow-lg":
 								typeof styles?.menu?.defaultStyleActive === "undefined" || styles?.menu?.defaultStyleActive === null

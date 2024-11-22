@@ -17,6 +17,7 @@ export const Avatar = ({ image, size = "md", alt = "Avatar", rounded = "full", c
 
 	return (
 		<div
+			data-testid={"avatar-container"}
 			{...props}
 			className={classNames(
 				"overflow-hidden",
@@ -28,11 +29,14 @@ export const Avatar = ({ image, size = "md", alt = "Avatar", rounded = "full", c
 				className,
 			)}
 		>
-			<img
-				src={image}
-				alt={alt}
-				className="object-cover w-full h-full" // Resmi sığdırmak için cover
-			/>
+			{image && (
+				<img
+					data-testid={"avatar-image"}
+					src={image}
+					alt={alt}
+					className="object-cover w-full h-full" // Resmi sığdırmak için cover
+				/>
+			)}
 		</div>
 	);
 };

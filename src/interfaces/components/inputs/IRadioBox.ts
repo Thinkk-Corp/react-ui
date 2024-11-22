@@ -4,4 +4,6 @@ import type { HTMLAttributes } from "react";
 export interface IRadioBox extends HTMLAttributes<HTMLInputElement> {
 	size?: ISize;
 	name: string;
+	checked?: boolean;
+	isInvalid?: boolean;
 }

@@ -1,4 +1,4 @@
-import { IconBox } from "@/components/IconBox.tsx";
+import { IconBox } from "@/components/iconbox/IconBox.tsx";
 import { SidebarItem } from "@/components/sidebar/SidebarItem.tsx";
 import type { ISidebarMenu, ISidebarMenuItem } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
 import { icons } from "@/plugins/Icons.tsx";
@@ -74,7 +74,11 @@ export const SidebarMenus = ({
 					>
 						{/* Menü ikonu ve başlık */}
 						<div className="flex items-center overflow-hidden">
-							{menu.icon && <IconBox>{menu.icon}</IconBox>}
+							{menu.icon && (
+								<IconBox color={"text-sidebar-item-color"} className={"hover:text-sidebar-item-active-color"}>
+									{menu.icon}
+								</IconBox>
+							)}
 							<span
 								data-sidebar-collapsed={sidebarCollapsed.status}
 								className={classNames(

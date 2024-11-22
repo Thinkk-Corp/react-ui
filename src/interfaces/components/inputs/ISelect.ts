@@ -7,12 +7,14 @@ export interface IOption {
 
 export interface ISelect {
 	id?: string;
+	options?: IOption[];
 	onBlur?: () => void;
 	isInvalid?: boolean;
 	onClick?: () => void;
 	customSize?: ISize;
-	options: IOption[];
+	endpoint?: string;
 	className?: string;
 	defaultValue?: string;
+	isSearchable?: boolean;
 	onChange?: (value: string) => void;
 }

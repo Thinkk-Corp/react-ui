@@ -1,10 +1,10 @@
-import { Avatar } from "@/components/Avatar.tsx";
-import { IconBox } from "@/components/IconBox.tsx";
+import { redirectNative } from "@/actions/client/RedirectNative.ts";
+import { Avatar } from "@/components/avatar/Avatar.tsx";
 import { Dropdown } from "@/components/dropdown/Dropdown.tsx";
+import { IconBox } from "@/components/iconbox/IconBox.tsx";
 import type { IDropdownStyle } from "@/interfaces/components/dropdown/IDropdown.ts";
 import type { IUserMenu } from "@/interfaces/components/navbar/IUserMenu.ts";
 import type { IUserMenuData } from "@/interfaces/components/navbar/IUserMenuData.ts";
-import { redirectNative } from "@/utils/RedirectNative.ts";
 
 export const UserMenu = ({ data }: { data: IUserMenuData }) => {
 	const dropdownStyleConfig: IDropdownStyle = {
@@ -35,7 +35,7 @@ export const UserMenu = ({ data }: { data: IUserMenuData }) => {
 				<p className={"text-subtitle2"}>{data.email}</p>
 			</Dropdown.Item>
 			{data.menus.length > 0 &&
-				data.menus.map((menu,index) => (
+				data.menus.map((menu, index) => (
 					<Dropdown.Item key={index.toString()}>
 						<div onKeyDown={() => {}} onClick={() => handleMenuClick(menu.action)} className={"flex items-center gap-4"}>
 							<IconBox>{menu.icon}</IconBox>
