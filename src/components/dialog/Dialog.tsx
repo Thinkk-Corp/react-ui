@@ -25,7 +25,7 @@ const sizeSchema: Record<ISize, string> = {
  * @param {string} id - dialog bileşeninin benzersiz kimliği.
  * @param {boolean} isOpen - dialog'ın açık mı kapalı mı olduğunu belirten durum.
  * @param {ISize} size - dialog'ın boyutunu belirler (default: "md").
- * @param {boolean} onCloseToClickOutside - dialog dışına tıklanarak kapanıp kapanamayacağını belirler.
+ * @param {boolean} closeToClickOutside - dialog dışına tıklanarak kapanıp kapanamayacağını belirler.
  * @param {() => void} onOpened - dialog açıldığında çalışacak geri çağırma fonksiyonu.
  * @param {() => void} onClosed - dialog kapandığında çalışacak geri çağırma fonksiyonu.
  * @param type
@@ -37,13 +37,13 @@ export const Dialog = ({
 	id,
 	isOpen,
 	size = "md",
-	onCloseToClickOutside = true,
+	closeToClickOutside = true,
 	onOpened,
 	onClosed,
 	type = "modal",
 	children,
 }: IDialog): JSX.Element => {
-	const [status, setStatus] = useState<boolean>(false); // dialog'ın açılma durumu
+	const [status, setStatus] = useState<boolean>(isOpen ?? false);
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 	const [zIndex, setZIndex] = useState<number>(100);
 	const [isMdScreen, setIsMdScreen] = useState<boolean>(true);
@@ -56,28 +56,21 @@ export const Dialog = ({
 
 	// dialog'u açmak için fonksiyon
 	const handleDialogOpen = useCallback(() => {
+		if (status) return;
 		setStatus(true); // dialog'u aç
 		onOpened?.(); // Eğer onOpened fonksiyonu sağlanmışsa çalıştır
-	}, [onOpened]);
+	}, [onOpened, status]);
 
 	// dialog'u kapatmak için fonksiyon
 	const handleDialogClose = useCallback(() => {
+		if (!status) return;
 		setStatus(false); // dialog'u kapat
-		onClosed?.(); // Eğer onClosed fonksiyonu sağlanmışsa çalıştır
-	}, [onClosed]);
+	}, [status]);
 
 	// Modal açma/kapama durumunu togglemek için fonksiyon
 	const handleDialogToggle = useCallback(() => {
-		setStatus((prevStatus) => {
-			const newStatus = !prevStatus;
-			if (newStatus) {
-				onOpened?.(); // dialog açıldıysa onOpened fonksiyonunu çağır
-			} else {
-				onClosed?.(); // dialog kapandıysa onClosed fonksiyonunu çağır
-			}
-			return newStatus;
-		});
-	}, [onOpened, onClosed]);
+		setStatus((prev) => !prev);
+	}, []);
 
 	const modalAnimateProps = {
 		initial: { opacity: 0, scale: 0.9 },
@@ -96,7 +89,14 @@ export const Dialog = ({
 		if (isOpen !== undefined && isOpen !== status) {
 			setStatus(isOpen); // isOpen değeri değişirse dialog durumunu güncelle
 		}
-	}, [isOpen, status]);
+	}, [isOpen]);
+
+	useEffect(() => {
+		if (status) {
+			return onOpened?.();
+		}
+		onClosed?.();
+	}, [status]);
 
 	// Modal tetikleyicisi (dialog'u açmak için kullanılan buton)
 	useEffect(() => {
@@ -149,7 +149,7 @@ export const Dialog = ({
 
 	// Modal dışına tıklanarak kapanmasını sağlamak için dışarıdan tıklama dinleyicisi
 	useEffect(() => {
-		if (!isVisible || !onCloseToClickOutside || !dialogRef.current || !overlayRef.current) return;
+		if (!isVisible || !closeToClickOutside || !dialogRef.current || !overlayRef.current) return;
 
 		const dialog = dialogRef.current;
 		const overlay = overlayRef.current;
@@ -164,18 +164,11 @@ export const Dialog = ({
 		return () => {
 			window.removeEventListener("click", listener); // Temizleme
 		};
-	}, [onCloseToClickOutside, handleDialogClose, isVisible]);
+	}, [closeToClickOutside, handleDialogClose, isVisible]);
 
 	useEffect(() => {
-		// Modal kapandığında animasyonu tekrar başlat
-		if (!status) {
-			setTimeout(() => {
-				setIsVisible(false);
-			}, 300);
-			return;
-		}
 		setIsVisible(true);
-	}, [status]);
+	}, []);
 
 	useEffect(() => {
 		const handleScreenSize = () => {
@@ -186,13 +179,40 @@ export const Dialog = ({
 
 		window.addEventListener("resize", handleScreenSize);
 
-		if (!dialogRef.current) return;
-		const dialogs = document.querySelectorAll("#dialog");
-		const dialogIndex = Array.from(dialogs).findIndex((dialog) => dialog === dialogRef.current);
-		if (dialogIndex === 0) return;
-		setZIndex((prev) => prev + dialogIndex * 10);
+		// Dinamik zIndex hesaplayan fonksyon
+		const calculateZIndex = () => {
+			if (!dialogRef.current) return;
+
+			const dialogs = document.querySelectorAll("#dialog");
+			const dialogIndex = Array.from(dialogs).findIndex((dialog) => dialog === dialogRef.current);
+
+			// Avoid updating zIndex if this is the first dialog
+			if (dialogIndex === 0) return;
+
+			// Check the previous dialog zIndex if exists
+			const previousDialog = dialogs[dialogIndex - 1];
+			const prevZIndex = window.getComputedStyle(previousDialog).zIndex;
+
+			if (prevZIndex && !Number.isNaN(Number(prevZIndex))) {
+				setZIndex(Number(prevZIndex) + 1);
+			}
+		};
+
+		const config = { subtree: true, childList: true };
+
+		// Dialog elementi sonradan render edildiğinden dolayı mutation ile takip ediyoruz
+		const observerCallback = (mutations: MutationRecord[]) => {
+			for (const mutation of mutations) {
+				if (mutation.type !== "childList") continue; // sadece childList türündeki değişiklikleri işleyin
+				calculateZIndex();
+			}
+		};
+
+		const observer = new MutationObserver(observerCallback);
+		observer.observe(document.body, config);
 
 		return () => {
+			observer.disconnect();
 			window.removeEventListener("resize", handleScreenSize);
 		};
 	}, []);
@@ -203,30 +223,36 @@ export const Dialog = ({
 				createPortal(
 					<AnimatePresence>
 						{status && (
-							<div id="dialog-overlay" ref={overlayRef} style={{ zIndex }} className="fixed inset-0">
+							<div data-testid={"dialog-overlay"} ref={overlayRef} style={{ zIndex }} className="fixed inset-0">
 								<motion.div
+									data-testid={"dialog-backdrop"}
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 0.5 }}
 									exit={{ opacity: 0 }}
 									transition={{ duration: 0.3 }}
 									key={"backdrop"}
 									style={{ zIndex }}
-									id="backdrop"
 									className="absolute inset-0 bg-black"
+									onAnimationComplete={() => {
+										if (status) return;
+										setIsVisible(false);
+									}}
 								/>
 								<div
+									data-testid={"dialog-container"}
 									className={classNames("flex h-screen inset-0 absolute", {
 										"items-center justify-center": type === "modal",
 										"justify-end": type === "drawer",
 									})}
 								>
 									<motion.div
+										data-testid={"dialog"}
+										id={"dialog"}
 										{...(type === "modal" ? modalAnimateProps : drawerAnimateProps)}
 										transition={{ duration: 0.3 }}
 										key={"dialog"}
 										ref={dialogRef}
 										style={{ zIndex: zIndex + 1 }}
-										id="dialog"
 										className={classNames(
 											"bg-paper-level2 p-4 flex flex-col gap-8",
 											{ "rounded-lg": type === "modal" },
@@ -235,7 +261,7 @@ export const Dialog = ({
 									>
 										{Children.toArray(children).map((child) => {
 											if (isValidElement(child) && childList.includes((child as ReactElement).type as any)) {
-												return cloneElement(child as ReactElement, { setStatus, type });
+												return cloneElement(child as ReactElement, { handleDialogClose, type });
 											}
 											return null;
 										})}

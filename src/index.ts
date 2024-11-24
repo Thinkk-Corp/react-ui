@@ -11,6 +11,8 @@ export { Input } from "@/components/inputs/input/Input.tsx";
 export { Avatar } from "@/components/avatar/Avatar.tsx";
 export { IconBox } from "@/components/iconbox/IconBox.tsx";
 export { Dropdown } from "@/components/dropdown/Dropdown";
+export { DropdownTrigger } from "@/components/dropdown/DropdownTrigger.tsx";
+export { DropdownItem } from "@/components/dropdown/DropdownItem.tsx";
 export { Button } from "@/components/button/Button.tsx";
 export { SplitLayout } from "@/components/layouts/SplitLayout";
 export { Dialog } from "@/components/dialog/Dialog";

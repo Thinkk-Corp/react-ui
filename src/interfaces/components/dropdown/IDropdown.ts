@@ -15,8 +15,8 @@ export interface IDropdownStyle {
 export interface IDropdown {
 	children?: ReactNode;
 	isOpen?: boolean;
-	onCloseToClickOutside?: boolean;
-	onCloseToClickInside?: boolean;
+	closeToClickOutside?: boolean;
+	closeToClickInside?: boolean;
 	onOpened?: () => void;
 	onClosed?: () => void;
 	size?: ISize;
