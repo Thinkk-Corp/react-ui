@@ -1,11 +1,5 @@
-import type { ICustomStylesConfig } from "@/interfaces/components/dropdown/IDropdown.ts";
+import type { IDropdownItem } from "@/interfaces/components/dropdown/IDropdownItem";
 import classNames from "classnames";
-import type { ReactNode } from "react";
-
-export interface IDropdownItem {
-	children: ReactNode;
-	style?: ICustomStylesConfig;
-}
 
 export const DropdownItem = ({ style, children }: IDropdownItem) => {
 	return (

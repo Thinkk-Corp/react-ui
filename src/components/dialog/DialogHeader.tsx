@@ -1,12 +1,6 @@
 import { IconBox } from "@/components/iconbox/IconBox.tsx";
+import type { IDialogHeader } from "@/interfaces/components/dialog/IDialogHeader.ts";
 import { icons } from "@/plugins/Icons.tsx";
-import type { ReactNode } from "react";
-
-interface IDialogHeader {
-	handleDialogClose?: () => void;
-	children: ReactNode;
-	closeIcon?: ReactNode;
-}
 
 export const DialogHeader = ({ handleDialogClose, children, closeIcon = icons.outline.x }: IDialogHeader) => {
 	return (

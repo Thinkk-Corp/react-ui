@@ -5,6 +5,7 @@ import type { IDialog } from "@/interfaces/components/dialog/IDialog.ts";
 import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import { emitter } from "@/plugins/Mitt.tsx";
 import { mediaQueryUtil } from "@/utils/MediaQueryUtil.ts";
+import { createMutationObserver } from "@/utils/ObserverUtil.ts";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import { Children, type ReactElement, cloneElement, isValidElement, useCallback, useEffect, useRef, useState } from "react";
@@ -112,8 +113,6 @@ export const Dialog = ({
 
 		let detachListener = attachListener();
 
-		const config = { childList: true, subtree: true };
-
 		const callback = (mutationList: MutationRecord[]) => {
 			for (const mutation of mutationList) {
 				if (mutation.type === "childList") {
@@ -127,9 +126,9 @@ export const Dialog = ({
 			}
 		};
 
-		const observer = new MutationObserver(callback);
+		const { startObserving, disconnectObserver } = createMutationObserver({ callback });
 
-		observer.observe(document.body, config);
+		startObserving();
 
 		// Mitt üzerinden gelen event'ler ile dialog kontrolü
 		emitter.on("dialog.open", ({ id: emittedId }) => id === emittedId && handleDialogOpen());
@@ -138,7 +137,7 @@ export const Dialog = ({
 		emitter.on("dialog.close.all", handleDialogClose);
 
 		return () => {
-			observer.disconnect();
+			disconnectObserver();
 			if (detachListener) detachListener();
 			emitter.off("dialog.open", ({ id: emittedId }) => id === emittedId && handleDialogOpen());
 			emitter.off("dialog.close", ({ id: emittedId }) => id === emittedId && handleDialogClose());
@@ -198,21 +197,20 @@ export const Dialog = ({
 			}
 		};
 
-		const config = { subtree: true, childList: true };
-
 		// Dialog elementi sonradan render edildiğinden dolayı mutation ile takip ediyoruz
-		const observerCallback = (mutations: MutationRecord[]) => {
+		const callback = (mutations: MutationRecord[]) => {
 			for (const mutation of mutations) {
 				if (mutation.type !== "childList") continue; // sadece childList türündeki değişiklikleri işleyin
 				calculateZIndex();
 			}
 		};
 
-		const observer = new MutationObserver(observerCallback);
-		observer.observe(document.body, config);
+		const { startObserving, disconnectObserver } = createMutationObserver({ callback });
+
+		startObserving();
 
 		return () => {
-			observer.disconnect();
+			disconnectObserver();
 			window.removeEventListener("resize", handleScreenSize);
 		};
 	}, []);
@@ -254,9 +252,13 @@ export const Dialog = ({
 										ref={dialogRef}
 										style={{ zIndex: zIndex + 1 }}
 										className={classNames(
-											"bg-paper-level2 p-4 flex flex-col gap-8",
-											{ "rounded-lg": type === "modal" },
-											isMdScreen ? sizeSchema[size] : type === "modal" ? "w-full mx-4" : "w-full ",
+											"bg-paper-level2 overflow-hidden h-[90%] p-4 flex flex-col gap-8",
+											{
+												"rounded-lg": type === "modal",
+												"w-full mx-4": type === "modal" && !isMdScreen,
+												"w-full": type !== "modal" || isMdScreen,
+											},
+											isMdScreen && sizeSchema[size],
 										)}
 									>
 										{Children.toArray(children).map((child) => {
