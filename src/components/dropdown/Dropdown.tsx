@@ -5,13 +5,24 @@ import type { IPosition, ISize } from "@/interfaces/types/IMetrics.ts";
 import classNames from "classnames";
 import { Children, type ReactElement, cloneElement, isValidElement, useCallback, useEffect, useRef, useState } from "react";
 
+export const positionSchema: Record<IPosition, string> = {
+	top: "bottom-full mb-3 left-1/2 -translate-x-1/2",
+	bottom: "mt-2 left-1/2 -translate-x-1/2",
+	right: "ml-2 left-full top-1/2 -translate-y-1/2",
+	left: "mr-2 right-full top-1/2 -translate-y-1/2",
+	"top-right": "mb-3 bottom-full left-0",
+	"top-left": "mb-3 bottom-full right-0",
+	"bottom-right": "mt-2 left-0",
+	"bottom-left": "mt-2 right-0",
+};
+
 // Dropdown bileşeni
 export const Dropdown = ({
 	onOpened,
 	onClosed,
 	isOpen = false,
-	onCloseToClickOutside = true,
-	onCloseToClickInside = true,
+	closeToClickOutside = true,
+	closeToClickInside = true,
 	styles,
 	children,
 	size = "md",
@@ -20,17 +31,6 @@ export const Dropdown = ({
 	const [internalIsOpen, setInternalIsOpen] = useState(isOpen);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const triggerRef = useRef<HTMLDivElement>(null);
-
-	const positionSchema: Record<IPosition, string> = {
-		top: "bottom-full mb-3 left-1/2 -translate-x-1/2",
-		bottom: "mt-2 left-1/2 -translate-x-1/2",
-		right: "ml-2 left-full top-1/2 -translate-y-1/2",
-		left: "mr-2 right-full top-1/2 -translate-y-1/2",
-		"top-right": "mb-3 bottom-full left-0",
-		"top-left": "mb-3 bottom-full right-0",
-		"bottom-right": "mt-2 left-0",
-		"bottom-left": "mt-2 right-0",
-	};
 
 	const sizeSchema: Record<ISize, string> = {
 		sm: "w-32",
@@ -51,11 +51,11 @@ export const Dropdown = ({
 
 			const isClickOutside = !dropdownRef.current.contains(event.target as Node);
 
-			if ((onCloseToClickOutside && isClickOutside) || (onCloseToClickInside && !isClickOutside)) {
+			if ((closeToClickOutside && isClickOutside) || (closeToClickInside && !isClickOutside)) {
 				setInternalIsOpen(false);
 			}
 		},
-		[onCloseToClickOutside, onCloseToClickInside, internalIsOpen],
+		[closeToClickOutside, closeToClickInside, internalIsOpen],
 	);
 
 	useEffect(() => {
@@ -65,20 +65,24 @@ export const Dropdown = ({
 		} else {
 			onClosed?.();
 		}
-	}, [internalIsOpen, onOpened, onClosed]);
+	}, [internalIsOpen]);
 
 	useEffect(() => {
-		if (onCloseToClickOutside) {
+		if (closeToClickOutside) {
 			window.addEventListener("click", handleClick);
 		}
 
 		return () => {
 			window.removeEventListener("click", handleClick);
 		};
-	}, [handleClick, onCloseToClickOutside]);
+	}, [handleClick, closeToClickOutside]);
+
+	useEffect(() => {
+		setInternalIsOpen(isOpen); // Ensure internal state matches external prop
+	}, [isOpen]);
 
 	return (
-		<span className="relative" ref={dropdownRef}>
+		<span data-testid={"dropdown"} className="relative" ref={dropdownRef}>
 			{/* Dropdown tetikleyici (Trigger) kısmı */}
 			{Children.toArray(children).map((child) => {
 				// Sadece DropdownTrigger bileşenini render et
@@ -93,8 +97,9 @@ export const Dropdown = ({
 			{/* Eğer Dropdown açık ise, item'ları render et */}
 			{internalIsOpen && (
 				<div
+					data-testid={"dropdown-menu"}
 					className={classNames(
-						"absolute z-10",
+						"absolute",
 						{
 							"bg-paper-level2 divide-y divide-custom-divider rounded-lg border border-custom-divider shadow-lg":
 								typeof styles?.menu?.defaultStyleActive === "undefined" || styles?.menu?.defaultStyleActive === null
@@ -117,7 +122,3 @@ export const Dropdown = ({
 		</span>
 	);
 };
-
-// Dropdown bileşeninin alt bileşenleri (Trigger ve Item)
-Dropdown.Trigger = DropdownTrigger;
-Dropdown.Item = DropdownItem;

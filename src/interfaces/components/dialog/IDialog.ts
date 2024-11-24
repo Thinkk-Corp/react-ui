@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 export interface IDialog {
 	id: string;
 	size?: ISize;
-	onCloseToClickOutside?: boolean;
+	closeToClickOutside?: boolean;
 	children?: ReactNode;
 	type?: "modal" | "drawer";
 	isOpen?: boolean;

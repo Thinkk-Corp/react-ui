@@ -1,5 +1,5 @@
-import { IconBox } from "@/components/IconBox.tsx";
-import { Input } from "@/components/inputs/Input.tsx";
+import { IconBox } from "@/components/iconbox/IconBox.tsx";
+import { Input } from "@/components/inputs/input/Input.tsx";
 import { Notifications } from "@/components/navbar/Notifications.tsx";
 import { ThemeChanger } from "@/components/navbar/ThemeChanger.tsx";
 import { UserMenu } from "@/components/navbar/UserMenu.tsx";
@@ -25,16 +25,16 @@ export const Navbar = ({ extraComponents, isThemeSwitcherActive = true, userMenu
 				"border-b border-custom-divider": currentTheme === "dark",
 			})}
 		>
-			<IconBox isHoverable color={"text-color-primary"} onClick={handleMobileMenuTriggerClick} className={"block md:hidden "}>
+			<IconBox isHoverable color={"color-primary"} onClick={handleMobileMenuTriggerClick} className={"block md:hidden "}>
 				{icons.outline.bars_3}
 			</IconBox>
 			<div className={"hidden md:flex items-center gap-5 w-1/2"}>
 				<label htmlFor={"search-input"}>
-					<IconBox color={"text-color-primary"} isHoverable>
+					<IconBox color={"color-primary"} isHoverable>
 						{icons.outline.search}
 					</IconBox>
 				</label>
-				<Input id={"search-input"} placeholder={"Arama yap..."} />
+				<Input id={"search-input"} className={"w-full"} placeholder={"Arama yap..."} />
 			</div>
 			<div className={"flex items-center gap-2 md:gap-5 border-l border-custom-divider pl-4"}>
 				{isThemeSwitcherActive && <ThemeChanger />}

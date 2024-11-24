@@ -1,7 +1,7 @@
-import { IconBox } from "@/components/IconBox.tsx";
+import { redirectNative } from "@/actions/client/RedirectNative.ts";
+import { IconBox } from "@/components/iconbox/IconBox.tsx";
 import type { ISidebarMenuAction, ISidebarMenuItem } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
 import { useUIStore } from "@/stores/UIStore.ts";
-import { redirectNative } from "@/utils/RedirectNative.ts";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { useLocation } from "react-router-dom";
@@ -59,7 +59,14 @@ export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild
 					"data-[menu-active='false']:hover:bg-sidebar-item-hover",
 				)}
 			>
-				{menu.icon && <IconBox>{menu.icon}</IconBox>}
+				{menu.icon && (
+					<IconBox
+						color={"text-sidebar-item-color"}
+						className={"data-[menu-active='true']:text-sidebar-item-active-color hover:text-sidebar-item-active-color"}
+					>
+						{menu.icon}
+					</IconBox>
+				)}
 				<span
 					data-sidebar-collapsed={sidebarCollapsed.status}
 					className={classNames(

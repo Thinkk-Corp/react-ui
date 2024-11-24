@@ -26,8 +26,9 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
-  },
-  "include": ["src"],
+    },
+    "types": ["jest"]
+ },
+  "include": ["src", "./setupTests.ts"],
    "exclude": ["node_modules"]
 }

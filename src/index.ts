@@ -7,17 +7,22 @@ import "@/styles/index.css";
 export { DefaultLayout } from "@/components/layouts/DefaultLayout";
 export { Sidebar } from "@/components/sidebar/Sidebar";
 export { Navbar } from "@/components/navbar/Navbar";
-export { Input } from "@/components/inputs/Input";
-export { UnderlinedInput } from "@/components/inputs/UnderlinedInput";
-export { Avatar } from "@/components/Avatar";
-export { IconBox } from "@/components/IconBox";
+export { Input } from "@/components/inputs/input/Input.tsx";
+export { Avatar } from "@/components/avatar/Avatar.tsx";
+export { IconBox } from "@/components/iconbox/IconBox.tsx";
 export { Dropdown } from "@/components/dropdown/Dropdown";
-export { Button } from "@/components/Button";
+export { DropdownTrigger } from "@/components/dropdown/DropdownTrigger.tsx";
+export { DropdownItem } from "@/components/dropdown/DropdownItem.tsx";
+export { Button } from "@/components/button/Button.tsx";
 export { SplitLayout } from "@/components/layouts/SplitLayout";
-export { Dialog } from "@/components/overlays/dialog/Dialog";
-export { DialogAction } from "@/components/overlays/dialog/DialogAction";
-export { DialogBody } from "@/components/overlays/dialog/DialogBody";
-export { DialogHeader } from "@/components/overlays/dialog/DialogHeader";
+export { Dialog } from "@/components/dialog/Dialog";
+export { DialogAction } from "@/components/dialog/DialogAction";
+export { DialogBody } from "@/components/dialog/DialogBody";
+export { DialogHeader } from "@/components/dialog/DialogHeader";
+export { Radiobox } from "@/components/inputs/radiobox/Radiobox.tsx";
+export { Checkbox } from "@/components/inputs/checkbox/Checkbox.tsx";
+export { Toggle } from "@/components/inputs/toggle/Toggle.tsx";
+export { Select } from "@/components/inputs/select/Select.tsx";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
@@ -26,7 +31,7 @@ export type { IDropdownStyle } from "@/interfaces/components/dropdown/IDropdown"
 export type { ISize, IRounded } from "@/interfaces/types/IMetrics.ts";
 
 // Utils
-export { redirectNative } from "@/utils/RedirectNative.ts";
+export { redirectNative } from "@/actions/client/RedirectNative.ts";
 export { generateId } from "@/utils/GenerateId.ts";
 export { shouldBypass } from "@/utils/ShouldBypass.ts";
 

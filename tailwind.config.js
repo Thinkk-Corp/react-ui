@@ -1,29 +1,80 @@
 import { screens } from "./src/styles/tailwind/Screens.ts";
 import { shadow } from "./src/styles/tailwind/Shadow.ts";
 import { action } from "./src/styles/tailwind/colors/Action.ts";
+import { blue } from "./src/styles/tailwind/colors/Blue.ts";
 import { color } from "./src/styles/tailwind/colors/Color.ts";
+import { common } from "./src/styles/tailwind/colors/Common.ts";
 import { custom } from "./src/styles/tailwind/colors/Custom.ts";
 import { error } from "./src/styles/tailwind/colors/Error.ts";
+import { green } from "./src/styles/tailwind/colors/Green.ts";
+import { grey } from "./src/styles/tailwind/colors/Grey.ts";
 import { info } from "./src/styles/tailwind/colors/Info.ts";
+import { overlays } from "./src/styles/tailwind/colors/Overlays.ts";
 import { paper } from "./src/styles/tailwind/colors/Paper.ts";
 import { primary } from "./src/styles/tailwind/colors/Primary.ts";
+import { red } from "./src/styles/tailwind/colors/Red.ts";
+import { royalBlue } from "./src/styles/tailwind/colors/RoyalBlue.ts";
 import { secondary } from "./src/styles/tailwind/colors/Secondary.ts";
 import { sidebar } from "./src/styles/tailwind/colors/Sidebar.ts";
+import { slate } from "./src/styles/tailwind/colors/Slate.ts";
 import { success } from "./src/styles/tailwind/colors/Success.ts";
 import { warning } from "./src/styles/tailwind/colors/Warning.ts";
+import { yellow } from "./src/styles/tailwind/colors/Yellow.ts";
+
+const colors = {
+	action,
+	blue,
+	color,
+	common,
+	custom,
+	error,
+	green,
+	grey,
+	info,
+	overlays,
+	paper,
+	primary,
+	red,
+	royalBlue,
+	secondary,
+	sidebar,
+	slate,
+	success,
+	warning,
+	yellow,
+};
+
+let textRegExp = "text-(";
+let bgRegExp = "bg-(";
+let borderRegExp = "border-(";
+
+for (const [key, value] of Object.entries(colors)) {
+	const subKeysPattern = Object.keys(value).join("|");
+	textRegExp += `${key}-(${subKeysPattern})|`;
+	bgRegExp += `${key}-(${subKeysPattern})|`;
+	borderRegExp += `${key}-(${subKeysPattern})|`;
+}
+
+textRegExp = `${textRegExp.slice(0, -1)})`;
+bgRegExp = `${bgRegExp.slice(0, -1)})`;
+borderRegExp = `${borderRegExp.slice(0, -1)})`;
+
+const colorRegex = new RegExp(textRegExp);
+const backgroundRegex = new RegExp(bgRegExp);
+const borderRegex = new RegExp(borderRegExp);
 
 export default {
-	content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
+	content: ["./index.html", "./src/**/*.{ts,tsx,ts,tsx}"],
 	darkMode: ["class", '[data-mode="dark"]'],
 	safelist: [
 		{
-			pattern: /bg-(primary|secondary|info|error|warning|success)-(main|light|dark)/,
+			pattern: backgroundRegex,
 		},
 		{
-			pattern: /text-(primary|secondary|info|error|warning|success)-(main|light|dark)/,
+			pattern: colorRegex,
 		},
 		{
-			pattern: /border-(primary|secondary|info|error|warning|success)-(main|light|dark)/,
+			pattern: borderRegex,
 		},
 		{
 			pattern: /w-(\d+\/\d+|full|screen|auto)/,
@@ -83,22 +134,14 @@ export default {
 				sans: ["Inter", "Helvetica", "sans-serif"],
 			},
 			screens,
-			colors: {
-				action,
-				color,
-				custom,
-				error,
-				info,
-				paper,
-				primary,
-				secondary,
-				success,
-				warning,
-				sidebar,
-			},
+			colors,
 			shadow,
 			textColor: {
 				DEFAULT: "var(--primary)",
+			},
+			zIndex: {
+				60: 60,
+				70: 70,
 			},
 			fontSize: {
 				h1: "2.25rem", // 36px

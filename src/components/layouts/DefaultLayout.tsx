@@ -22,7 +22,7 @@ export const DefaultLayout = ({ sidebar, navbar }: IDefaultLayout): JSX.Element 
 			<div
 				data-sidebar-collapsed={sidebarCollapsed.status}
 				className={classNames(
-					"fixed top-0 overflow-hidden left-0 z-50 h-full duration-300 transition-all",
+					"fixed top-0 overflow-hidden left-0 z-60 h-full duration-300 transition-all",
 					"data-[sidebar-collapsed='true']:-translate-x-full",
 					"data-[sidebar-collapsed='true']:md:translate-x-0",
 					"data-[sidebar-collapsed='false']:md:translate-x-0",
@@ -46,7 +46,7 @@ export const DefaultLayout = ({ sidebar, navbar }: IDefaultLayout): JSX.Element 
 				<div
 					data-sidebar-collapsed={sidebarCollapsed.status}
 					className={classNames(
-						"fixed top-0 left-0 duration-300 transition-all right-0 h-16",
+						"fixed top-0 left-0 z-50 duration-300 transition-all right-0 h-16",
 						"data-[sidebar-collapsed='false']:md:left-72",
 						"data-[sidebar-collapsed='true']:md:left-[4.5rem]",
 					)}

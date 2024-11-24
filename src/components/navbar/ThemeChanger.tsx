@@ -1,4 +1,4 @@
-import { IconBox } from "@/components/IconBox.tsx";
+import { IconBox } from "@/components/iconbox/IconBox.tsx";
 import { icons } from "@/plugins/Icons.tsx";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
 
@@ -11,7 +11,7 @@ export const ThemeChanger = () => {
 	};
 
 	return (
-		<IconBox color={"text-color-primary"} isHoverable onClick={handleThemeChange}>
+		<IconBox color={"color-primary"} isHoverable onClick={handleThemeChange}>
 			{currentTheme === "light" ? icons.outline.sun : icons.outline.moon}
 		</IconBox>
 	);

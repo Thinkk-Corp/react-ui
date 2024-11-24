@@ -3,7 +3,14 @@ import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import classNames from "classnames";
 
 // IconBox bileşeni
-export const IconBox = ({ isHoverable = false, size = "md", color, className, children, ...props }: IIconBox) => {
+export const IconBox = ({
+	isHoverable = false,
+	size = "md",
+	color = "color-primary",
+	className,
+	children,
+	...props
+}: IIconBox) => {
 	// Tailwind CSS genişlik ve yükseklik değerleri için boyut haritası
 	const sizeMap: Record<ISize, string> = {
 		sm: "w-4 h-4", // Küçük boyut
@@ -18,18 +25,21 @@ export const IconBox = ({ isHoverable = false, size = "md", color, className, ch
 
 	return (
 		<div
+			data-testid={"icon-box-container"}
 			className={classNames(
 				"flex items-center justify-center rounded-lg w-max h-max cursor-pointer ", // Temel stil sınıfları
 				{
 					"transition-transform transform hover:bg-action-hover p-2": isHoverable, // Hover efekti
 				},
-				color,
+				`text-${color}`,
 				className, // Ek kullanıcı sınıfları
 			)}
 			{...props}
 		>
 			{/* İkon buraya yerleştirilebilir */}
-			<span className={iconSize}>{children}</span>
+			<span data-testid={"icon-box-child"} className={iconSize}>
+				{children}
+			</span>
 		</div>
 	);
 };
