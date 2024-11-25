@@ -14,7 +14,7 @@ export { Dropdown } from "@/components/dropdown/Dropdown";
 export { DropdownTrigger } from "@/components/dropdown/DropdownTrigger.tsx";
 export { DropdownItem } from "@/components/dropdown/DropdownItem.tsx";
 export { Button } from "@/components/button/Button.tsx";
-export { SplitLayout } from "@/components/layouts/SplitLayout";
+export { SplitLayout } from "@/components/layouts/split-layout/SplitLayout.tsx";
 export { Dialog } from "@/components/dialog/Dialog";
 export { DialogAction } from "@/components/dialog/DialogAction";
 export { DialogBody } from "@/components/dialog/DialogBody";
