@@ -18,7 +18,7 @@
  * console.log(shouldBypass(paths, "/user/123")); // true
  * console.log(shouldBypass(paths, "/about")); // false
  */
-export function shouldBypass(byPassList: string[], url: string) {
+export function shouldBypass(byPassList: string[], url: string): boolean {
 	let urlPath: string;
 	try {
 		// URL'yi geçerli bir formatta olup olmadığını kontrol et

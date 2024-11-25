@@ -1,4 +1,4 @@
-import { Toggle } from "@/components/inputs/toggle/Toggle"; // Adjust the import path accordingly
+import { Toggle } from "@/components/form/inputs/toggle/Toggle.tsx"; // Adjust the import path accordingly
 import { fireEvent, render, screen } from "@testing-library/react";
 import { vi } from "vitest";
 

@@ -1,4 +1,4 @@
-import { Select } from "@/components/inputs/select/Select"; // Adjust the import path as necessary
+import { Select } from "@/components/form/inputs/select/Select.tsx"; // Adjust the import path as necessary
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
 

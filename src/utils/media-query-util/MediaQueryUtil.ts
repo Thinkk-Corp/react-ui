@@ -48,6 +48,8 @@ export const mediaQueryUtil = (media: ISize | ISize[]): Record<ISize, boolean> |
 		);
 	}
 
+	if (typeof media === "undefined" || media === null) return null;
+
 	// Eğer 'media' tek bir öğe ise, ekran genişliği ile bu öğeyi karşılaştır
 	return currentScreenWidth >= screensValues[media]; // Ekran genişliği verilen boyutu geçiyorsa true döndür
 };

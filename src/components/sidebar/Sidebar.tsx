@@ -2,7 +2,7 @@ import { SidebarMenus } from "@/components/sidebar/SidebarMenus.tsx";
 import type { ISidebar } from "@/interfaces/components/sidebar/ISidebar.ts";
 import { icons } from "@/plugins/Icons.tsx";
 import { useUIStore } from "@/stores/UIStore.ts";
-import { mediaQueryUtil } from "@/utils/MediaQueryUtil.ts";
+import { mediaQueryUtil } from "@/utils/media-query-util/MediaQueryUtil.ts";
 import classNames from "classnames";
 import { useCallback, useEffect, useState } from "react";
 
@@ -78,6 +78,7 @@ export const Sidebar = ({ logo, collapsedLogo, menus }: ISidebar) => {
 
 	return (
 		<div
+			data-testid={"sidebar"}
 			className="flex h-screen flex-col justify-between border-e border-sidebar-border bg-sidebar-default"
 			onMouseEnter={() => handleSidebarHover(true)}
 			onMouseLeave={() => handleSidebarHover(false)}

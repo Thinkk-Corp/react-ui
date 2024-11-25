@@ -4,8 +4,8 @@ import { DialogHeader } from "@/components/dialog/DialogHeader.tsx";
 import type { IDialog } from "@/interfaces/components/dialog/IDialog.ts";
 import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import { emitter } from "@/plugins/Mitt.tsx";
-import { mediaQueryUtil } from "@/utils/MediaQueryUtil.ts";
-import { createMutationObserver } from "@/utils/ObserverUtil.ts";
+import { mediaQueryUtil } from "@/utils/media-query-util/MediaQueryUtil.ts";
+import { createMutationObserver } from "@/utils/observer-util/ObserverUtil.ts";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import { Children, type ReactElement, cloneElement, isValidElement, useCallback, useEffect, useRef, useState } from "react";
@@ -263,7 +263,7 @@ export const Dialog = ({
 									>
 										{Children.toArray(children).map((child) => {
 											if (isValidElement(child) && childList.includes((child as ReactElement).type as any)) {
-												return cloneElement(child as ReactElement, { handleDialogClose, type });
+												return cloneElement(child as ReactElement, { handleDialogClose });
 											}
 											return null;
 										})}

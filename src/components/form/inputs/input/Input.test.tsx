@@ -1,4 +1,4 @@
-import { Input } from "@/components/inputs/input/Input.tsx";
+import { Input } from "@/components/form/inputs/input/Input.tsx";
 import type { IIconBox } from "@/interfaces/components/IIconBox.ts";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { vi } from "vitest";

@@ -1,4 +1,4 @@
-import type { ISizeSchema } from "@/components/inputs/toggle/Toggle.tsx";
+import type { ISizeSchema } from "@/components/form/inputs/toggle/Toggle.tsx";
 import type { IInput } from "@/interfaces/components/inputs/IInput.ts";
 import classNames from "classnames";
 import type { FC } from "react";

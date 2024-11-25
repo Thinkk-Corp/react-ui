@@ -11,21 +11,20 @@ export const createMutationObserver = ({
 
 	// Observer başlatma fonksiyonu
 	const startObserving = () => {
-		// Eğer observer yoksa yeni bir instance oluşturuyoruz
-		if (!observer) {
-			observer = new MutationObserver(callback);
-		}
+		// Eğer observer zaten varsa, yeni bir tane başlatma
+		if (observer || typeof callback !== "function") return;
 
+		// Observer'ı oluştur
+		observer = new MutationObserver(callback);
 		// Observer'ı hedef üzerinde gözlemlemeye başlatıyoruz
 		observer.observe(target, config);
 	};
 
 	// Observer'ı durdurma fonksiyonu
 	const disconnectObserver = () => {
-		if (observer) {
-			observer.disconnect();
-			observer = null; // Observer'ı sıfırlıyoruz
-		}
+		if (!observer) return;
+		observer.disconnect();
+		observer = null;
 	};
 
 	// Observer'ı yeniden başlatma fonksiyonu

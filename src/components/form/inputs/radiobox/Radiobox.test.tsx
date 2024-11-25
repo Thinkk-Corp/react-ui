@@ -1,4 +1,4 @@
-import { Radiobox } from "@/components/inputs/radiobox/Radiobox.tsx";
+import { Radiobox } from "@/components/form/inputs/radiobox/Radiobox.tsx";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 

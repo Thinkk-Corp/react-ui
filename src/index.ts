@@ -4,10 +4,10 @@ export { Root } from "@/Root";
 import "@/styles/index.css";
 
 // Components
-export { DefaultLayout } from "@/components/layouts/DefaultLayout";
+export { DefaultLayout } from "@/components/layouts/default-layout/DefaultLayout.tsx";
 export { Sidebar } from "@/components/sidebar/Sidebar";
 export { Navbar } from "@/components/navbar/Navbar";
-export { Input } from "@/components/inputs/input/Input.tsx";
+export { Input } from "@/components/form/inputs/input/Input.tsx";
 export { Avatar } from "@/components/avatar/Avatar.tsx";
 export { IconBox } from "@/components/iconbox/IconBox.tsx";
 export { Dropdown } from "@/components/dropdown/Dropdown";
@@ -19,10 +19,10 @@ export { Dialog } from "@/components/dialog/Dialog";
 export { DialogAction } from "@/components/dialog/DialogAction";
 export { DialogBody } from "@/components/dialog/DialogBody";
 export { DialogHeader } from "@/components/dialog/DialogHeader";
-export { Radiobox } from "@/components/inputs/radiobox/Radiobox.tsx";
-export { Checkbox } from "@/components/inputs/checkbox/Checkbox.tsx";
-export { Toggle } from "@/components/inputs/toggle/Toggle.tsx";
-export { Select } from "@/components/inputs/select/Select.tsx";
+export { Radiobox } from "@/components/form/inputs/radiobox/Radiobox.tsx";
+export { Checkbox } from "@/components/form/inputs/checkbox/Checkbox.tsx";
+export { Toggle } from "@/components/form/inputs/toggle/Toggle.tsx";
+export { Select } from "@/components/form/inputs/select/Select.tsx";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
@@ -33,7 +33,7 @@ export type { ISize, IRounded } from "@/interfaces/types/IMetrics.ts";
 // Utils
 export { redirectNative } from "@/actions/client/RedirectNative.ts";
 export { generateId } from "@/utils/GenerateId.ts";
-export { shouldBypass } from "@/utils/ShouldBypass.ts";
+export { shouldBypass } from "@/utils/should-bypass/ShouldBypass.ts";
 
 // Plugins
 export { icons } from "@/plugins/Icons";

@@ -1,4 +1,4 @@
-import { Checkbox } from "@/components/inputs/checkbox/Checkbox.tsx";
+import { Checkbox } from "@/components/form/inputs/checkbox/Checkbox.tsx";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { render } from "@testing-library/react";
 import { describe, it, vi } from "vitest";
