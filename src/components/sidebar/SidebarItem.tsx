@@ -33,12 +33,13 @@ export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild
 
 	return (
 		<li
-			data-sidebar-collapsed={sidebarCollapsed.status}
+			data-testid={"sidebar-item-container"}
 			className="flex items-center gap-2"
 			onKeyDown={() => {}}
 			onClick={() => handleMenuClick(menu.action)}
 		>
 			<div
+				data-testid={"sidebar-item-child-dot"}
 				data-is-child={isChild}
 				data-menu-active={isActivatedMenuItem}
 				className={classNames(
@@ -47,6 +48,7 @@ export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild
 				)}
 			/>
 			<div
+				data-testid={"sidebar-item"}
 				data-menu-active={isActivatedMenuItem}
 				data-is-child={isChild}
 				data-sidebar-collapsed={sidebarCollapsed.status}
@@ -61,6 +63,7 @@ export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild
 			>
 				{menu.icon && (
 					<IconBox
+						data-testid={"sidebar-item-icon"}
 						color={"text-sidebar-item-color"}
 						className={"data-[menu-active='true']:text-sidebar-item-active-color hover:text-sidebar-item-active-color"}
 					>
@@ -68,6 +71,7 @@ export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild
 					</IconBox>
 				)}
 				<span
+					data-testid={"sidebar-item-text"}
 					data-sidebar-collapsed={sidebarCollapsed.status}
 					className={classNames(
 						"text-nowrap truncate leading-5 text-body2 opacity-100",

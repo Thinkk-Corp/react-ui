@@ -21,7 +21,7 @@ export default defineConfig({
 		rollupOptions: {
 			external: [...Object.keys(peerDependencies)], // Defines external dependencies for Rollup bundling.
 		},
-		sourcemap: true, // Generates source maps for debugging.
+		sourcemap: false, // Generates source maps for debugging.
 		emptyOutDir: true,
 	},
 
@@ -29,9 +29,6 @@ export default defineConfig({
 		alias: {
 			"@": path.resolve(__dirname, "./src"),
 		},
-	},
-	server: {
-		port: 3000,
 	},
 	plugins: [
 		react({

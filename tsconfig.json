@@ -1,24 +1,25 @@
 {
  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "typeRoots": ["./node_modules/@types", "./@types"],
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "target": "ES2020",
     "declaration": true, // TypeScript'in d.ts dosyaları oluşturmasını sağlar.
     "emitDeclarationOnly": true, // Sadece d.ts dosyalarını oluşturur, JavaScript dosyaları oluşturmaz.
     "outDir": "dist", // Çıktı dizini.
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "moduleResolution": "bundler",
+    "lib": ["ES6", "DOM", "DOM.Iterable"],
+    "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
     "moduleDetection": "force",
-    "sourceMap": true,
+    "sourceMap": false,
     "jsx": "react-jsx",
     "strict": true,
     "noUnusedLocals": true,
@@ -27,8 +28,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["jest"]
  },
-  "include": ["src", "./setupTests.ts"],
+   "include": ["src/**/*.ts"],
    "exclude": ["node_modules"]
 }
