@@ -1,10 +1,9 @@
 import { Select } from "@/components/form/inputs/select/Select.tsx"; // Adjust the import path as necessary
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { vi } from "vitest";
 
 // Mocking the server call (getOptionsAction)
-vi.mock("@/actions/server/GetOptionsAction.ts", () => ({
-	getOptionsAction: vi.fn(),
+jest.mock("@/actions/server/GetOptionsAction.ts", () => ({
+	getOptionsAction: jest.fn(),
 }));
 
 describe("Select Component", () => {
@@ -16,9 +15,9 @@ describe("Select Component", () => {
 		endpoint: "",
 		className: "test-class",
 		isInvalid: false,
-		onChange: vi.fn(),
-		onClick: vi.fn(),
-		onBlur: vi.fn(),
+		onChange: jest.fn(),
+		onClick: jest.fn(),
+		onBlur: jest.fn(),
 		isSearchable: false,
 	};
 

@@ -1,11 +1,10 @@
 import { Input } from "@/components/form/inputs/input/Input.tsx";
 import type { IIconBox } from "@/interfaces/components/IIconBox.ts";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { vi } from "vitest";
 
 // Mock IconBox component
 // `IconBox` bileşeni testlerde gerçek bir bağımlılık olmadan kullanılabilmesi için mocklanmıştır.
-vi.mock("@/components/IconBox.tsx", () => ({
+jest.mock("@/components/iconbox/IconBox.tsx", () => ({
 	IconBox: ({ children, ...props }: IIconBox) => <div {...props}>{children}</div>,
 }));
 
@@ -26,7 +25,7 @@ describe("Input Component", () => {
 
 	it("calls onChange when value changes", () => {
 		// Kullanıcı girdiği değeri değiştirdiğinde, `onChange` fonksiyonunun çağrıldığı kontrol edilir.
-		const mockOnChange = vi.fn(); // `onChange` için bir mock fonksiyon oluşturulur.
+		const mockOnChange = jest.fn(); // `onChange` için bir mock fonksiyon oluşturulur.
 		render(<Input value="" onChange={mockOnChange} placeholder="Test input" />);
 		const inputElement = screen.getByTestId("input");
 		fireEvent.change(inputElement, { target: { value: "New value" } });

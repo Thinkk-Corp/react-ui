@@ -1,7 +1,7 @@
 import { redirectNative } from "@/actions/client/RedirectNative.ts";
 import { IconBox } from "@/components/iconbox/IconBox.tsx";
 import type { ISidebarMenuAction, ISidebarMenuItem } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
-import { useUIStore } from "@/stores/UIStore.ts";
+import { useUIStore } from "@/stores/ui-store/UIStore.ts";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { useLocation } from "react-router-dom";

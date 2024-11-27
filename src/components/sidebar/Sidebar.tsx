@@ -1,7 +1,7 @@
 import { SidebarMenus } from "@/components/sidebar/SidebarMenus.tsx";
 import type { ISidebar } from "@/interfaces/components/sidebar/ISidebar.ts";
 import { icons } from "@/plugins/Icons.tsx";
-import { useUIStore } from "@/stores/UIStore.ts";
+import { useUIStore } from "@/stores/ui-store/UIStore.ts";
 import { mediaQueryUtil } from "@/utils/media-query-util/MediaQueryUtil.ts";
 import classNames from "classnames";
 import { useCallback, useEffect, useState } from "react";

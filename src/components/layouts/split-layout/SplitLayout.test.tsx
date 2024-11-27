@@ -1,13 +1,14 @@
 import { SplitLayout } from "@/components/layouts/split-layout/SplitLayout.tsx";
-import { useThemeStore } from "@/stores/ThemeStore";
-import { render, screen, waitFor } from "@testing-library/react";
-import { describe, it } from "vitest";
+import { useThemeStore } from "@/stores/ThemeStore.ts";
+import { act, render, screen, waitFor } from "@testing-library/react";
+
+const toggleTheme = useThemeStore.getState().toggleTheme;
 
 describe("SplitLayout", () => {
-	const toggleTheme = useThemeStore.getState().toggleTheme;
-
 	it("renders correctly with light theme", () => {
-		toggleTheme();
+		act(() => {
+			toggleTheme();
+		});
 
 		render(<SplitLayout image="image.jpg" title="Test Title" subtitle="Test Subtitle" />);
 
@@ -39,7 +40,9 @@ describe("SplitLayout", () => {
 		expect(screen.getByTestId("split-layout")).toHaveClass("bg-split-layout-light");
 
 		// Tema değişimini simüle et
-		toggleTheme();
+		act(() => {
+			toggleTheme();
+		});
 
 		// Tema değişiminden sonra karanlık temayı bekle
 		await waitFor(() => expect(screen.getByTestId("split-layout")).toHaveClass("bg-split-layout-dark"));

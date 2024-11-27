@@ -3,7 +3,6 @@ import { DropdownItem } from "@/components/dropdown/DropdownItem.tsx";
 import { DropdownTrigger } from "@/components/dropdown/DropdownTrigger.tsx";
 import type { IDropdownStyle } from "@/interfaces/components/dropdown/IDropdown.ts";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
 
 describe("Dropdown Component", () => {
 	// Test 1: isOpen true olduğunda dropdown'ın, tetikleyici ve öğeler ile doğru şekilde render edilip edilmediğini kontrol et
@@ -47,8 +46,8 @@ describe("Dropdown Component", () => {
 
 	// Test 3: Dropdown'ı tıkladığında açılıp kapanmasını ve uygun olay işleyicilerinin çağrıldığını test et
 	it("should toggle the dropdown and call the appropriate events on click", async () => {
-		const mockOnOpened = vi.fn();
-		const mockOnClosed = vi.fn();
+		const mockOnOpened = jest.fn();
+		const mockOnClosed = jest.fn();
 
 		render(
 			<Dropdown onClosed={mockOnClosed} onOpened={mockOnOpened}>

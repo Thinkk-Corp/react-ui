@@ -1,14 +1,13 @@
 import { createMutationObserver } from "@/utils/observer-util/ObserverUtil.ts"; // uygun yolu belirtin
 import { waitFor } from "@testing-library/react";
-import { type Mock, describe, expect, it, vi } from "vitest";
 
 describe("createMutationObserver", () => {
-	let mockCallback: Mock;
+	let mockCallback: jest.Mock;
 	let observer: ReturnType<typeof createMutationObserver>;
 
 	beforeEach(() => {
 		// Mock callback fonksiyonu oluşturalım
-		mockCallback = vi.fn();
+		mockCallback = jest.fn();
 		// Observer'ı başlatalım
 		observer = createMutationObserver({
 			target: document.body,
@@ -47,7 +46,7 @@ describe("createMutationObserver", () => {
 
 	it("should not create a new observer if one already exists", () => {
 		observer.startObserving();
-		const observerSpy = vi.spyOn(observer, "startObserving"); // Observer'ı tekrar başlatmayı izle
+		const observerSpy = jest.spyOn(observer, "startObserving"); // Observer'ı tekrar başlatmayı izle
 		observer.startObserving(); // Aynı observer'ı yeniden başlatmayı dene
 		expect(observerSpy).toHaveBeenCalledTimes(1); // Observer sadece bir kez başlatılmalı
 	});

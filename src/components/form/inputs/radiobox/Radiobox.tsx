@@ -11,6 +11,8 @@ import classNames from "classnames";
  * @param {string} [props.color="primary-main"] - Radiobox seçili durumunda uygulanacak renk (Tailwind renk sınıfları ile uyumlu).
  * @param checked
  * @param {string} props.name - Radiobox'un `name` özelliği (aynı gruptaki radioboxlar için aynı olmalıdır).
+ * @param readOnly
+ * @param onChange
  * @param {ISize} [props.size="md"] - Radiobox boyutu (`sm`, `md`, `lg`, `xl`, `2xl`).
  * @param {string} [props.className] - Ekstra Tailwind sınıfları eklemek için kullanılır.
  * @param {React.InputHTMLAttributes<HTMLInputElement>} props - HTML input elementine ait diğer özellikler.
@@ -22,6 +24,8 @@ export const Radiobox = ({
 	color = "primary-main",
 	checked = false,
 	name,
+	readOnly,
+	onChange,
 	size = "md",
 	className,
 	...props
@@ -39,6 +43,8 @@ export const Radiobox = ({
 			type="radio"
 			name={name}
 			checked={checked}
+			readOnly={readOnly}
+			onChange={onChange}
 			{...props}
 			className={classNames(
 				"appearance-none border rounded-full border-custom-divider",

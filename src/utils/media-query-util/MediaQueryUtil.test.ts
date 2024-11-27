@@ -1,5 +1,4 @@
 import { extractNumberFromString, mediaQueryUtil } from "@/utils/media-query-util/MediaQueryUtil.ts"; // adjust the import path
-import { describe, expect, it, vi } from "vitest";
 
 const innerWidthDefine = (value: number) =>
 	Object.defineProperty(window, "innerWidth", {
@@ -9,7 +8,7 @@ const innerWidthDefine = (value: number) =>
 	});
 
 // Mock the screens object from the style file
-vi.mock("@/styles/tailwind/Screens.ts", () => ({
+jest.mock("@/styles/tailwind/Screens.ts", () => ({
 	screens: {
 		sm: "640px",
 		md: "768px",

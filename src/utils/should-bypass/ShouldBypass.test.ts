@@ -1,5 +1,4 @@
 import { shouldBypass } from "@/utils/should-bypass/ShouldBypass.ts"; // uygun yolu belirtin
-import { describe, expect, it } from "vitest";
 
 describe("shouldBypass", () => {
 	it("should return true when the URL matches exactly with a path", () => {

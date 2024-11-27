@@ -1,7 +1,6 @@
 import { DropdownItem } from "@/components/dropdown/DropdownItem";
 import type { ICustomStylesConfig } from "@/interfaces/components/dropdown/IDropdown";
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
 
 describe("DropdownItem Bileşeni", () => {
 	// Test 1: DropdownItem bileşeninin doğru sınıflarla render edilmesi

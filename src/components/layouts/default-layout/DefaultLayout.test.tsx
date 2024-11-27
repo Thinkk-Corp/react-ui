@@ -1,26 +1,26 @@
 import { DefaultLayout } from "@/components/layouts/default-layout/DefaultLayout.tsx";
-import { useUIStore } from "@/stores/UIStore.ts";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, vi } from "vitest";
+import { useUIStore } from "@/stores/ui-store/UIStore.ts";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 
-vi.mock("react-router-dom", () => ({
-	...vi.importActual("react-router-dom"),
+jest.mock("react-router-dom", () => ({
+	...jest.requireActual("react-router-dom"),
 	Outlet: () => <div data-testid="outlet" />,
 }));
 
 const setSidebarCollapsed = useUIStore.getState().setSidebarCollapsed;
 const sidebarCollapsed = useUIStore.getState().sidebarCollapsed;
 
+const MockNavbar = () => <div data-testid="navbar">Mock Navbar</div>;
+
 const MockSidebar = () => (
 	<div
 		data-testid="sidebar"
-		onMouseLeave={() => setSidebarCollapsed({ ...sidebarCollapsed, status: true })}
-		onMouseEnter={() => setSidebarCollapsed({ ...sidebarCollapsed, status: false })}
+		onMouseLeave={() => act(() => setSidebarCollapsed({ ...sidebarCollapsed, status: true }))}
+		onMouseEnter={() => act(() => setSidebarCollapsed({ ...sidebarCollapsed, status: false }))}
 	>
 		Mock Sidebar
 	</div>
 );
-const MockNavbar = () => <div data-testid="navbar">Mock Navbar</div>;
 
 describe("DefaultLayout", () => {
 	it("should render correctly", () => {
@@ -36,7 +36,10 @@ describe("DefaultLayout", () => {
 	it("should hover over to collapse", () => {
 		render(<DefaultLayout sidebar={<MockSidebar />} navbar={<MockNavbar />} />);
 
-		setSidebarCollapsed({ isLocked: false, status: true });
+		// Act: wrap state updates inside act()
+		act(() => {
+			setSidebarCollapsed({ isLocked: false, status: true });
+		});
 
 		const sidebar = screen.getByTestId("sidebar");
 		const sidebarSection = screen.getByTestId("sidebar-section");

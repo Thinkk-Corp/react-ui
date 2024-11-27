@@ -1,10 +1,9 @@
 import { Radiobox } from "@/components/form/inputs/radiobox/Radiobox.tsx";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
 
 describe("Radiobox Component", () => {
 	it("renders with default props", () => {
-		render(<Radiobox name="test-radio" />);
+		render(<Radiobox readOnly checked name="test-radio" />);
 
 		// input elemanını seç
 		const radiobox = screen.getByTestId("radiobox");
@@ -16,7 +15,7 @@ describe("Radiobox Component", () => {
 	});
 
 	it("applies the correct color when the 'color' prop is passed", () => {
-		render(<Radiobox name="test-radio" color="primary-main" />);
+		render(<Radiobox readOnly checked name="test-radio" color="primary-main" />);
 
 		const radiobox = screen.getByTestId("radiobox");
 
@@ -25,7 +24,7 @@ describe("Radiobox Component", () => {
 	});
 
 	it("applies the correct size based on the 'size' prop", () => {
-		render(<Radiobox name="test-radio" size="lg" />);
+		render(<Radiobox readOnly checked name="test-radio" size="lg" />);
 
 		const radiobox = screen.getByTestId("radiobox");
 
@@ -34,7 +33,7 @@ describe("Radiobox Component", () => {
 	});
 
 	it("triggers the 'onChange' event when checked", () => {
-		const mockOnChange = vi.fn();
+		const mockOnChange = jest.fn();
 		render(<Radiobox name="test-radio" onChange={mockOnChange} />);
 
 		const radiobox = screen.getByTestId("radiobox");
@@ -47,7 +46,7 @@ describe("Radiobox Component", () => {
 	});
 
 	it("applies the correct shadow when checked", () => {
-		render(<Radiobox name="test-radio" checked color="primary-main" />);
+		render(<Radiobox readOnly checked name="test-radio" color="primary-main" />);
 
 		const radiobox = screen.getByTestId("radiobox");
 
@@ -56,7 +55,7 @@ describe("Radiobox Component", () => {
 	});
 
 	it("applies the correct border color when checked", () => {
-		render(<Radiobox name="test-radio" checked color="primary-main" />);
+		render(<Radiobox readOnly checked name="test-radio" color="primary-main" />);
 
 		const radiobox = screen.getByTestId("radiobox");
 

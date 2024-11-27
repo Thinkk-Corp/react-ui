@@ -2,7 +2,7 @@ import type { IRoot } from "@/interfaces/IRoot.ts";
 import { getI18nInstance, initI18n } from "@/plugins/I18n.ts";
 import { useRouterStore } from "@/stores/RouterStore.ts";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
-import { useUIStore } from "@/stores/UIStore.ts";
+import { useUIStore } from "@/stores/ui-store/UIStore.ts";
 import { promiseRejectionErrorHandler } from "@/utils/PromiseRejectionErrorHandler.ts";
 import { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";

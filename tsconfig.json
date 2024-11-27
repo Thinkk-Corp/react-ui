@@ -1,34 +1,33 @@
 {
- "compilerOptions": {
-    "target": "ES6",
-    "module": "CommonJS",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["./node_modules/@types", "./@types"],
-    "composite": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "declaration": true, // TypeScript'in d.ts dosyaları oluşturmasını sağlar.
-    "emitDeclarationOnly": true, // Sadece d.ts dosyalarını oluşturur, JavaScript dosyaları oluşturmaz.
-    "outDir": "dist", // Çıktı dizini.
-    "useDefineForClassFields": true,
-    "lib": ["ES6", "DOM", "DOM.Iterable"],
-    "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": false,
-    "moduleDetection": "force",
-    "sourceMap": false,
-    "jsx": "react-jsx",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    },
- },
-   "include": ["src/**/*.ts"],
+   "compilerOptions": {
+      "typeRoots": ["./node_modules/@types", "./@types", "node_modules/@testing-library"],
+      "composite": true,
+      "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+      "target": "ES2020",
+      "declaration": true, // TypeScript'in d.ts dosyaları oluşturmasını sağlar.
+      "emitDeclarationOnly": true, // Sadece d.ts dosyalarını oluşturur, JavaScript dosyaları oluşturmaz.
+      "outDir": "dist", // Çıktı dizini.
+      "useDefineForClassFields": true,
+      "lib": ["ES2020", "DOM", "DOM.Iterable"],
+      "module": "ESNext",
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "moduleResolution": "bundler",
+      "allowImportingTsExtensions": true,
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": false,
+      "moduleDetection": "force",
+      "sourceMap": true,
+      "jsx": "react-jsx",
+      "strict": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noFallthroughCasesInSwitch": true,
+      "paths": {
+         "@/*": ["./src/*"]
+      },
+   },
+   "include": ["src"],
    "exclude": ["node_modules"]
 }

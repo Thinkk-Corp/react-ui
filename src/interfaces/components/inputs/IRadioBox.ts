@@ -6,4 +6,5 @@ export interface IRadioBox extends HTMLAttributes<HTMLInputElement> {
 	name: string;
 	checked?: boolean;
 	isInvalid?: boolean;
+	readOnly?: boolean;
 }

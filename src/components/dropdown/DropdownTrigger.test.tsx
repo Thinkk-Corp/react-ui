@@ -1,11 +1,10 @@
 import { DropdownTrigger } from "@/components/dropdown/DropdownTrigger";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
 
 describe("DropdownTrigger Bileşeni", () => {
 	// Test 1: DropdownTrigger bileşeninin doğru sınıflarla render edilmesi
 	it("doğru default ve özel sınıflarla render edilmelidir", () => {
-		const mockSetIsOpen = vi.fn();
+		const mockSetIsOpen = jest.fn();
 		const style = {
 			defaultStyleActive: true,
 			customStyle: "test-custom-style",
@@ -29,7 +28,7 @@ describe("DropdownTrigger Bileşeni", () => {
 
 	// Test 2: onClick fonksiyonunun isOpen durumunu değiştirmesi
 	it("tıklandığında isOpen durumunu değiştirmelidir", () => {
-		const mockSetIsOpen = vi.fn();
+		const mockSetIsOpen = jest.fn();
 
 		render(
 			<DropdownTrigger isOpen={false} setIsOpen={mockSetIsOpen}>
@@ -48,7 +47,7 @@ describe("DropdownTrigger Bileşeni", () => {
 
 	// Test 3: setIsOpen undefined olduğunda onClick fonksiyonunun hiçbir şey yapmaması
 	it("setIsOpen undefined ise hiçbir şey yapmamalıdır", () => {
-		const mockSetIsOpen = vi.fn();
+		const mockSetIsOpen = jest.fn();
 
 		render(
 			<DropdownTrigger isOpen={false} setIsOpen={undefined}>

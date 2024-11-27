@@ -1,9 +1,8 @@
 import { Toggle } from "@/components/form/inputs/toggle/Toggle.tsx"; // Adjust the import path accordingly
 import { fireEvent, render, screen } from "@testing-library/react";
-import { vi } from "vitest";
 
 describe("Toggle Component", () => {
-	test("renders with default props", () => {
+	it("renders with default props", () => {
 		render(<Toggle name="test-toggle" id="test-toggle" />);
 
 		const toggle = screen.getByTestId("toggle-label");
@@ -19,7 +18,7 @@ describe("Toggle Component", () => {
 		expect(screen.getByTestId("toggle-icon")).toHaveAttribute("data-icon", "x");
 	});
 
-	test("renders with checked state", () => {
+	it("renders with checked state", () => {
 		render(<Toggle name="test-toggle" id="test-toggle" checked={true} />);
 
 		const toggle = screen.getByTestId("toggle-label");
@@ -35,7 +34,7 @@ describe("Toggle Component", () => {
 		expect(screen.getByTestId("toggle-icon")).toHaveAttribute("data-icon", "check");
 	});
 
-	test("toggles on click", () => {
+	it("toggles on click", () => {
 		render(<Toggle name="test-toggle" id="test-toggle" />);
 
 		const toggle = screen.getByTestId("toggle-label");
@@ -64,7 +63,7 @@ describe("Toggle Component", () => {
 		expect(screen.getByTestId("toggle-icon")).toHaveAttribute("data-icon", "x");
 	});
 
-	test("applies custom className", () => {
+	it("applies custom className", () => {
 		render(<Toggle name="test-toggle" id="test-toggle" className="custom-class" />);
 
 		const toggle = screen.getByTestId("toggle-label");
@@ -73,7 +72,7 @@ describe("Toggle Component", () => {
 		expect(toggle).toHaveClass("custom-class");
 	});
 
-	test("applies custom color when checked", () => {
+	it("applies custom color when checked", () => {
 		render(<Toggle name="test-toggle" id="test-toggle" checked={true} color="secondary-main" />);
 
 		const toggle = screen.getByTestId("toggle-label");
@@ -82,8 +81,8 @@ describe("Toggle Component", () => {
 		expect(toggle).toHaveClass("bg-secondary-main");
 	});
 
-	test("fires onChange handler on click", () => {
-		const onChangeMock = vi.fn();
+	it("fires onChange handler on click", () => {
+		const onChangeMock = jest.fn();
 
 		render(<Toggle name="test-toggle" id="test-toggle" onChange={onChangeMock} />);
 

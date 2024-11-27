@@ -1,7 +1,6 @@
 import { Checkbox } from "@/components/form/inputs/checkbox/Checkbox.tsx";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { render } from "@testing-library/react";
-import { describe, it, vi } from "vitest";
 
 describe("Checkbox Component", () => {
 	it("renders correctly with default props", () => {
@@ -37,7 +36,7 @@ describe("Checkbox Component", () => {
 	});
 
 	it("calls onChange when checked", () => {
-		const mockOnChange = vi.fn();
+		const mockOnChange = jest.fn();
 		render(<Checkbox name={"test"} onChange={mockOnChange} />);
 
 		const checkboxInput = screen.getByTestId("checkbox-input");

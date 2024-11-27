@@ -6,7 +6,7 @@ import { UserMenu } from "@/components/navbar/UserMenu.tsx";
 import type { INavbar } from "@/interfaces/components/navbar/INavbar.ts";
 import { icons } from "@/plugins/Icons.tsx";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
-import { useUIStore } from "@/stores/UIStore.ts";
+import { useUIStore } from "@/stores/ui-store/UIStore.ts";
 import classNames from "classnames";
 
 export const Navbar = ({ extraComponents, isThemeSwitcherActive = true, userMenus, notifications }: INavbar) => {

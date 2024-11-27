@@ -3,15 +3,14 @@ import { DialogBody } from "@/components/dialog/DialogBody.tsx";
 import { DialogHeader } from "@/components/dialog/DialogHeader.tsx";
 import type { IDialog } from "@/interfaces/components/dialog/IDialog.ts"; // Adjust the path to where your Dialog component is located
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { vi } from "vitest";
 import { Dialog } from "./Dialog";
 
 // Mocking the emitter (mitt)
-vi.mock("@/plugins/Mitt.tsx", () => ({
+jest.mock("@/plugins/Mitt.tsx", () => ({
 	emitter: {
-		on: vi.fn(),
-		off: vi.fn(),
-		emit: vi.fn(),
+		on: jest.fn(),
+		off: jest.fn(),
+		emit: jest.fn(),
 	},
 }));
 
@@ -21,8 +20,8 @@ describe("Dialog Component", () => {
 		isOpen: false,
 		size: "md",
 		closeToClickOutside: true,
-		onOpened: vi.fn(),
-		onClosed: vi.fn(),
+		onOpened: jest.fn(),
+		onClosed: jest.fn(),
 		type: "modal",
 		children: (
 			<>
@@ -48,7 +47,7 @@ describe("Dialog Component", () => {
 	});
 
 	it("should call onOpened when dialog is opened", async () => {
-		const onOpenedMock = vi.fn();
+		const onOpenedMock = jest.fn();
 		render(<Dialog {...defaultProps} isOpen onOpened={onOpenedMock} />);
 
 		const dialog = screen.getByTestId("dialog");
@@ -61,7 +60,7 @@ describe("Dialog Component", () => {
 	});
 
 	it("should call onClosed when dialog is closed", async () => {
-		const onClosedMock = vi.fn();
+		const onClosedMock = jest.fn();
 		render(<Dialog {...defaultProps} closeToClickOutside={false} isOpen={true} onClosed={onClosedMock} />);
 
 		// Dialog elementinin doğru şekilde render edildiğini doğrula
@@ -93,7 +92,7 @@ describe("Dialog Component", () => {
 	});
 
 	it("should close dialog when clicked outside (closeToClickOutside is true)", async () => {
-		const onClosedMock = vi.fn();
+		const onClosedMock = jest.fn();
 		render(<Dialog {...defaultProps} isOpen={true} onClosed={onClosedMock} />);
 
 		// Dialog elementinin doğru şekilde render edildiğini doğrula
@@ -113,7 +112,7 @@ describe("Dialog Component", () => {
 	});
 
 	it("should not close dialog when clicked inside the dialog", async () => {
-		const onCloseMock = vi.fn();
+		const onCloseMock = jest.fn();
 		render(<Dialog {...defaultProps} isOpen={true} onClosed={onCloseMock} />);
 
 		const dialog = screen.getByTestId("dialog");
@@ -135,8 +134,6 @@ describe("Dialog Component", () => {
 		const dialogs = screen.getAllByTestId("dialog");
 
 		expect(dialogs).toHaveLength(2);
-
-		screen.debug();
 
 		// Check if zIndex has been adjusted correctly for each dialog
 		await waitFor(() => {

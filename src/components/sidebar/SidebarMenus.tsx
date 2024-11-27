@@ -2,7 +2,7 @@ import { IconBox } from "@/components/iconbox/IconBox.tsx";
 import { SidebarItem } from "@/components/sidebar/SidebarItem.tsx";
 import type { ISidebarMenu, ISidebarMenuItem } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
 import { icons } from "@/plugins/Icons.tsx";
-import { useUIStore } from "@/stores/UIStore.ts";
+import { useUIStore } from "@/stores/ui-store/UIStore.ts";
 import { mediaQueryUtil } from "@/utils/media-query-util/MediaQueryUtil.ts";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
