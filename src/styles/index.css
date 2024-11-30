@@ -579,23 +579,22 @@ body{
     --card-shadow:rgba(0, 0, 0, 0.24) 0px 5px 22px 0px, rgba(255, 255, 255, 0.12) 0px 0px 0px 1px ;
 }
 
-/* Custom Scrollbar Styles */
 ::-webkit-scrollbar {
-  width: 6px; /* or any width you prefer */
+  width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgb(191, 193, 207); /* Track color */
+    background: rgb(191, 193, 207);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #858585; /* Scrollbar color */
-  border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+    background: #858585;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Darker scrollbar color on hover */
+    background: #555;
 }
 
 

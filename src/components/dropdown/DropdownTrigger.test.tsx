@@ -7,7 +7,7 @@ describe("DropdownTrigger Bileşeni", () => {
 		const mockSetIsOpen = jest.fn();
 		const style = {
 			defaultStyleActive: true,
-			customStyle: "test-custom-style",
+			customStyle: "jest-config-custom-style",
 		};
 
 		render(
@@ -22,7 +22,7 @@ describe("DropdownTrigger Bileşeni", () => {
 		expect(dropdownTrigger).toHaveClass(
 			"inline-flex items-center text-body2 overflow-hidden text-color-primary rounded-lg cursor-pointer border border-custom-divider bg-paper-level2 px-2 py-1",
 		);
-		expect(dropdownTrigger).toHaveClass("test-custom-style");
+		expect(dropdownTrigger).toHaveClass("jest-config-custom-style");
 		expect(dropdownTrigger).toHaveTextContent("Test Trigger");
 	});
 

@@ -28,7 +28,7 @@ describe("shouldBypass", () => {
 
 	it("should handle URLs with query parameters", () => {
 		const paths = ["/user/*"];
-		expect(shouldBypass(paths, "/user/123?name=test")).toBe(true); // URL yoluyla eşleşme, true dönecek
+		expect(shouldBypass(paths, "/user/123?name=jest-config")).toBe(true); // URL yoluyla eşleşme, true dönecek
 	});
 
 	it("should return false for invalid URLs", () => {

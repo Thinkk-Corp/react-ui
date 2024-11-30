@@ -1,15 +1,14 @@
+// jest.config.js
 import path from "node:path";
-import type { Config } from "jest";
 
 export default {
 	preset: "ts-jest",
 	testEnvironment: "jest-environment-jsdom",
-	transform: {
-		"^.+\\.tsx?$": "ts-jest",
-	},
 	moduleNameMapper: {
-		"^@/(.*)$": path.resolve(__dirname, "src/$1"), // Use path.resolve to avoid path issues in Windows
+		"^@/(.*)$": path.resolve(__dirname, "src/$1"),
 	},
-	testMatch: ["**/?(*.)+(spec|test).[jt]s?(x)"],
-	setupFilesAfterEnv: ["@testing-library/jest-dom", "<rootDir>/jest-setup.ts"],
-} as Config;
+	setupFilesAfterEnv: [
+		"@testing-library/jest-dom", // @testing-library/jest-dom'u yükle
+		"<rootDir>/jest-setup.ts", // Jest setup dosyasını yükle
+	],
+};

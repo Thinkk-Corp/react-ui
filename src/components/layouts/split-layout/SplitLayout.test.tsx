@@ -12,14 +12,14 @@ describe("SplitLayout", () => {
 
 		render(<SplitLayout image="image.jpg" title="Test Title" subtitle="Test Subtitle" />);
 
-		// İlk temanın doğru bir şekilde uygulandığını test et
+		// İlk temanın doğru bir şekilde uygulandığını jest-config et
 		expect(screen.getByTestId("split-layout")).toHaveClass("bg-split-layout-light");
 	});
 
 	it("renders content correctly", () => {
 		render(<SplitLayout image="image.jpg" title="Test Title" subtitle="Test Subtitle" />);
 
-		// Başlık ve alt başlığın doğru şekilde render edildiğini test et
+		// Başlık ve alt başlığın doğru şekilde render edildiğini jest-config et
 		expect(screen.getByTestId("title")).toHaveTextContent("Test Title");
 		expect(screen.getByTestId("subtitle")).toHaveTextContent("Test Subtitle");
 	});
@@ -27,7 +27,7 @@ describe("SplitLayout", () => {
 	it("renders the image if passed as a prop", () => {
 		render(<SplitLayout image="image.jpg" title="Test Title" subtitle="Test Subtitle" />);
 
-		// Resim elemanının doğru özelliklere sahip olduğunu test et
+		// Resim elemanının doğru özelliklere sahip olduğunu jest-config et
 		const imgElement = screen.getByTestId("image");
 		expect(imgElement).toHaveAttribute("src", "image.jpg");
 		expect(imgElement).toHaveAttribute("alt", "Test Title");

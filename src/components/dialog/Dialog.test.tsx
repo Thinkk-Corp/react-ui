@@ -16,7 +16,7 @@ jest.mock("@/plugins/Mitt.tsx", () => ({
 
 describe("Dialog Component", () => {
 	const defaultProps: IDialog = {
-		id: "test-dialog",
+		id: "jest-config-dialog",
 		isOpen: false,
 		size: "md",
 		closeToClickOutside: true,

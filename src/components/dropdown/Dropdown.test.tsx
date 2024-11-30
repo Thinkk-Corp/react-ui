@@ -44,7 +44,7 @@ describe("Dropdown Component", () => {
 		expect(dropdownMenu).not.toBeInTheDocument();
 	});
 
-	// Test 3: Dropdown'ı tıkladığında açılıp kapanmasını ve uygun olay işleyicilerinin çağrıldığını test et
+	// Test 3: Dropdown'ı tıkladığında açılıp kapanmasını ve uygun olay işleyicilerinin çağrıldığını jest-config et
 	it("should toggle the dropdown and call the appropriate events on click", async () => {
 		const mockOnOpened = jest.fn();
 		const mockOnClosed = jest.fn();
@@ -119,7 +119,7 @@ describe("Dropdown Component", () => {
 		expect(dropdownMenu).toHaveClass("w-64");
 	});
 
-	// Test 6: closeToClickOutside prop'u true ise dışarıya tıklayarak dropdown'ın kapanmasını test et
+	// Test 6: closeToClickOutside prop'u true ise dışarıya tıklayarak dropdown'ın kapanmasını jest-config et
 	it("should close dropdown when clicking outside if closeToClickOutside is true", () => {
 		render(
 			<Dropdown isOpen={true}>
@@ -151,7 +151,7 @@ describe("Dropdown Component", () => {
 		expect(updatedDropdownMenu).toBeInTheDocument(); // Dropdown hala görünür olmalı
 	});
 
-	// Test 7: closeToClickInside prop'u true ise içeride tıklayarak dropdown'ın kapanmasını test et
+	// Test 7: closeToClickInside prop'u true ise içeride tıklayarak dropdown'ın kapanmasını jest-config et
 	it("should close dropdown when clicking inside if closeToClickInside is true", () => {
 		render(
 			<Dropdown isOpen={true}>
@@ -183,19 +183,19 @@ describe("Dropdown Component", () => {
 		expect(updatedDropdownMenu).toBeInTheDocument(); // Dropdown hala görünür olmalı
 	});
 
-	// Test 8: styles prop'u eklendiğinde stilin doğru şekilde uygulandığını test et
+	// Test 8: styles prop'u eklendiğinde stilin doğru şekilde uygulandığını jest-config et
 	it("should apply styles when styles prop added", () => {
 		const mockStyles: IDropdownStyle = {
 			trigger: {
 				defaultStyleActive: true,
-				customStyle: "test-style-trigger",
+				customStyle: "jest-config-style-trigger",
 			},
 			menu: {
 				defaultStyleActive: true,
 			},
 			item: {
 				defaultStyleActive: false,
-				customStyle: "test-style-item",
+				customStyle: "jest-config-style-item",
 			},
 		};
 		render(
@@ -210,9 +210,9 @@ describe("Dropdown Component", () => {
 		const dropdownMenu = screen.getByTestId("dropdown-menu");
 		const dropdownItems = screen.getAllByTestId("dropdown-item");
 
-		expect(dropdownTrigger).toHaveClass("bg-paper-level2 test-style-trigger");
+		expect(dropdownTrigger).toHaveClass("bg-paper-level2 jest-config-style-trigger");
 		expect(dropdownMenu).toHaveClass("bg-paper-level2");
-		expect(dropdownItems[0]).toHaveClass("test-style-item");
+		expect(dropdownItems[0]).toHaveClass("jest-config-style-item");
 		expect(dropdownItems[0]).not.toHaveClass("text-color-primary");
 	});
 });

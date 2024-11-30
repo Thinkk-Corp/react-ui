@@ -7,7 +7,7 @@ describe("DropdownItem Bileşeni", () => {
 	it("doğru default ve özel stillerle render edilmelidir", () => {
 		const style: ICustomStylesConfig = {
 			defaultStyleActive: true,
-			customStyle: "test-custom-style",
+			customStyle: "jest-config-custom-style",
 		};
 
 		render(<DropdownItem style={style}>Test Item</DropdownItem>);
@@ -16,7 +16,7 @@ describe("DropdownItem Bileşeni", () => {
 
 		// Default ve özel stillerin doğru şekilde uygulanıp uygulanmadığını kontrol et
 		expect(dropdownItem).toHaveClass("text-color-primary text-body2 hover:bg-action-hover p-3");
-		expect(dropdownItem).toHaveClass("test-custom-style");
+		expect(dropdownItem).toHaveClass("jest-config-custom-style");
 		expect(dropdownItem).toHaveTextContent("Test Item");
 	});
 
@@ -24,7 +24,7 @@ describe("DropdownItem Bileşeni", () => {
 	it("defaultStyleActive undefined veya null olduğunda varsayılan stil uygulanmalıdır", () => {
 		const style: ICustomStylesConfig = {
 			defaultStyleActive: undefined,
-			customStyle: "test-custom-style",
+			customStyle: "jest-config-custom-style",
 		};
 
 		render(<DropdownItem style={style}>Test Item</DropdownItem>);
@@ -33,14 +33,14 @@ describe("DropdownItem Bileşeni", () => {
 
 		// Varsayılan stilin uygulanıp uygulanmadığını kontrol et
 		expect(dropdownItem).toHaveClass("text-color-primary text-body2 hover:bg-action-hover p-3");
-		expect(dropdownItem).toHaveClass("test-custom-style");
+		expect(dropdownItem).toHaveClass("jest-config-custom-style");
 	});
 
 	// Test 3: Varsayılan stilin devre dışı bırakılması (defaultStyleActive false)
 	it("defaultStyleActive false olduğunda varsayılan stil devre dışı bırakılmalıdır", () => {
 		const style: ICustomStylesConfig = {
 			defaultStyleActive: false,
-			customStyle: "test-custom-style",
+			customStyle: "jest-config-custom-style",
 		};
 
 		render(<DropdownItem style={style}>Test Item</DropdownItem>);
@@ -49,7 +49,7 @@ describe("DropdownItem Bileşeni", () => {
 
 		// Varsayılan stilin uygulanmadığını kontrol et
 		expect(dropdownItem).not.toHaveClass("text-color-primary text-body2 hover:bg-action-hover p-3");
-		expect(dropdownItem).toHaveClass("test-custom-style");
+		expect(dropdownItem).toHaveClass("jest-config-custom-style");
 	});
 
 	// Test 4: Stil özelliği olmadan render edilmesi
@@ -60,6 +60,6 @@ describe("DropdownItem Bileşeni", () => {
 
 		// Varsayılan stillerin doğru şekilde uygulanıp uygulanmadığını kontrol et
 		expect(dropdownItem).toHaveClass("text-color-primary text-body2 hover:bg-action-hover p-3");
-		expect(dropdownItem).not.toHaveClass("test-custom-style");
+		expect(dropdownItem).not.toHaveClass("jest-config-custom-style");
 	});
 });

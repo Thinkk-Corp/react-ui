@@ -64,7 +64,7 @@ const backgroundRegex = new RegExp(bgRegExp);
 const borderRegex = new RegExp(borderRegExp);
 
 export default {
-	content: ["./index.html", "./src/**/*.{ts,tsx,ts,tsx}"],
+	content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
 	darkMode: ["class", '[data-mode="dark"]'],
 	safelist: [
 		{

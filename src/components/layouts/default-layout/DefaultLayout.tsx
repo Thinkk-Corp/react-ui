@@ -1,5 +1,5 @@
 import type { IDefaultLayout } from "@/interfaces/components/layouts/IDefaultLayout.ts";
-import { useUIStore } from "@/stores/ui-store/UIStore.ts";
+import { useUIStore } from "@/stores/UIStore.ts";
 import classNames from "classnames";
 import { Outlet } from "react-router-dom";
 

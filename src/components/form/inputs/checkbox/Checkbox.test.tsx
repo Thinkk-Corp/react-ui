@@ -1,66 +1,84 @@
 import { Checkbox } from "@/components/form/inputs/checkbox/Checkbox.tsx";
-import { fireEvent, screen, waitFor } from "@testing-library/react";
-import { render } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
-describe("Checkbox Component", () => {
-	it("renders correctly with default props", () => {
-		render(<Checkbox name={"test"} />);
-		const checkbox = screen.getByTestId("checkbox-label");
-		expect(checkbox).toBeInTheDocument();
+describe("Checkbox Component - Class and Style Control", () => {
+	it("should apply the correct size class based on the 'size' prop", () => {
+		const { rerender } = render(<Checkbox name="test-checkbox" size="sm" />);
+
+		// Verify that the checkbox label has the correct size class for 'sm'
+		let label = screen.getByTestId("checkbox-label");
+		expect(label).toHaveClass("w-4 h-4"); // 'sm' size class
+
+		// Re-render with a different size
+		rerender(<Checkbox name="test-checkbox" size="xl" />);
+
+		// Verify the size class for 'xl'
+		label = screen.getByTestId("checkbox-label");
+		expect(label).toHaveClass("w-8 h-8"); // 'xl' size class
 	});
 
-	it("applies isInvalid class when isInvalid prop is true", () => {
-		render(<Checkbox name={"test"} isInvalid />);
-		const checkbox = screen.getByTestId("checkbox-label");
-		expect(checkbox).toHaveStyle("border-color:var(--error-dark)");
+	it("should apply the correct color class when checked", async () => {
+		render(<Checkbox name="test-checkbox" readOnly checked={false} color="primary-main" />);
+
+		// Initially, the checkbox should not be checked
+		let label = screen.getByTestId("checkbox-label");
+		expect(label).not.toHaveClass("bg-primary-main");
+
+		// Check the checkbox
+		fireEvent.click(label);
+
+		// After checking, the checkbox should have the background color class
+		label = screen.getByTestId("checkbox-label");
+		await waitFor(() => expect(label).toHaveClass("bg-primary-main"));
 	});
 
-	it("applies isInvalid class when isInvalid prop is true and hovered or focused", () => {
-		// Checkbox'ı isInvalid prop'u ile render et
-		render(<Checkbox name={"test"} isInvalid />);
+	it("should apply the invalid border style when 'isInvalid' is true", () => {
+		render(<Checkbox name="test-checkbox" isInvalid />);
 
-		const checkbox = screen.getByTestId("checkbox-label");
-		const checkboxInput = screen.getByTestId("checkbox-input");
-
-		// Checkbox üzerine gelindiğinde (hover)
-		fireEvent.mouseOver(checkboxInput);
-		expect(checkbox).toHaveStyle("border-color:var(--error-dark)"); // Hover durumunda doğru stilin uygulanıp uygulanmadığını kontrol et
-
-		// Checkbox'a odaklandığında (focus)
-		fireEvent.focus(checkboxInput);
-		expect(checkbox).toHaveStyle("border-color:var(--error-dark)"); // Focus durumunda doğru stilin uygulanıp uygulanmadığını kontrol et
-
-		// Odak noktası (blur) sonrası tekrar stil kontrolü
-		fireEvent.blur(checkboxInput);
-		expect(checkbox).toHaveStyle("border-color:var(--error-dark)"); // Focus kaybolduğunda stilin kaldırılmasını doğrula
+		// Check that the label has the 'data-[invalid=true]' class for invalid state
+		const label = screen.getByTestId("checkbox-label");
+		expect(label).toHaveClass("data-[invalid='true']:border-error-dark");
 	});
 
-	it("calls onChange when checked", () => {
-		const mockOnChange = jest.fn();
-		render(<Checkbox name={"test"} onChange={mockOnChange} />);
+	it("should apply custom className passed as a prop", () => {
+		render(<Checkbox name="test-checkbox" className="custom-class" />);
 
-		const checkboxInput = screen.getByTestId("checkbox-input");
-
-		// Checkbox'ı tıklayarak checked durumu değiştir
-		fireEvent.click(checkboxInput);
-
-		// onChange fonksiyonunun çağrıldığını doğrula
-		expect(mockOnChange).toHaveBeenCalled();
-
-		// Checkbox'ın checked durumunun doğru olduğunu kontrol et
-		expect(checkboxInput).toBeChecked();
+		// Ensure the custom class is applied to the label element
+		const label = screen.getByTestId("checkbox-label");
+		expect(label).toHaveClass("custom-class");
 	});
 
-	it("When checked, a check icon appeared", async () => {
-		render(<Checkbox name={"test"} />);
-		const checkboxInput = screen.getByTestId("checkbox-input");
+	it("should not apply 'bg-primary-main' when not checked", () => {
+		render(<Checkbox name="test-checkbox" color="primary-main" />);
 
-		// Checkbox'ı tıklayarak checked durumu değiştir
-		fireEvent.click(checkboxInput);
+		// Initially, the checkbox is not checked, so 'bg-primary-main' should not be applied
+		const label = screen.getByTestId("checkbox-label");
+		expect(label).not.toHaveClass("bg-primary-main");
+	});
 
-		await waitFor(() => {
-			const checkboxCheckIcon = screen.getByTestId("checkbox-check");
-			expect(checkboxCheckIcon).toBeInTheDocument();
-		});
+	it("should apply the correct icon size based on the 'size' prop", () => {
+		const { rerender } = render(<Checkbox name="test-checkbox" checked size="sm" />);
+
+		// Verify that the check icon has the correct size for 'sm'
+		const checkIcon = screen.getByTestId("check-icon");
+		expect(checkIcon).toHaveClass("w-3 h-3");
+
+		// Re-render with a larger size
+		rerender(<Checkbox name="test-checkbox" size="xl" />);
+
+		// Verify that the check icon has the correct size for 'xl'
+		expect(checkIcon).toHaveClass("w-7 h-7");
+	});
+
+	it("should apply the correct styles when checked", () => {
+		render(<Checkbox name="test-checkbox" checked />);
+
+		// Ensure the check icon is present when the checkbox is checked
+		const checkIcon = screen.getByTestId("check-icon");
+		expect(checkIcon).toBeInTheDocument();
+
+		// Ensure the checkbox label has the correct background color when checked
+		const label = screen.getByTestId("checkbox-label");
+		expect(label).toHaveClass("bg-primary-main"); // When checked, should apply color class
 	});
 });

@@ -13,7 +13,7 @@ describe("Select Component", () => {
 			{ value: "2", label: "Option 2" },
 		],
 		endpoint: "",
-		className: "test-class",
+		className: "jest-config-class",
 		isInvalid: false,
 		onChange: jest.fn(),
 		onClick: jest.fn(),
@@ -26,7 +26,7 @@ describe("Select Component", () => {
 
 		const input = screen.getByTestId("select-input");
 
-		// Select placeholder render edildimi test et
+		// Select placeholder render edildimi jest-config et
 		expect(input).toHaveTextContent("Seçiniz");
 		expect(screen.getByText("Option 1")).toBeInTheDocument();
 		expect(screen.getByText("Option 2")).toBeInTheDocument();

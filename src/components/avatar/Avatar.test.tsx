@@ -1,62 +1,66 @@
-import { Avatar } from "@/components/avatar/Avatar"; // Gerekirse yolu ayarlayın
+import { Avatar } from "@/components/avatar/Avatar";
 import { render, screen } from "@testing-library/react";
 
 describe("Avatar Component", () => {
-	it("varsayılan özelliklerle render edilir", () => {
-		render(<Avatar alt={"test"} image="https://via.placeholder.com/150" />);
+	it("should render with the correct size class based on the 'size' prop", () => {
+		render(<Avatar alt={""} size="sm" image="test.jpg" />);
 
 		const avatarContainer = screen.getByTestId("avatar-container");
+		// 'sm' boyutuna ait sınıfın uygulanıp uygulanmadığını kontrol ediyoruz
+		expect(avatarContainer).toHaveClass("w-8 h-8"); // 'sm' boyutu
+	});
+
+	it("should apply the correct size class for 'md' by default", () => {
+		render(<Avatar alt={""} image="test.jpg" />);
+
+		const avatarContainer = screen.getByTestId("avatar-container");
+		// Varsayılan olarak 'md' boyutunun sınıfının uygulanıp uygulanmadığını kontrol ediyoruz
+		expect(avatarContainer).toHaveClass("w-12 h-12"); // Default size 'md'
+	});
+
+	it("should render with the correct rounded class based on the 'rounded' prop", () => {
+		const { rerender } = render(<Avatar alt={""} size="md" rounded="lg" image="test.jpg" />);
+
+		const avatarContainer = screen.getByTestId("avatar-container");
+		// 'rounded' prop'u '2xl' olduğunda ilgili sınıfın uygulanıp uygulanmadığını kontrol ediyoruz
+		expect(avatarContainer).toHaveClass("rounded-lg"); // '2xl' rounded class
+
+		// 'sm' rounded durumu için testi tekrar yapıyoruz
+		rerender(<Avatar alt={""} size="md" rounded="sm" image="test.jpg" />);
+		// 'sm' prop'u için 'rounded' sınıfının uygulanıp uygulanmadığını kontrol ediyoruz
+		expect(avatarContainer).toHaveClass("rounded");
+	});
+
+	it("should render the avatar image with correct alt text", () => {
+		render(<Avatar size="md" image="test.jpg" alt="User Avatar" />);
+
 		const avatarImage = screen.getByTestId("avatar-image");
-
-		// Varsayılan boyutun 'md' olup olmadığını kontrol et
-		expect(avatarContainer).toHaveClass("w-12 h-12");
-		// Resim src ve alt özelliklerini doğrula
-		expect(avatarImage).toHaveAttribute("src", "https://via.placeholder.com/150");
-		expect(avatarImage).toHaveAttribute("alt", "test");
+		// 'alt' metninin doğru şekilde render edilip edilmediğini kontrol ediyoruz
+		expect(avatarImage).toHaveAttribute("alt", "User Avatar");
 	});
 
-	it("özel boyut uygular", () => {
-		render(<Avatar alt={"test"} image="https://via.placeholder.com/150" size="lg" />);
+	it("should not render an image if the 'image' prop is not provided", () => {
+		// @ts-ignore
+		render(<Avatar size="md" />);
+
+		const avatarImage = screen.queryByTestId("avatar-image");
+		// 'image' prop'u verilmediğinde resmin render edilmediğini kontrol ediyoruz
+		expect(avatarImage).not.toBeInTheDocument(); // Image should not be rendered if no 'image' prop
+	});
+
+	it("should apply the custom className passed as a prop", () => {
+		render(<Avatar alt={""} size="md" image="test.jpg" className="custom-class" />);
 
 		const avatarContainer = screen.getByTestId("avatar-container");
-
-		// Özel boyutun ('lg') uygulandığını kontrol et
-		expect(avatarContainer).toHaveClass("w-16 h-16");
-	});
-
-	it("özel alt metin uygular", () => {
-		render(<Avatar image="https://via.placeholder.com/150" alt="test" />);
-
-		const avatarImage = screen.getByTestId("avatar-image");
-
-		// Özel alt metnin uygulandığını kontrol et
-		expect(avatarImage).toHaveAttribute("alt", "test");
-	});
-
-	it("özel yuvarlaklık sınıfı uygular", () => {
-		render(<Avatar alt={"test"} image="https://via.placeholder.com/150" rounded="lg" />);
-
-		const avatarContainer = screen.getByTestId("avatar-container");
-
-		// Özel yuvarlaklık sınıfının uygulandığını kontrol et
-		expect(avatarContainer).toHaveClass("rounded-lg");
-	});
-
-	it("varsayılan yuvarlaklık sınıfı uygular", () => {
-		render(<Avatar alt={"test"} image="https://via.placeholder.com/150" />);
-
-		const avatarContainer = screen.getByTestId("avatar-container");
-
-		// Varsayılan yuvarlaklık sınıfının uygulandığını kontrol et
-		expect(avatarContainer).toHaveStyle("border-radius:100%");
-	});
-
-	it("özel className uygular", () => {
-		render(<Avatar alt={"test"} image="https://via.placeholder.com/150" className="custom-class" />);
-
-		const avatarContainer = screen.getByTestId("avatar-container");
-
-		// Özel className'in uygulandığını kontrol et
+		// 'className' prop'u ile gelen özel sınıfın uygulanıp uygulanmadığını kontrol ediyoruz
 		expect(avatarContainer).toHaveClass("custom-class");
+	});
+
+	it("should apply the correct class when rounded is 'sm'", () => {
+		render(<Avatar alt={""} size="md" rounded="sm" image="test.jpg" />);
+
+		const avatarContainer = screen.getByTestId("avatar-container");
+		// 'sm' rounded olduğunda 'rounded' sınıfının uygulanıp uygulanmadığını kontrol ediyoruz
+		expect(avatarContainer).toHaveClass("rounded"); // Should have the 'rounded' class when 'sm' is passed
 	});
 });
