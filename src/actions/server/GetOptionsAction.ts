@@ -1,4 +1,4 @@
-import type { IOption } from "@/interfaces/components/inputs/ISelect.ts";
+import type { IOption } from "@/interfaces/components/form/inputs/ISelect.ts";
 import HTTPClient from "@/plugins/HTTPClient.ts";
 import get from "lodash/get";
 

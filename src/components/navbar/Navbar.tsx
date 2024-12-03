@@ -21,11 +21,11 @@ export const Navbar = ({ extraComponents, isThemeSwitcherActive = true, userMenu
 	return (
 		<div
 			className={classNames("h-full bg-paper-default flex items-center justify-between gap-4 px-4 lg:px-10", {
-				"shadow-md": currentTheme === "light",
-				"border-b border-custom-divider": currentTheme === "dark",
+				"shadow-3 bg-common-white": currentTheme === "light",
+				"bg-sidebar-default": currentTheme === "dark",
 			})}
 		>
-			<IconBox isHoverable color={"color-primary"} onClick={handleMobileMenuTriggerClick} className={"block md:hidden "}>
+			<IconBox isHoverable color={"color-primary"} onClick={handleMobileMenuTriggerClick} className={"block md:hidden"}>
 				{icons.outline.bars_3}
 			</IconBox>
 			<div className={"hidden md:flex items-center gap-5 w-1/2"}>
@@ -36,7 +36,7 @@ export const Navbar = ({ extraComponents, isThemeSwitcherActive = true, userMenu
 				</label>
 				<Input id={"search-input"} className={"w-full"} placeholder={"Arama yap..."} />
 			</div>
-			<div className={"flex items-center gap-2 md:gap-5 border-l border-custom-divider pl-4"}>
+			<div className={"flex items-center gap-2 md:gap-4 border-l border-custom-divider pl-4"}>
 				{isThemeSwitcherActive && <ThemeChanger />}
 				{notifications && <Notifications />}
 				{userMenus && userMenus.menus.length > 0 && <UserMenu data={userMenus} />}

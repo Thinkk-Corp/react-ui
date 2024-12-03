@@ -1,7 +1,7 @@
 import { getOptionsAction } from "@/actions/server/GetOptionsAction.ts";
 import { Input } from "@/components/form/inputs/input/Input.tsx";
 import { IconBox } from "@/components/iconbox/IconBox.tsx";
-import type { IOption, ISelect } from "@/interfaces/components/inputs/ISelect.ts";
+import type { IOption, ISelect } from "@/interfaces/components/form/inputs/ISelect.ts";
 import { icons } from "@/plugins/Icons.tsx";
 import classNames from "classnames";
 import type React from "react";
@@ -16,6 +16,7 @@ export const Select = ({
 	isInvalid = false,
 	id,
 	defaultValue,
+	value,
 	onChange,
 	onClick,
 	onBlur,
@@ -116,15 +117,18 @@ export const Select = ({
 
 	// Default Değer Güncellenirse
 	useEffect(() => {
-		if (defaultValue && defaultValue !== selectedValue) {
-			setSelectedValue(defaultValue);
-		}
+		if (!defaultValue || defaultValue === selectedValue) return;
+		setSelectedValue(defaultValue);
 	}, [defaultValue]);
 
 	useEffect(() => {
-		if (selectedValue === findLabelByValue(searchValue)) return;
 		setSearchValue(findLabelByValue(selectedValue));
 	}, [selectedValue]);
+
+	useEffect(() => {
+		if (typeof value === "undefined") return;
+		setSelectedValue(value);
+	}, [value]);
 
 	return (
 		<div
@@ -144,7 +148,7 @@ export const Select = ({
 					data-invalid={isInvalid}
 					className={classNames(
 						"h-10 w-full flex items-center justify-between px-3 rounded-lg cursor-pointer",
-						"bg-paper-level2 border border-custom-divider",
+						"bg-transparent border border-custom-divider",
 						"data-[invalid='true']:border-error-main",
 						"data-[invalid='false']:hover:border-primary-main",
 						"data-[invalid='false']:group-data-[toggle='true']:border-primary-main",
@@ -170,8 +174,8 @@ export const Select = ({
 			<ul
 				data-testid="select-menu"
 				className={classNames(
-					"absolute overflow-hidden w-full mt-1 rounded-lg shadow-md border divide-y",
-					"bg-paper-level2 divide-custom-divider border-custom-divider",
+					"absolute overflow-hidden w-full mt-1 max-h-80 overflow-y-auto rounded-lg shadow-md border divide-y",
+					"bg-paper-card divide-custom-divider border-custom-card-border",
 					{ hidden: !isOpen },
 				)}
 			>

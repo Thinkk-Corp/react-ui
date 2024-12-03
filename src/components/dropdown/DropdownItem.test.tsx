@@ -1,5 +1,5 @@
 import { DropdownItem } from "@/components/dropdown/DropdownItem";
-import type { ICustomStylesConfig } from "@/interfaces/components/dropdown/IDropdown";
+import type { ICustomStylesConfig } from "@/interfaces/types/ICustomStyleConfig.ts";
 import { render, screen } from "@testing-library/react";
 
 describe("DropdownItem Bileşeni", () => {

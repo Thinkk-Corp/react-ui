@@ -79,7 +79,7 @@ export const Sidebar = ({ logo, collapsedLogo, menus }: ISidebar) => {
 	return (
 		<div
 			data-testid={"sidebar"}
-			className="flex h-screen flex-col justify-between border-e border-sidebar-border bg-sidebar-default"
+			className="flex h-screen flex-col justify-between border-e border-custom-card-border bg-sidebar-default"
 			onMouseEnter={() => handleSidebarHover(true)}
 			onMouseLeave={() => handleSidebarHover(false)}
 		>

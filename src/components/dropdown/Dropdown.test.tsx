@@ -2,7 +2,10 @@ import { Dropdown, positionSchema } from "@/components/dropdown/Dropdown.tsx";
 import { DropdownItem } from "@/components/dropdown/DropdownItem.tsx";
 import { DropdownTrigger } from "@/components/dropdown/DropdownTrigger.tsx";
 import type { IDropdownStyle } from "@/interfaces/components/dropdown/IDropdown.ts";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { useThemeStore } from "@/stores/ThemeStore.ts";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+
+const toggleTheme = useThemeStore.getState().toggleTheme;
 
 describe("Dropdown Component", () => {
 	// Test 1: isOpen true olduğunda dropdown'ın, tetikleyici ve öğeler ile doğru şekilde render edilip edilmediğini kontrol et
@@ -210,9 +213,31 @@ describe("Dropdown Component", () => {
 		const dropdownMenu = screen.getByTestId("dropdown-menu");
 		const dropdownItems = screen.getAllByTestId("dropdown-item");
 
-		expect(dropdownTrigger).toHaveClass("bg-paper-level2 jest-config-style-trigger");
-		expect(dropdownMenu).toHaveClass("bg-paper-level2");
+		expect(dropdownTrigger).toHaveClass("bg-paper-card jest-config-style-trigger");
+		expect(dropdownMenu).toHaveClass("bg-paper-card");
 		expect(dropdownItems[0]).toHaveClass("jest-config-style-item");
 		expect(dropdownItems[0]).not.toHaveClass("text-color-primary");
+	});
+
+	it("Should apply correct class to Dropdown Menu when theme change", async () => {
+		render(
+			<Dropdown isOpen={true}>
+				<DropdownTrigger>test</DropdownTrigger>
+				<DropdownItem>item 1</DropdownItem>
+				<DropdownItem>item 2</DropdownItem>
+			</Dropdown>,
+		);
+
+		const dropdownMenu = screen.getByTestId("dropdown-menu");
+
+		expect(dropdownMenu).not.toHaveClass("shadow-card");
+
+		act(() => {
+			toggleTheme();
+		});
+
+		await waitFor(() => {
+			expect(dropdownMenu).toHaveClass("shadow-card");
+		});
 	});
 });

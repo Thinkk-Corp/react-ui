@@ -49,7 +49,7 @@ export const DefaultLayout = ({ sidebar, navbar }: IDefaultLayout): JSX.Element 
 					data-testid={"navbar-section"}
 					data-sidebar-collapsed={sidebarCollapsed.status}
 					className={classNames(
-						"fixed top-0 left-0 z-50 duration-300 transition-all right-0 h-16",
+						"fixed top-0 left-0 z-50 duration-300 transition-all right-0 h-[4.5rem]",
 						"data-[sidebar-collapsed='false']:md:left-72",
 						"data-[sidebar-collapsed='true']:md:left-[4.5rem]",
 					)}
@@ -57,7 +57,7 @@ export const DefaultLayout = ({ sidebar, navbar }: IDefaultLayout): JSX.Element 
 					{navbar}
 				</div>
 				{/* İçerik Alanı */}
-				<div data-testid={"content-section"} className={"mt-[6.5rem] bg-paper-default px-4 lg:px-14"}>
+				<div data-testid={"content-section"} className={"mt-[6.5rem] px-4 lg:px-14"}>
 					<Outlet />
 				</div>
 			</div>

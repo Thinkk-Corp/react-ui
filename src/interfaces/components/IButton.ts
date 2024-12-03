@@ -5,5 +5,6 @@ export interface IButton extends HTMLAttributes<HTMLButtonElement> {
 	size?: ISize;
 	colorScheme?: IColorVariants;
 	children: ReactNode | string | number;
+	type?: "submit" | "reset" | "button";
 	variant?: "contained" | "outlined" | "underlined";
 }

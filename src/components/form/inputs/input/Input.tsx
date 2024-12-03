@@ -1,5 +1,5 @@
 import type { ISizeSchema } from "@/components/form/inputs/toggle/Toggle.tsx";
-import type { IInput } from "@/interfaces/components/inputs/IInput.ts";
+import type { IInput } from "@/interfaces/components/form/inputs/IInput.ts";
 import classNames from "classnames";
 import type { FC } from "react";
 
@@ -7,7 +7,6 @@ import type { FC } from "react";
 // Kullanıcıdan gelen çeşitli özellikleri destekler ve bu özelliklere göre farklı stiller uygular.
 export const Input: FC<IInput> = ({
 	type,
-	defaultValue,
 	onClick,
 	isInvalid = false,
 	onChange,
@@ -37,20 +36,19 @@ export const Input: FC<IInput> = ({
 			data-testid={"input-wrapper"} // Testlerde kullanılmak üzere `data-testid` özelliği eklendi.
 			data-invalid={isInvalid} // Hata durumunu belirtmek için `data-invalid` özelliği kullanılır.
 			className={classNames(
-				"relative rounded-lg shadow-sm bg-paper-level2 pr-6", // Temel stiller
+				"relative rounded-lg w-full shadow-sm bg-transparent pr-6", // Temel stiller
 				sizeSchema[customSize], // Boyut şeması bazlı sınıflar
-				className, // Kullanıcı tarafından sağlanan ek sınıflar
 				"border-custom-divider border text-color-primary", // Kenarlık ve metin renk stilleri
 				"data-[invalid='true']:border-error-dark", // Hata durumunda kenarlık rengi
 				"data-[invalid='false']:hover:border-primary-main", // Hata durumu yokken hover stili
 				"data-[invalid='false']:focus-within:border-primary-main", // Fokus stili
+				className, // Kullanıcı tarafından sağlanan ek sınıflar
 			)}
 		>
 			{/* Girdi alanı (input) */}
 			<input
 				data-testid={"input"} // Testlerde kullanılmak üzere `data-testid` özelliği eklendi.
 				type={type} // Girdi türü (örneğin: text, password)
-				defaultValue={defaultValue} // Varsayılan değer
 				onClick={onClick} // Tıklama olayını yakalar
 				value={value} // Kontrollü değer
 				onChange={onChange} // Değer değişikliği olayını yakalar

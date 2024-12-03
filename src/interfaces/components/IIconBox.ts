@@ -6,4 +6,5 @@ export interface IIconBox extends HTMLAttributes<HTMLDivElement> {
 	size?: ISize;
 	className?: string;
 	children: ReactNode;
+	radius?: ISize | "3xl" | "full" | "none";
 }

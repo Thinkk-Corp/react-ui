@@ -2,6 +2,7 @@ import { DropdownItem } from "@/components/dropdown/DropdownItem.tsx";
 import { DropdownTrigger } from "@/components/dropdown/DropdownTrigger.tsx";
 import type { IDropdown } from "@/interfaces/components/dropdown/IDropdown.ts";
 import type { IPosition, ISize } from "@/interfaces/types/IMetrics.ts";
+import { useThemeStore } from "@/stores/ThemeStore.ts";
 import classNames from "classnames";
 import { Children, type ReactElement, cloneElement, isValidElement, useCallback, useEffect, useRef, useState } from "react";
 
@@ -31,6 +32,7 @@ export const Dropdown = ({
 	const [internalIsOpen, setInternalIsOpen] = useState(isOpen);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const triggerRef = useRef<HTMLDivElement>(null);
+	const theme = useThemeStore((state) => state.theme);
 
 	const sizeSchema: Record<ISize, string> = {
 		sm: "w-32",
@@ -101,7 +103,7 @@ export const Dropdown = ({
 					className={classNames(
 						"absolute",
 						{
-							"bg-paper-level2 divide-y divide-custom-divider rounded-lg border border-custom-divider shadow-lg":
+							[`bg-paper-card divide-y divide-custom-divider rounded-lg border border-custom-card-border ${theme === "light" && " shadow-card"}`]:
 								typeof styles?.menu?.defaultStyleActive === "undefined" || styles?.menu?.defaultStyleActive === null
 									? true
 									: styles?.menu?.defaultStyleActive,

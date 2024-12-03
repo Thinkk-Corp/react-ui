@@ -9,6 +9,7 @@ export interface ISelect {
 	id?: string;
 	options?: IOption[];
 	onBlur?: () => void;
+	value?: string;
 	isInvalid?: boolean;
 	onClick?: () => void;
 	customSize?: ISize;

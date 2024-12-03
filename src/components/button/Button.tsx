@@ -51,7 +51,7 @@ export const Button = ({
 	return (
 		<button
 			className={classNames(
-				"rounded-md shadow-md",
+				"rounded-md shadow-2",
 				sizeScheme[size], // Boyutlandırma
 				colorScheme[variant][colorSchemeProp], // Renk ve stil
 				className, // Ekstra sınıflar

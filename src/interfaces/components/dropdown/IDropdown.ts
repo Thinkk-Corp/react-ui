@@ -1,10 +1,6 @@
+import type { ICustomStylesConfig } from "@/interfaces/types/ICustomStyleConfig.ts";
 import type { IPosition, ISize } from "@/interfaces/types/IMetrics.ts";
 import type { ReactNode } from "react";
-
-export interface ICustomStylesConfig {
-	defaultStyleActive?: boolean;
-	customStyle?: string;
-}
 
 export interface IDropdownStyle {
 	trigger?: ICustomStylesConfig;

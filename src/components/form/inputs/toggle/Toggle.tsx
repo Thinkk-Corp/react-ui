@@ -1,5 +1,5 @@
 import { IconBox } from "@/components/iconbox/IconBox.tsx";
-import type { IRadioBox } from "@/interfaces/components/inputs/IRadioBox.ts";
+import type { IRadioBox } from "@/interfaces/components/form/inputs/IRadioBox.ts";
 import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import { icons } from "@/plugins/Icons.tsx";
 import classNames from "classnames";

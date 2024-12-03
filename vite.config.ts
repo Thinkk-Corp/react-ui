@@ -21,10 +21,12 @@ export default defineConfig({
 		rollupOptions: {
 			external: [...Object.keys(peerDependencies)], // Defines external dependencies for Rollup bundling.
 		},
-		sourcemap: false, // Generates source maps for debugging.
+		sourcemap: true, // Generates source maps for debugging.
 		emptyOutDir: true,
 	},
-
+	optimizeDeps: {
+		exclude: ["react-hook-form", "zod"],
+	},
 	resolve: {
 		alias: {
 			"@": path.resolve(__dirname, "./src"),

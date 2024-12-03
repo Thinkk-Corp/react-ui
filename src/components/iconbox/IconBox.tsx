@@ -9,6 +9,7 @@ export const IconBox = ({
 	color = "color-primary",
 	className,
 	children,
+	radius = "lg",
 	...props
 }: IIconBox) => {
 	// Tailwind CSS genişlik ve yükseklik değerleri için boyut haritası
@@ -27,7 +28,8 @@ export const IconBox = ({
 		<div
 			data-testid={"icon-box-container"}
 			className={classNames(
-				"flex items-center justify-center rounded-lg w-max h-max cursor-pointer ", // Temel stil sınıfları
+				"flex items-center justify-center w-max h-max cursor-pointer",
+				`rounded-${radius}`,
 				{
 					"transition-transform transform hover:bg-action-hover p-2": isHoverable, // Hover efekti
 				},
