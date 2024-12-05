@@ -1,10 +1,12 @@
 import type { IDropdownTrigger } from "@/interfaces/components/dropdown/IDropdownTrigger.ts";
+import { keyboardUtil } from "@/utils/KeyboardUtil.ts";
 import classNames from "classnames";
 import { forwardRef } from "react";
 
-export const DropdownTrigger = forwardRef<HTMLDivElement, IDropdownTrigger>(({ isOpen, setIsOpen, style, children }, ref) => {
+export const DropdownTrigger = forwardRef<HTMLButtonElement, IDropdownTrigger>(({ isOpen, setIsOpen, style, children }, ref) => {
 	return (
-		<div
+		<button
+			type={"button"}
 			data-testid={"dropdown-trigger"}
 			className={classNames(
 				{
@@ -16,11 +18,19 @@ export const DropdownTrigger = forwardRef<HTMLDivElement, IDropdownTrigger>(({ i
 				style?.customStyle,
 			)}
 			ref={ref}
-			onKeyDown={() => {}}
+			onKeyDown={(e) =>
+				keyboardUtil({
+					e,
+					key: "Enter",
+					callback: () => {
+						setIsOpen?.(!isOpen);
+					},
+				})
+			}
 			onClick={() => setIsOpen?.(!isOpen)}
 		>
 			{children}
-		</div>
+		</button>
 	);
 });
 

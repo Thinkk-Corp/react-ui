@@ -16,9 +16,9 @@ describe("Select Component", () => {
 
 	// Bileşenin varsayılan props'larla doğru render edildiğini kontrol eder
 	it("should render correctly with default props", () => {
-		render(<Select />);
+		render(<Select options={defaultOptions} />);
 		expect(screen.getByTestId("select-container")).toBeInTheDocument();
-		expect(screen.getByText("Seçiniz")).toBeInTheDocument();
+		expect(screen.getByTestId("select-input")).toHaveValue("Seçiniz");
 	});
 
 	// Dropdown açıldığında seçeneklerin görüntülendiğini kontrol eder
@@ -72,7 +72,7 @@ describe("Select Component", () => {
 	// Hatalı durumlarda hata stillerinin gösterildiğini kontrol eder
 	it("should display error styles when isInvalid is true", () => {
 		render(<Select isInvalid />);
-		expect(screen.getByTestId("select-input")).toHaveAttribute("data-invalid", "true");
+		expect(screen.getByTestId("input-wrapper")).toHaveAttribute("data-invalid", "true");
 	});
 
 	// Hiç seçenek olmadığında 'İçerik Bulunamadı' yazısının gösterildiğini kontrol eder
@@ -91,5 +91,33 @@ describe("Select Component", () => {
 		setTimeout(() => {
 			expect(input).toHaveValue("Option 1");
 		}, 100);
+	});
+
+	// Enter tuşuna basıldığında seçeneğin seçildiğini kontrol eder
+	it("should select an option when Enter is pressed", () => {
+		const handleChange = jest.fn();
+		render(<Select options={defaultOptions} onChange={handleChange} />);
+		fireEvent.click(screen.getByTestId("select-input"));
+		const option = screen.getByText("Option 1");
+		fireEvent.keyDown(option, { key: "Enter", code: "Enter" });
+		expect(handleChange).toHaveBeenCalledWith("1");
+	});
+
+	// ArrowUp ve ArrowDown tuşlarına basıldığında seçenekler arasında geçiş yapıldığını kontrol eder
+	it("should navigate through options with ArrowUp and ArrowDown", () => {
+		render(<Select options={defaultOptions} isSearchable />);
+		fireEvent.click(screen.getByTestId("select-input"));
+
+		const selectOptions = screen.getAllByTestId("select-option");
+
+		// ArrowDown ile seçenekler arasında geçişi test et
+		fireEvent.keyDown(screen.getByTestId("select-input"), { key: "ArrowDown", code: "ArrowDown" });
+		expect(selectOptions[1]).toHaveClass("bg-primary-main");
+
+		fireEvent.keyDown(screen.getByTestId("select-input"), { key: "ArrowDown", code: "ArrowDown" });
+		expect(selectOptions[2]).toHaveClass("bg-primary-main");
+
+		fireEvent.keyDown(screen.getByTestId("select-input"), { key: "ArrowUp", code: "ArrowUp" });
+		expect(selectOptions[1]).toHaveClass("bg-primary-main");
 	});
 });

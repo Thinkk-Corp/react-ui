@@ -3,8 +3,8 @@ import { Input } from "@/components/form/inputs/input/Input.tsx";
 import { IconBox } from "@/components/icon-box/IconBox.tsx";
 import type { IOption, ISelect } from "@/interfaces/components/form/inputs/ISelect.ts";
 import { icons } from "@/plugins/Icons.tsx";
+import { keyboardUtil } from "@/utils/KeyboardUtil.ts";
 import classNames from "classnames";
-import { useRef } from "react";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
 
@@ -24,10 +24,9 @@ export const Select = ({
 	const [isOpen, setIsOpen] = useState(false);
 	const [options, setOptions] = useState<IOption[]>([defaultOption]);
 	const [selectedValue, setSelectedValue] = useState<string>("");
+	const [beingSelectedValue, setBeingSelectedValue] = useState<string>("");
 	const [searchValue, setSearchValue] = useState<string>("");
 	const [filteredOptions, setFilteredOptions] = useState<IOption[]>(options);
-
-	const selectInputRef = useRef<HTMLDivElement>(null);
 
 	// Helper: Label Bul
 	const findLabelByValue = useCallback(
@@ -76,6 +75,30 @@ export const Select = ({
 		</IconBox>
 	);
 
+	const changeItem = (direction: "up" | "down"): void => {
+		// Eğer seçili öğe filtrelenmiş lstede yok ise filtrelenmiş listede ilk öğeyi seç
+		if (!filteredOptions.find((option) => option.value === beingSelectedValue)) {
+			setBeingSelectedValue(filteredOptions[0].value);
+		}
+
+		const selectedValueIndex = filteredOptions.findIndex((option) => option.value === beingSelectedValue);
+
+		// Eğer ilk ya da son öğedeysen, başka bir öğeye geçme
+		if (selectedValueIndex === -1) return; // Seçili değer bulunamadıysa çık
+
+		// Yukarı ve aşağı yönde geçişi kontrol et
+		let newSelectedValueIndex: number;
+
+		if (direction === "down") {
+			newSelectedValueIndex = selectedValueIndex === filteredOptions.length - 1 ? selectedValueIndex : selectedValueIndex + 1;
+		} else {
+			newSelectedValueIndex = selectedValueIndex === 0 ? selectedValueIndex : selectedValueIndex - 1;
+		}
+
+		// Seçilen değeri güncelle
+		setBeingSelectedValue(filteredOptions[newSelectedValueIndex].value);
+	};
+
 	// Props ile Gelen Seçenekleri Yükleme
 	useEffect(() => {
 		if (optionsProp && optionsProp.length > 0) {
@@ -101,6 +124,7 @@ export const Select = ({
 
 	useEffect(() => {
 		setSearchValue(findLabelByValue(selectedValue));
+		setBeingSelectedValue(selectedValue);
 	}, [selectedValue]);
 
 	useEffect(() => {
@@ -108,51 +132,50 @@ export const Select = ({
 		setSelectedValue(value);
 	}, [value, selectedValue]);
 
+	useEffect(() => {
+		if (isOpen) return;
+		setBeingSelectedValue(selectedValue);
+	}, [isOpen]);
+
 	return (
 		<div
 			data-toggle={isOpen}
 			data-testid="select-container"
-			className={classNames("relative z-40 isolate group min-w-60 inline-block", className)}
+			className={classNames("relative group min-w-60 inline-block", className)}
 		>
 			{/* Seçim veya Arama Alanı */}
-			{!isSearchable ? (
-				<div
-					onBlur={handleBlur}
-					ref={selectInputRef}
-					data-testid={"select-input"}
-					onKeyDown={() => {}}
-					onClick={toggleDropdown}
-					id={id}
-					data-invalid={isInvalid}
-					className={classNames(
-						"h-10 w-full flex items-center justify-between px-3 rounded-lg cursor-pointer",
-						"bg-transparent border border-custom-divider",
-						"data-[invalid='true']:border-error-main",
-						"data-[invalid='false']:hover:border-primary-main",
-						"data-[invalid='false']:group-data-[toggle='true']:border-primary-main",
-					)}
-				>
-					<span className="text-body1">{searchValue}</span>
-					{iconRenderer()}
-				</div>
-			) : (
-				<Input
-					onBlur={handleBlur}
-					data-testid={"select-input"}
-					icon={iconRenderer()}
-					isInvalid={isInvalid}
-					value={searchValue}
-					onChange={handleSearchChange}
-					onClick={toggleDropdown}
-					className="w-full"
-				/>
-			)}
+			<Input
+				readOnly={!isSearchable}
+				onBlur={handleBlur}
+				id={id}
+				data-testid={"select-input"}
+				icon={iconRenderer()}
+				isInvalid={isInvalid}
+				onKeyDown={(e) => {
+					e.preventDefault();
+					keyboardUtil({ e, key: "Enter", callback: toggleDropdown });
+					keyboardUtil({ e, key: "ArrowUp", callback: () => changeItem("up") });
+					keyboardUtil({ e, key: "ArrowDown", callback: () => changeItem("down") });
+					if (!isOpen) return;
+					keyboardUtil({
+						e,
+						key: "Enter",
+						callback: () => {
+							handleSelect(beingSelectedValue);
+						},
+					});
+				}}
+				value={searchValue}
+				onChange={handleSearchChange}
+				onClick={toggleDropdown}
+				className="w-full z-40"
+			/>
 
 			{/* Seçenek Listesi */}
 			<ul
 				data-testid="select-menu"
 				className={classNames(
-					"absolute overflow-hidden w-full mt-1 max-h-80 overflow-y-auto rounded-lg shadow-md border divide-y",
+					"absolute overflow-hidden z-50 w-full mt-1 max-h-80 overflow-y-auto rounded-lg shadow-md border divide-y",
 					"bg-paper-card divide-custom-divider border-custom-card-border",
 					{ hidden: !isOpen },
 				)}
@@ -161,12 +184,20 @@ export const Select = ({
 					filteredOptions.map((option) => (
 						<li
 							data-testid={"select-option"}
-							onKeyDown={() => {}}
+							onKeyDown={(e) =>
+								keyboardUtil({
+									e,
+									key: "Enter",
+									callback: () => {
+										handleSelect(option.value);
+									},
+								})
+							}
 							key={option.value}
 							onClick={() => handleSelect(option.value)}
 							className={classNames("px-3 py-2 cursor-pointer", {
-								"bg-primary-main text-white": selectedValue === option.value,
-								"hover:bg-action-hover text-color-primary": selectedValue !== option.value,
+								"bg-primary-main text-white": beingSelectedValue === option.value,
+								"hover:bg-action-hover text-color-primary": beingSelectedValue !== option.value,
 							})}
 						>
 							{option.label}

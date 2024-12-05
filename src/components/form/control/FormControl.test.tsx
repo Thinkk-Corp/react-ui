@@ -15,7 +15,7 @@ describe("FormControl Component", () => {
 	// Bileşenin herhangi bir hata olmadan render edilip edilmediğini test ediyoruz.
 	it("renders the component without crashing", () => {
 		render(<FormControl {...defaultProps} />);
-		expect(screen.getByTestId("control")).toBeInTheDocument();
+		expect(screen.getByTestId("form-control")).toBeInTheDocument();
 		expect(screen.getByTestId("input")).toBeInTheDocument();
 	});
 
@@ -70,7 +70,7 @@ describe("FormControl Component", () => {
 	// `className` prop'u ile verilen ek sınıfların doğru şekilde render edilip edilmediğini test ediyoruz.
 	it("renders additional class names passed via the className prop", () => {
 		render(<FormControl {...defaultProps} className="custom-class" />);
-		const container = screen.getByTestId("control");
+		const container = screen.getByTestId("form-control");
 		expect(container).toHaveClass("custom-class");
 	});
 });

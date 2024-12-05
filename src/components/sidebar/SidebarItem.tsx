@@ -2,6 +2,7 @@ import { redirectNative } from "@/actions/client/RedirectNative.ts";
 import { IconBox } from "@/components/icon-box/IconBox.tsx";
 import type { ISidebarMenuAction, ISidebarMenuItem } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
 import { useUIStore } from "@/stores/UIStore.ts";
+import { keyboardUtil } from "@/utils/KeyboardUtil.ts";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { useLocation } from "react-router-dom";
@@ -35,7 +36,7 @@ export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild
 		<li
 			data-testid={"sidebar-item-container"}
 			className="flex items-center gap-2"
-			onKeyDown={() => {}}
+			onKeyDown={(e) => keyboardUtil({ e, key: "Enter", callback: () => handleMenuClick(menu.action) })}
 			onClick={() => handleMenuClick(menu.action)}
 		>
 			<div
