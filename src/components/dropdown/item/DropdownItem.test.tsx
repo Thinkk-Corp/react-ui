@@ -1,4 +1,4 @@
-import { DropdownItem } from "@/components/dropdown/DropdownItem";
+import { DropdownItem } from "@/components/dropdown/item/DropdownItem.tsx";
 import type { ICustomStylesConfig } from "@/interfaces/types/ICustomStyleConfig.ts";
 import { render, screen } from "@testing-library/react";
 

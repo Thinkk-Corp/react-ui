@@ -1,5 +1,5 @@
-import { DropdownItem } from "@/components/dropdown/DropdownItem.tsx";
-import { DropdownTrigger } from "@/components/dropdown/DropdownTrigger.tsx";
+import { DropdownItem } from "@/components/dropdown/item/DropdownItem.tsx";
+import { DropdownTrigger } from "@/components/dropdown/trigger/DropdownTrigger.tsx";
 import type { IDropdown } from "@/interfaces/components/dropdown/IDropdown.ts";
 import type { IPosition, ISize } from "@/interfaces/types/IMetrics.ts";
 import { useThemeStore } from "@/stores/ThemeStore.ts";

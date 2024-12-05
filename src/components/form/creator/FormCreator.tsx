@@ -1,14 +1,13 @@
 import { Button } from "@/components/button/Button.tsx";
-import { Card } from "@/components/card/Card.tsx";
-import { CardAction } from "@/components/card/CardAction.tsx";
-import { CardBody } from "@/components/card/CardBody.tsx";
-import { CardHeader } from "@/components/card/CardHeader.tsx";
-import { FormControl } from "@/components/form/FormControl.tsx";
-import { InputPicker } from "@/components/form/InputPicker.tsx";
-import { IconBox } from "@/components/iconbox/IconBox.tsx";
+import { CardAction } from "@/components/card/action/CardAction.tsx";
+import { CardBody } from "@/components/card/body/CardBody.tsx";
+import { CardHeader } from "@/components/card/header/CardHeader.tsx";
+import { Card } from "@/components/card/main/Card.tsx";
+import { FormControl } from "@/components/form/control/FormControl.tsx";
+import { FormPicker } from "@/components/form/picker/FormPicker.tsx";
+import { IconBox } from "@/components/icon-box/IconBox.tsx";
 import type { IFormButton, IFormCreator, IFormField } from "@/interfaces/components/form/IFormCreator.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
 import { Controller, type DefaultValues, type FieldValues, type Path, useForm } from "react-hook-form";
 
 export const FormCreator = <T extends FieldValues>({
@@ -19,13 +18,13 @@ export const FormCreator = <T extends FieldValues>({
 	header,
 	cardStyles,
 	buttons,
-	defaultValues,
+	initialValues,
 	className,
 	size = "md",
 }: IFormCreator<T>) => {
 	"use no memo";
 
-	const getDefaultValue = ({
+	const getInitialValue = ({
 		key,
 		parentKey,
 	}: {
@@ -35,22 +34,22 @@ export const FormCreator = <T extends FieldValues>({
 		if (parentKey && fields[parentKey] && "combined" in fields[parentKey]) {
 			const parentField = fields[parentKey];
 			if (parentField.children && key in parentField.children) {
-				return parentField.children[key].defaultValue;
+				return parentField.children[key][typeof parentField.children[key].checked === "undefined" ? "initialValue" : "checked"];
 			}
 		}
 		if (key in fields && "type" in fields[key]) {
-			return fields[key].defaultValue;
+			return fields[key][typeof fields[key].checked === "undefined" ? "initialValue" : "checked"];
 		}
 	};
 
-	const getDefaultValues = Object.entries(fields).reduce<DefaultValues<T>>(
+	const getInitialValues = Object.entries(fields).reduce<DefaultValues<T>>(
 		(acc, [key, field]) => {
 			if ("combined" in field && field.combined && field.children) {
 				for (const [childKey] of Object.entries(field.children)) {
-					acc[childKey] = getDefaultValue({ parentKey: key as keyof typeof fields, key: childKey });
+					acc[childKey] = getInitialValue({ parentKey: key as keyof typeof fields, key: childKey });
 				}
 			} else {
-				acc[key] = getDefaultValue({ key: key as keyof typeof fields });
+				acc[key] = getInitialValue({ key: key as keyof typeof fields });
 			}
 			return acc;
 		},
@@ -61,10 +60,9 @@ export const FormCreator = <T extends FieldValues>({
 		control,
 		handleSubmit,
 		reset,
-		watch,
 		formState: { errors },
 	} = useForm<T>({
-		defaultValues: defaultValues ?? getDefaultValues,
+		defaultValues: initialValues ?? getInitialValues,
 		resolver: zodResolver(validationSchema),
 		reValidateMode: "onBlur",
 		mode: "onBlur",
@@ -77,23 +75,21 @@ export const FormCreator = <T extends FieldValues>({
 		button.action?.();
 	};
 
-	const watchh = watch();
-
-	useEffect(() => {
-		console.log(watchh);
-	}, [watchh]);
-
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} noValidate>
-			<Card size={size} className={className} styles={cardStyles}>
+			<Card data-testid={"form-creator"} size={size} className={className} styles={cardStyles}>
 				{(header || icon) && (
-					<CardHeader className="flex items-center gap-3">
+					<CardHeader data-testid={"form-header-section"} className="flex items-center gap-3">
 						{icon && (
-							<IconBox className={"shadow-2 p-2"} radius="full">
+							<IconBox data-testid={"form-icon"} className={"shadow-2 p-2"} radius="full">
 								{icon}
 							</IconBox>
 						)}
-						{header && <h4 className="text-h4">{header}</h4>}
+						{header && (
+							<h4 data-testid={"form-header"} className="text-h4">
+								{header}
+							</h4>
+						)}
 					</CardHeader>
 				)}
 
@@ -102,7 +98,7 @@ export const FormCreator = <T extends FieldValues>({
 						// Handling combined fields with children
 						if ("children" in field && field.combined && field.children) {
 							return (
-								<div key={fieldKey} className="flex-col sm:flex-row flex items-start gap-5">
+								<div key={fieldKey} data-testid={"combined-fields"} className="flex-col sm:flex-row flex items-start gap-5">
 									{Object.entries(field.children).map(([childKey, childField]) => (
 										<Controller
 											key={childKey}
@@ -116,7 +112,12 @@ export const FormCreator = <T extends FieldValues>({
 													error={errors[childKey]?.message}
 													className={"w-full sm:w-1/2"}
 												>
-													<InputPicker isInvalid={!!errors[childKey]} control={fieldControl} field={childField as IFormField} />
+													<FormPicker
+														data-testid={"form-input-picker"}
+														isInvalid={!!errors[childKey]}
+														control={fieldControl}
+														field={childField as IFormField}
+													/>
 												</FormControl>
 											)}
 										/>
@@ -133,8 +134,18 @@ export const FormCreator = <T extends FieldValues>({
 									control={control} // Ensure control is passed correctly
 									disabled={field.disabled}
 									render={({ field: fieldControl }) => (
-										<FormControl label={field.label} isRequired={field.required} error={errors[fieldKey]?.message}>
-											<InputPicker isInvalid={!!errors[fieldKey]} control={fieldControl} field={field as IFormField} />
+										<FormControl
+											data-testid="form-control"
+											label={field.label}
+											isRequired={field.required}
+											error={errors[fieldKey]?.message}
+										>
+											<FormPicker
+												data-testid={"form-input-picker"}
+												isInvalid={!!errors[fieldKey]}
+												control={fieldControl}
+												field={field as IFormField}
+											/>
 										</FormControl>
 									)}
 								/>

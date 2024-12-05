@@ -1,9 +1,7 @@
-import { IconBox } from "@/components/iconbox/IconBox.tsx";
 import type { IRadioBox } from "@/interfaces/components/form/inputs/IRadioBox.ts";
 import type { ISize } from "@/interfaces/types/IMetrics.ts";
-import { icons } from "@/plugins/Icons.tsx";
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type ISizeSchema = Record<ISize, string>;
 
@@ -17,6 +15,8 @@ export type ISizeSchema = Record<ISize, string>;
  * @param checked
  * @param {string} [props.color="primary-main"] - Toggle seçili durumunda uygulanacak renk (Tailwind renk sınıfları ile uyumlu).
  * @param {ISize} [props.size="md"] - Toggle boyutu (`sm`, `md`, `lg`, `xl`, `2xl`).
+ * @param isInvalid
+ * @param value
  * @param {string} props.name - Toggle'un `name` özelliği (form grupları için).
  * @param {string} [props.className] - Ekstra Tailwind sınıfları eklemek için kullanılır.
  * @param {React.InputHTMLAttributes<HTMLInputElement>} props - HTML input elementine ait diğer özellikler.
@@ -24,19 +24,16 @@ export type ISizeSchema = Record<ISize, string>;
  * @returns {JSX.Element} Özelleştirilmiş bir toggle bileşeni.
  */
 export const Toggle = ({
-	size = "md",
-	checked = false,
+	size = "sm",
+	checked,
+	isInvalid,
+	value,
 	color = "primary-main",
 	name,
 	className,
 	...props
 }: IRadioBox): JSX.Element => {
 	const [isChecked, setIsChecked] = useState(checked);
-
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setIsChecked(e.target.checked);
-		props.onChange?.(e);
-	};
 
 	const sizeSchema: ISizeSchema = {
 		sm: "h-6 w-10",
@@ -54,13 +51,14 @@ export const Toggle = ({
 		"2xl": "h-12 w-12",
 	};
 
-	const iconSizeSchema: ISizeSchema = {
-		sm: "size-3",
-		md: "size-4",
-		lg: "size-5",
-		xl: "size-6",
-		"2xl": "size-7",
-	};
+	useEffect(() => {
+		if (typeof value === "undefined" || value === null) return;
+		setIsChecked(value);
+	}, [value]);
+
+	useEffect(() => {
+		setIsChecked(checked);
+	}, [checked]);
 
 	return (
 		<label
@@ -68,36 +66,20 @@ export const Toggle = ({
 			htmlFor={props.id}
 			className={classNames(
 				"relative inline-block cursor-pointer rounded-full bg-custom-divider transition [-webkit-tap-highlight-color:_transparent]",
-				{ [`bg-${color}`]: isChecked },
+				{ [`bg-${color}`]: isChecked && !isInvalid, "bg-error-dark": isInvalid }, // `checked` durumu burada doğru şekilde kontrol edilmelidir
 				sizeSchema[size],
 				className,
 			)}
 		>
-			<input
-				data-testid={"toggle-input"}
-				type="checkbox"
-				checked={isChecked}
-				onChange={handleChange}
-				{...props}
-				className="sr-only"
-			/>
+			<input data-testid={"toggle-input"} checked={isChecked} type="checkbox" {...props} className="sr-only" />
 			<span
-				data-testid={"toggle-iconbox"}
+				data-testid={"toggle-icon-box"}
 				className={classNames(
 					"absolute inset-y-0 z-10 m-1 inline-flex items-center justify-center rounded-full bg-white transition-transform",
-					{ "translate-x-full": isChecked, "translate-x-0": !isChecked },
 					iconBoxSizeSchema[size],
+					{ "translate-x-full": isChecked, "translate-x-0": !isChecked },
 				)}
-			>
-				<IconBox
-					data-testid={"toggle-icon"}
-					data-icon={isChecked ? "check" : "x"}
-					className={iconSizeSchema[size]}
-					color={"color-disabled"}
-				>
-					{icons.outline[isChecked ? "check" : "x"]}
-				</IconBox>
-			</span>
+			/>
 		</label>
 	);
 };

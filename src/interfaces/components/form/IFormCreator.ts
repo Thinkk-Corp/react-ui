@@ -8,10 +8,11 @@ import type { z } from "zod";
 export type IFormFieldValueTypes = boolean | string | number | undefined;
 
 export interface IDefaultFormField {
-	type: string;
+	type: "text" | "email" | "select" | "checkbox" | "radiobox" | "toggle" | "textarea";
 	label: string;
 	disabled?: boolean;
-	defaultValue: IFormFieldValueTypes;
+	checked?: boolean;
+	initialValue?: IFormFieldValueTypes;
 	placeholder?: string;
 	required?: boolean;
 	readonly?: boolean;
@@ -26,7 +27,7 @@ export interface IChildrenFormField {
 	combined?: boolean;
 	children?: Record<
 		string,
-		Pick<IDefaultFormField, "defaultValue" | "type" | "readonly" | "label" | "required" | "disabled" | "placeholder">
+		Pick<IDefaultFormField, "checked" | "initialValue" | "type" | "readonly" | "label" | "required" | "disabled" | "placeholder">
 	>;
 }
 
@@ -46,7 +47,7 @@ export interface IFormCreator<T> {
 	size?: ISize | "full";
 	fields: IFormFields;
 	onSubmit: () => Promise<void> | void;
-	defaultValues?: DefaultValues<T>;
+	initialValues?: DefaultValues<T>;
 	header?: string;
 	validationSchema: z.ZodObject<Record<string, z.ZodTypeAny>>;
 	icon?: ReactNode;

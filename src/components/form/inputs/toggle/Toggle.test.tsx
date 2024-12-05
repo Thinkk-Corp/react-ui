@@ -1,98 +1,71 @@
-import { Toggle } from "@/components/form/inputs/toggle/Toggle.tsx"; // Adjust the import path accordingly
 import { fireEvent, render, screen } from "@testing-library/react";
+import { Toggle } from "./Toggle"; // Gerekirse import yolunu düzenleyin
 
-describe("Toggle Component", () => {
-	it("renders with default props", () => {
-		render(<Toggle name="test-toggle" id="test-toggle" />);
+describe("Toggle Bileşeni", () => {
+	const defaultProps = {
+		onChange: jest.fn(),
+		onBlur: jest.fn(),
+	};
+
+	it("toggle doğru boyut ve renk ile render edilmelidir", () => {
+		render(<Toggle {...defaultProps} checked={false} color="primary-main" size="md" name="test-toggle" />);
+
+		// Toggle'ın doğru sınıflara sahip olup olmadığını kontrol et
+		const toggle = screen.getByTestId("toggle-label");
+		expect(toggle).toHaveClass("h-8 w-14"); // 'md' boyutunun sınıflarını kontrol et
+		expect(toggle).toHaveClass("bg-custom-divider"); // Varsayılan arka plan rengi
+	});
+
+	it("toggle seçili olduğunda arka plan renginin değiştiğini kontrol et", () => {
+		render(<Toggle {...defaultProps} checked={true} color="primary-main" size="md" name="test-toggle" />);
+
+		// Toggle'ın arka plan renginin seçili olduğunda doğru renge dönüştüğünü kontrol et
+		const toggle = screen.getByTestId("toggle-label");
+		expect(toggle).toHaveClass("bg-primary-main"); // Seçili durumda renk
+
+		// Şimdi, toggle'ı kaldır ve arka plan renginin geri dönüp dönmediğini kontrol et
+		fireEvent.click(toggle);
+		expect(toggle).toHaveClass("bg-custom-divider"); // Seçili değilken varsayılan renk
+	});
+
+	it("toggle'a tıklanıldığında durum değişiyor mu?", () => {
+		const { rerender } = render(<Toggle {...defaultProps} checked={false} color="primary-main" size="md" name="test-toggle" />);
 
 		const toggle = screen.getByTestId("toggle-label");
-		const input = screen.getByTestId("toggle-input");
-		const iconBox = screen.getByTestId("toggle-iconbox");
-
-		// Check if the default checkbox state is unchecked
-		expect(input).not.toBeChecked();
-		// Check if the initial background is the default (not the checked color)
+		// Başlangıçta seçili değil
 		expect(toggle).toHaveClass("bg-custom-divider");
-		// Check if the default icon is the 'x' icon
-		expect(iconBox).toHaveClass("translate-x-0");
-		expect(screen.getByTestId("toggle-icon")).toHaveAttribute("data-icon", "x");
-	});
 
-	it("renders with checked state", () => {
-		render(<Toggle name="test-toggle" id="test-toggle" checked={true} />);
-
-		const toggle = screen.getByTestId("toggle-label");
-		const input = screen.getByTestId("toggle-input");
-		const iconBox = screen.getByTestId("toggle-iconbox");
-
-		// Check if the checkbox is initially checked
-		expect(input).toBeChecked();
-		// Check if the background color is changed when checked
-		expect(toggle).toHaveClass("bg-primary-main");
-		// Check if the icon is the 'check' icon
-		expect(iconBox).toHaveClass("translate-x-full");
-		expect(screen.getByTestId("toggle-icon")).toHaveAttribute("data-icon", "check");
-	});
-
-	it("toggles on click", () => {
-		render(<Toggle name="test-toggle" id="test-toggle" />);
-
-		const toggle = screen.getByTestId("toggle-label");
-		const input = screen.getByTestId("toggle-input");
-		const iconBox = screen.getByTestId("toggle-iconbox");
-
-		// Initial state: unchecked
-		expect(input).not.toBeChecked();
-		expect(iconBox).toHaveClass("translate-x-0");
-		expect(screen.getByTestId("toggle-icon")).toHaveAttribute("data-icon", "x");
-
-		// Simulate a click event to check the toggle
+		// Toggle'ı tıkla ve durumu kontrol et
 		fireEvent.click(toggle);
-
-		// After click: checked
-		expect(input).toBeChecked();
-		expect(iconBox).toHaveClass("translate-x-full");
-		expect(screen.getByTestId("toggle-icon")).toHaveAttribute("data-icon", "check");
-
-		// Simulate another click event to uncheck the toggle
-		fireEvent.click(toggle);
-
-		// After second click: unchecked
-		expect(input).not.toBeChecked();
-		expect(iconBox).toHaveClass("translate-x-0");
-		expect(screen.getByTestId("toggle-icon")).toHaveAttribute("data-icon", "x");
+		rerender(<Toggle {...defaultProps} checked={true} color="primary-main" size="md" name="test-toggle" />);
+		expect(toggle).toHaveClass("bg-primary-main"); // Seçili durumda olması gerekiyor
 	});
 
-	it("applies custom className", () => {
-		render(<Toggle name="test-toggle" id="test-toggle" className="custom-class" />);
+	it("boyut prop'ine göre doğru ikon boyutunun render edilmesi", () => {
+		render(<Toggle {...defaultProps} checked={true} color="primary-main" size="lg" name="test-toggle" />);
 
-		const toggle = screen.getByTestId("toggle-label");
-
-		// Check if the custom class is applied
-		expect(toggle).toHaveClass("custom-class");
+		const iconBox = screen.getByTestId("toggle-icon-box");
+		expect(iconBox).toHaveClass("h-8 w-8"); // 'lg' boyutunun sınıflarını kontrol et
 	});
 
-	it("applies custom color when checked", () => {
-		render(<Toggle name="test-toggle" id="test-toggle" checked={true} color="secondary-main" />);
+	it("value prop'u undefined veya null olduğunda durum değişmemeli", () => {
+		const { rerender } = render(
+			<Toggle {...defaultProps} checked={false} color="primary-main" size="md" name="test-toggle" value={undefined} />,
+		);
 
 		const toggle = screen.getByTestId("toggle-label");
+		// Başlangıçta seçili değil
+		expect(toggle).toHaveClass("bg-custom-divider");
 
-		// Check if the correct color class is applied when checked
-		expect(toggle).toHaveClass("bg-secondary-main");
+		// value undefined olduğunda toggle durumunun değişmemesi gerektiğini kontrol et
+		rerender(<Toggle {...defaultProps} checked={false} color="primary-main" size="md" name="test-toggle" value={null} />);
+		expect(toggle).toHaveClass("bg-custom-divider"); // Hala seçili değil
 	});
 
-	it("fires onChange handler on click", () => {
-		const onChangeMock = jest.fn();
-
-		render(<Toggle name="test-toggle" id="test-toggle" onChange={onChangeMock} />);
+	it("isInvalid true olduğunda hata durumu uygulanmalı", () => {
+		render(<Toggle {...defaultProps} checked={false} color="primary-main" size="md" name="test-toggle" isInvalid={true} />);
 
 		const toggle = screen.getByTestId("toggle-label");
-
-		// Simulate click and verify onChange is called
-		fireEvent.click(toggle);
-		expect(onChangeMock).toHaveBeenCalledTimes(1);
-
-		fireEvent.click(toggle);
-		expect(onChangeMock).toHaveBeenCalledTimes(2);
+		expect(toggle).toHaveClass("bg-error-dark"); // Hata durumu rengi kontrol et
 	});
 });

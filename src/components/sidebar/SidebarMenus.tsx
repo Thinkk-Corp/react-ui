@@ -1,4 +1,4 @@
-import { IconBox } from "@/components/iconbox/IconBox.tsx";
+import { IconBox } from "@/components/icon-box/IconBox.tsx";
 import { SidebarItem } from "@/components/sidebar/SidebarItem.tsx";
 import type { ISidebarMenu, ISidebarMenuItem } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
 import { icons } from "@/plugins/Icons.tsx";

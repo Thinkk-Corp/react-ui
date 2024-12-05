@@ -2,12 +2,13 @@ import type { IRadioBox } from "@/interfaces/components/form/inputs/IRadioBox.ts
 import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import { icons } from "@/plugins/Icons.tsx";
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Checkbox = ({
 	color = "primary-main",
 	checked,
 	name,
+	value,
 	isInvalid = false,
 	size = "md",
 	id,
@@ -32,10 +33,14 @@ export const Checkbox = ({
 		"2xl": "w-9 h-9",
 	};
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setIsChecked(e.target.checked);
-		props.onChange?.(e);
-	};
+	useEffect(() => {
+		setIsChecked(checked);
+	}, [checked]);
+
+	useEffect(() => {
+		if (typeof value === "undefined" || value === null) return;
+		setIsChecked(Boolean(value));
+	}, [value]);
 
 	return (
 		<label
@@ -43,12 +48,12 @@ export const Checkbox = ({
 			data-invalid={isInvalid}
 			htmlFor={id}
 			className={classNames(
-				"relative inline-block border rounded",
+				"relative appearance-none inline-block border rounded-md",
+				"data-[invalid='false']:border-custom-divider",
+				"data-[invalid='true']:border-error-dark",
 				{
 					[`bg-${color}`]: isChecked,
-					"data-[invalid='false']:border-custom-divider": !isChecked,
 				},
-				"data-[invalid='true']:border-error-dark",
 				sizeSchema[size],
 				className,
 			)}
@@ -56,17 +61,16 @@ export const Checkbox = ({
 			<input
 				id={id}
 				data-testid={"checkbox-input"}
+				{...props}
 				type="checkbox"
 				name={name}
-				{...props}
 				checked={isChecked}
-				onChange={handleChange}
 				className={classNames("appearance-none sr-only absolute inset-0")}
 			/>
 			{isChecked && (
 				<div
 					data-testid={"checkbox-check"}
-					className={classNames("absolute inset-0 flex justify-center items-center transition-all ")}
+					className={classNames("absolute inset-0 flex justify-center items-center transition-all")}
 				>
 					<div data-testid={"check-icon"} className={classNames("text-white", iconSizeScheme[size])}>
 						{icons.outline.check}

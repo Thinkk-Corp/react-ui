@@ -1,4 +1,4 @@
-import { DropdownTrigger } from "@/components/dropdown/DropdownTrigger";
+import { DropdownTrigger } from "@/components/dropdown/trigger/DropdownTrigger.tsx";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 describe("DropdownTrigger Bileşeni", () => {

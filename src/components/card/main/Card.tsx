@@ -1,6 +1,6 @@
-import { CardAction } from "@/components/card/CardAction.tsx";
-import { CardBody } from "@/components/card/CardBody.tsx";
-import { CardHeader } from "@/components/card/CardHeader.tsx";
+import { CardAction } from "@/components/card/action/CardAction.tsx";
+import { CardBody } from "@/components/card/body/CardBody.tsx";
+import { CardHeader } from "@/components/card/header/CardHeader.tsx";
 import type { ICard } from "@/interfaces/components/card/ICard.ts";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
 import classNames from "classnames";
@@ -19,7 +19,7 @@ import { Children, type ReactElement, cloneElement, isValidElement } from "react
  * @param {string} [props.className] - Ekstra CSS sınıfları.
  * @returns {JSX.Element} - Card bileşeni JSX çıktısı.
  */
-export const Card = ({ size = "md", children, styles, className }: ICard): JSX.Element => {
+export const Card = ({ size = "md", children, styles, className = "" }: ICard): JSX.Element => {
 	const allowedComponents = [CardHeader, CardBody, CardAction];
 
 	const theme = useThemeStore((state) => state.theme);

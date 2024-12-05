@@ -1,6 +1,6 @@
-import { Dropdown, positionSchema } from "@/components/dropdown/Dropdown.tsx";
-import { DropdownItem } from "@/components/dropdown/DropdownItem.tsx";
-import { DropdownTrigger } from "@/components/dropdown/DropdownTrigger.tsx";
+import { DropdownItem } from "@/components/dropdown/item/DropdownItem.tsx";
+import { Dropdown, positionSchema } from "@/components/dropdown/main/Dropdown.tsx";
+import { DropdownTrigger } from "@/components/dropdown/trigger/DropdownTrigger.tsx";
 import type { IDropdownStyle } from "@/interfaces/components/dropdown/IDropdown.ts";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";

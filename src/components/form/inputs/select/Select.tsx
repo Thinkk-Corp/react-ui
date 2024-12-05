@@ -1,10 +1,9 @@
 import { getOptionsAction } from "@/actions/server/GetOptionsAction.ts";
 import { Input } from "@/components/form/inputs/input/Input.tsx";
-import { IconBox } from "@/components/iconbox/IconBox.tsx";
+import { IconBox } from "@/components/icon-box/IconBox.tsx";
 import type { IOption, ISelect } from "@/interfaces/components/form/inputs/ISelect.ts";
 import { icons } from "@/plugins/Icons.tsx";
 import classNames from "classnames";
-import type React from "react";
 import { useRef } from "react";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
@@ -15,7 +14,6 @@ export const Select = ({
 	className,
 	isInvalid = false,
 	id,
-	defaultValue,
 	value,
 	onChange,
 	onClick,
@@ -25,7 +23,7 @@ export const Select = ({
 	const defaultOption = { value: "", label: "Seçiniz" };
 	const [isOpen, setIsOpen] = useState(false);
 	const [options, setOptions] = useState<IOption[]>([defaultOption]);
-	const [selectedValue, setSelectedValue] = useState<string>(defaultValue || "");
+	const [selectedValue, setSelectedValue] = useState<string>("");
 	const [searchValue, setSearchValue] = useState<string>("");
 	const [filteredOptions, setFilteredOptions] = useState<IOption[]>(options);
 
@@ -65,9 +63,11 @@ export const Select = ({
 	// Blur Olayı
 	const handleBlur = () => {
 		if (searchValue !== findLabelByValue(selectedValue)) setSearchValue(findLabelByValue(selectedValue));
-		setFilteredOptions(options);
-		onBlur?.();
-		setTimeout(() => setIsOpen(false), 100);
+		setTimeout(() => {
+			setFilteredOptions(options);
+			setIsOpen(false);
+			onBlur?.();
+		}, 100);
 	};
 
 	const iconRenderer = () => (
@@ -75,22 +75,6 @@ export const Select = ({
 			{icons.outline[isOpen ? "chevron_up" : "chevron_down"]}
 		</IconBox>
 	);
-
-	const handleOutsideClick = useCallback(
-		(e: MouseEvent) => {
-			if (!selectInputRef.current || selectInputRef.current.contains(e.target as Node)) return;
-			setIsOpen(false);
-			onBlur?.();
-		},
-		[onBlur],
-	);
-
-	useEffect(() => {
-		window.addEventListener("click", handleOutsideClick);
-		return () => {
-			window.removeEventListener("click", handleOutsideClick);
-		};
-	}, [handleOutsideClick]);
 
 	// Props ile Gelen Seçenekleri Yükleme
 	useEffect(() => {
@@ -115,35 +99,29 @@ export const Select = ({
 		}
 	}, [optionsProp, endpoint]);
 
-	// Default Değer Güncellenirse
-	useEffect(() => {
-		if (!defaultValue || defaultValue === selectedValue) return;
-		setSelectedValue(defaultValue);
-	}, [defaultValue]);
-
 	useEffect(() => {
 		setSearchValue(findLabelByValue(selectedValue));
 	}, [selectedValue]);
 
 	useEffect(() => {
-		if (typeof value === "undefined") return;
+		if (typeof value === "undefined" || value === null || value === selectedValue) return;
 		setSelectedValue(value);
-	}, [value]);
+	}, [value, selectedValue]);
 
 	return (
 		<div
 			data-toggle={isOpen}
 			data-testid="select-container"
-			className={classNames("relative group min-w-60 inline-block", className)}
+			className={classNames("relative z-40 isolate group min-w-60 inline-block", className)}
 		>
 			{/* Seçim veya Arama Alanı */}
 			{!isSearchable ? (
 				<div
+					onBlur={handleBlur}
 					ref={selectInputRef}
 					data-testid={"select-input"}
 					onKeyDown={() => {}}
 					onClick={toggleDropdown}
-					onBlur={handleBlur}
 					id={id}
 					data-invalid={isInvalid}
 					className={classNames(
@@ -154,18 +132,18 @@ export const Select = ({
 						"data-[invalid='false']:group-data-[toggle='true']:border-primary-main",
 					)}
 				>
-					<span className="text-body1">{filteredOptions.length === 0 ? "Seçiniz" : searchValue}</span>
+					<span className="text-body1">{searchValue}</span>
 					{iconRenderer()}
 				</div>
 			) : (
 				<Input
+					onBlur={handleBlur}
 					data-testid={"select-input"}
 					icon={iconRenderer()}
 					isInvalid={isInvalid}
-					value={filteredOptions.length === 0 ? "Seçiniz" : searchValue}
+					value={searchValue}
 					onChange={handleSearchChange}
 					onClick={toggleDropdown}
-					onBlur={handleBlur}
 					className="w-full"
 				/>
 			)}

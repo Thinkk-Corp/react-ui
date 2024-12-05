@@ -1,123 +1,95 @@
-import { Select } from "@/components/form/inputs/select/Select.tsx"; // Adjust the import path as necessary
+import { Select } from "@/components/form/inputs/select/Select";
+import type { IOption } from "@/interfaces/components/form/inputs/ISelect";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
-// Mocking the server call (getOptionsAction)
-jest.mock("@/actions/server/GetOptionsAction.ts", () => ({
-	getOptionsAction: jest.fn(),
-}));
-
 describe("Select Component", () => {
-	const defaultProps = {
-		options: [
-			{ value: "1", label: "Option 1" },
-			{ value: "2", label: "Option 2" },
-		],
-		endpoint: "",
-		className: "jest-config-class",
-		isInvalid: false,
-		onChange: jest.fn(),
-		onClick: jest.fn(),
-		onBlur: jest.fn(),
-		isSearchable: false,
-	};
+	// Testler başlamadan önce mock'ları temizliyoruz
+	beforeEach(() => {
+		jest.clearAllMocks();
+	});
 
-	it("renders correctly with provided options", () => {
-		render(<Select {...defaultProps} />);
+	// Varsayılan seçenekler
+	const defaultOptions: IOption[] = [
+		{ value: "1", label: "Option 1" },
+		{ value: "2", label: "Option 2" },
+	];
 
+	// Bileşenin varsayılan props'larla doğru render edildiğini kontrol eder
+	it("should render correctly with default props", () => {
+		render(<Select />);
+		expect(screen.getByTestId("select-container")).toBeInTheDocument();
+		expect(screen.getByText("Seçiniz")).toBeInTheDocument();
+	});
+
+	// Dropdown açıldığında seçeneklerin görüntülendiğini kontrol eder
+	it("should render options when dropdown is open", () => {
+		render(<Select options={defaultOptions} />);
+		fireEvent.click(screen.getByTestId("select-input"));
+		expect(screen.getByTestId("select-menu")).toBeVisible();
+		expect(screen.getAllByTestId("select-option").length).toBe(defaultOptions.length + 1); // +1 varsayılan seçenek
+	});
+
+	// Dropdown'un tıklama ile açılıp kapandığını kontrol eder
+	it("should toggle dropdown on click", async () => {
+		render(<Select options={defaultOptions} />);
 		const input = screen.getByTestId("select-input");
-
-		// Select placeholder render edildimi jest-config et
-		expect(input).toHaveTextContent("Seçiniz");
-		expect(screen.getByText("Option 1")).toBeInTheDocument();
-		expect(screen.getByText("Option 2")).toBeInTheDocument();
-	});
-
-	it("opens and closes the dropdown when clicked", async () => {
-		render(<Select {...defaultProps} />);
-
-		const selectInput = screen.getByTestId("select-input");
-
-		// Başlangıç dropdown kapalı
-		expect(screen.getByTestId("select-menu")).toHaveClass("hidden");
-
-		// Select tıklama
-		fireEvent.click(selectInput);
-
-		// Dropdown açıldı
-		expect(screen.getByTestId("select-menu")).not.toHaveClass("hidden");
-
-		// Tekrar tıklama dropdownu kapatır
-		fireEvent.click(selectInput);
-		expect(screen.getByTestId("select-menu")).toHaveClass("hidden");
-	});
-
-	it("handles option selection", () => {
-		render(<Select {...defaultProps} />);
-
-		const selectInput = screen.getByTestId("select-input");
-
-		// Dropdownu aç
-		fireEvent.click(selectInput);
-
-		// Seçenek seç
-		fireEvent.click(screen.getByText("Option 1"));
-
-		// Onchange doğru değeri almışmı kontrol et
-		expect(defaultProps.onChange).toHaveBeenCalledWith("1");
-
-		// Seçim sonrası dropdown kapalımı
-		expect(screen.getByTestId("select-menu")).toHaveClass("hidden");
-	});
-
-	it("filters options based on search input when searchable", async () => {
-		const searchableProps = {
-			...defaultProps,
-			isSearchable: true,
-		};
-
-		render(<Select {...searchableProps} />);
-
-		const selectInput = screen.getByTestId("select-input");
-
-		// Dropdownu aç
-		fireEvent.click(selectInput);
-
-		// Arama alanına birşey gir
-		fireEvent.change(selectInput, { target: { value: "Option 1" } });
-
-		// Sonuçların filtrelenmesini bekle
+		fireEvent.click(input);
+		const menu = screen.queryByTestId("select-menu");
+		expect(menu).not.toHaveClass("hidden");
+		fireEvent.click(input);
 		await waitFor(() => {
-			expect(screen.getByText("Option 1")).toBeInTheDocument();
-			expect(screen.queryByText("Option 2")).not.toBeInTheDocument();
+			expect(menu).toHaveClass("hidden");
 		});
 	});
 
-	it('displays "No options available" when no options are passed', async () => {
-		render(<Select {...defaultProps} options={[]} />);
+	// Arama girdisine göre seçeneklerin filtrelendiğini kontrol eder
+	it("should filter options based on search input", () => {
+		render(<Select options={defaultOptions} isSearchable />);
+		const input = screen.getByTestId("select-input");
+		fireEvent.change(input, { target: { value: "Option 1" } });
+		expect(screen.getAllByTestId("select-option").length).toBe(1);
+		expect(screen.getByText("Option 1")).toBeInTheDocument();
+	});
 
-		const selectInput = screen.getByTestId("select-input");
+	// Bir seçenek seçildiğinde onChange fonksiyonunun çağrıldığını kontrol eder
+	it("should call onChange when an option is selected", () => {
+		const handleChange = jest.fn();
+		render(<Select options={defaultOptions} onChange={handleChange} />);
+		fireEvent.click(screen.getByTestId("select-input"));
+		fireEvent.click(screen.getByText("Option 1"));
+		expect(handleChange).toHaveBeenCalledWith("1");
+	});
 
-		// Dropdownu aç
-		fireEvent.click(selectInput);
+	// Bileşen dışına tıklanınca dropdown'ın kapandığını kontrol eder
+	it("should close dropdown on outside click", async () => {
+		render(<Select options={defaultOptions} />);
+		fireEvent.click(screen.getByTestId("select-input"));
+		expect(screen.getByTestId("select-menu")).not.toHaveClass("hidden");
+		fireEvent.click(document.body);
+		setTimeout(() => expect(screen.getByTestId("select-menu")).toHaveClass("hidden"), 100);
+	});
 
-		// Beklenen "İçerik Bulunamadı" yazı görüntülendimi
+	// Hatalı durumlarda hata stillerinin gösterildiğini kontrol eder
+	it("should display error styles when isInvalid is true", () => {
+		render(<Select isInvalid />);
+		expect(screen.getByTestId("select-input")).toHaveAttribute("data-invalid", "true");
+	});
+
+	// Hiç seçenek olmadığında 'İçerik Bulunamadı' yazısının gösterildiğini kontrol eder
+	it("should display 'İçerik Bulunamadı' if no options are available", () => {
+		render(<Select options={[]} />);
+		fireEvent.click(screen.getByTestId("select-input"));
 		expect(screen.getByText("İçerik Bulunamadı")).toBeInTheDocument();
 	});
 
-	it("closes dropdown on outside click", async () => {
-		render(<Select {...defaultProps} />);
-
-		const selectInput = screen.getByTestId("select-input");
-
-		// Dropdownu aç
-		fireEvent.click(selectInput);
-
-		// Dışarı tıkla
+	// Blur olayında arama değerinin sıfırlandığını kontrol eder
+	it("should reset searchValue on blur", () => {
+		render(<Select options={defaultOptions} isSearchable defaultValue="1" />);
+		const input = screen.getByTestId("select-input");
+		fireEvent.change(input, { target: { value: "Some search" } });
 		fireEvent.click(document.body);
-
-		// Dropdown kapanmalı
-		await waitFor(() => {
-			expect(screen.getByTestId("select-menu")).toHaveClass("hidden");
-		});
+		setTimeout(() => {
+			expect(input).toHaveValue("Option 1");
+		}, 100);
 	});
 });

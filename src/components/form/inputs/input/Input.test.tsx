@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 
 // Mock IconBox component
 // `IconBox` bileşeni testlerde gerçek bir bağımlılık olmadan kullanılabilmesi için mocklanmıştır.
-jest.mock("@/components/iconbox/IconBox.tsx", () => ({
+jest.mock("@/components/icon-box/IconBox.tsx", () => ({
 	IconBox: ({ children, ...props }: IIconBox) => <div {...props}>{children}</div>,
 }));
 

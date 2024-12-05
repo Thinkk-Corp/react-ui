@@ -1,4 +1,4 @@
-import type { IDropdownItem } from "@/interfaces/components/dropdown/IDropdownItem";
+import type { IDropdownItem } from "@/interfaces/components/dropdown/IDropdownItem.ts";
 import classNames from "classnames";
 
 export const DropdownItem = ({ style, children }: IDropdownItem) => {

@@ -1,4 +1,4 @@
-import { IconBox } from "@/components/iconbox/IconBox"; // İlgili import yolunu düzenleyin
+import { IconBox } from "@/components/icon-box/IconBox"; // İlgili import yolunu düzenleyin
 import { icons } from "@/plugins/Icons"; // İlgili import yolunu düzenleyin
 import { render, screen } from "@testing-library/react";
 

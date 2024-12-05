@@ -1,9 +1,9 @@
-import { DialogAction } from "@/components/dialog/DialogAction.tsx";
-import { DialogBody } from "@/components/dialog/DialogBody.tsx";
-import { DialogHeader } from "@/components/dialog/DialogHeader.tsx";
+import { DialogAction } from "@/components/dialog/action/DialogAction.tsx";
+import { DialogBody } from "@/components/dialog/body/DialogBody.tsx";
+import { DialogHeader } from "@/components/dialog/header/DialogHeader.tsx";
 import type { IDialog } from "@/interfaces/components/dialog/IDialog.ts"; // Adjust the path to where your Dialog component is located
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { Dialog } from "./Dialog";
+import { Dialog } from "./Dialog.tsx";
 
 // Mocking the emitter (mitt)
 jest.mock("@/plugins/Mitt.tsx", () => ({

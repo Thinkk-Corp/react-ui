@@ -50,6 +50,7 @@ export const Button = ({
 
 	return (
 		<button
+			data-testid={"button"}
 			className={classNames(
 				"rounded-md shadow-2",
 				sizeScheme[size], // Boyutlandırma

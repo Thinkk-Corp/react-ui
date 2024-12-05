@@ -1,6 +1,6 @@
-import { DialogAction } from "@/components/dialog/DialogAction.tsx";
-import { DialogBody } from "@/components/dialog/DialogBody.tsx";
-import { DialogHeader } from "@/components/dialog/DialogHeader.tsx";
+import { DialogAction } from "@/components/dialog/action/DialogAction.tsx";
+import { DialogBody } from "@/components/dialog/body/DialogBody.tsx";
+import { DialogHeader } from "@/components/dialog/header/DialogHeader.tsx";
 import type { IDialog } from "@/interfaces/components/dialog/IDialog.ts";
 import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import { emitter } from "@/plugins/Mitt.tsx";
