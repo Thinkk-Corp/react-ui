@@ -1,5 +1,5 @@
 import { redirectNative } from "@/actions/client/RedirectNative.ts";
-import { IconBox } from "@/components/iconbox/IconBox.tsx";
+import { IconBox } from "@/components/icon-box/IconBox.tsx";
 import type { ISidebarMenuAction, ISidebarMenuItem } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
 import { useUIStore } from "@/stores/UIStore.ts";
 import classNames from "classnames";
@@ -33,12 +33,13 @@ export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild
 
 	return (
 		<li
-			data-sidebar-collapsed={sidebarCollapsed.status}
+			data-testid={"sidebar-item-container"}
 			className="flex items-center gap-2"
 			onKeyDown={() => {}}
 			onClick={() => handleMenuClick(menu.action)}
 		>
 			<div
+				data-testid={"sidebar-item-child-dot"}
 				data-is-child={isChild}
 				data-menu-active={isActivatedMenuItem}
 				className={classNames(
@@ -47,9 +48,9 @@ export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild
 				)}
 			/>
 			<div
+				data-testid={"sidebar-item"}
 				data-menu-active={isActivatedMenuItem}
 				data-is-child={isChild}
-				data-sidebar-collapsed={sidebarCollapsed.status}
 				className={classNames(
 					"flex rounded-lg items-center w-full px-2 py-2.5 mb-4 flex-1",
 					"data-[is-child='true']:mb-0 data-[is-child='false']:mt-1",
@@ -61,23 +62,28 @@ export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild
 			>
 				{menu.icon && (
 					<IconBox
+						data-testid={"sidebar-item-icon"}
+						data-menu-active={isActivatedMenuItem}
 						color={"text-sidebar-item-color"}
 						className={"data-[menu-active='true']:text-sidebar-item-active-color hover:text-sidebar-item-active-color"}
 					>
 						{menu.icon}
 					</IconBox>
 				)}
-				<span
-					data-sidebar-collapsed={sidebarCollapsed.status}
-					className={classNames(
-						"text-nowrap truncate leading-5 text-body2 opacity-100",
-						"transition-all duration-300", // Tüm geçişlere animasyon uygulanacak
-						"data-[sidebar-collapsed='true']:md:scale-x-0 origin-left data-[sidebar-collapsed='true']:md:opacity-0", // collapsed durumunda width 0 ve opacity 0 olacak
-						{ "ml-4": menu.icon && !sidebarCollapsed.status }, // margin sağda icon varsa
-					)}
-				>
-					{menu.text}
-				</span>
+				{menu.text && menu.text !== "" && (
+					<span
+						data-testid={"sidebar-item-text"}
+						data-sidebar-collapsed={sidebarCollapsed.status}
+						className={classNames(
+							"text-nowrap truncate leading-5 text-body2 opacity-100",
+							"transition-all duration-300", // Tüm geçişlere animasyon uygulanacak
+							"data-[sidebar-collapsed='true']:md:scale-x-0 origin-left data-[sidebar-collapsed='true']:md:opacity-0", // collapsed durumunda width 0 ve opacity 0 olacak
+							{ "ml-4": menu.icon && !sidebarCollapsed.status }, // margin sağda icon varsa
+						)}
+					>
+						{menu.text}
+					</span>
+				)}
 			</div>
 		</li>
 	);

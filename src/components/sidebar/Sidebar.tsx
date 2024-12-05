@@ -2,7 +2,7 @@ import { SidebarMenus } from "@/components/sidebar/SidebarMenus.tsx";
 import type { ISidebar } from "@/interfaces/components/sidebar/ISidebar.ts";
 import { icons } from "@/plugins/Icons.tsx";
 import { useUIStore } from "@/stores/UIStore.ts";
-import { mediaQueryUtil } from "@/utils/MediaQueryUtil.ts";
+import { mediaQueryUtil } from "@/utils/media-query-util/MediaQueryUtil.ts";
 import classNames from "classnames";
 import { useCallback, useEffect, useState } from "react";
 
@@ -78,12 +78,14 @@ export const Sidebar = ({ logo, collapsedLogo, menus }: ISidebar) => {
 
 	return (
 		<div
-			className="flex h-screen flex-col justify-between border-e border-sidebar-border bg-sidebar-default"
+			data-testid={"sidebar"}
+			className="flex h-screen flex-col justify-between border-e border-custom-card-border bg-sidebar-default"
 			onMouseEnter={() => handleSidebarHover(true)}
 			onMouseLeave={() => handleSidebarHover(false)}
 		>
 			<div className="px-4 py-6">
 				<div
+					data-testid={"sidebar-header"}
 					data-sidebar-collapsed={sidebarCollapsed.status}
 					className={classNames(
 						"duration-300 flex items-center mb-10 md:justify-center",
@@ -92,12 +94,15 @@ export const Sidebar = ({ logo, collapsedLogo, menus }: ISidebar) => {
 				>
 					<div>
 						{sidebarCollapsed.status && isMdScreen
-							? collapsedLogo && <img alt={"logo"} className={"h-10"} src={collapsedLogo} />
-							: logo && <img alt={"logo"} className={"h-10"} src={logo} />}
+							? collapsedLogo && (
+									<img alt={"logo"} data-testid={"sidebar-collapsed-logo"} className={"h-10"} src={collapsedLogo} />
+								)
+							: logo && <img data-testid={"sidebar-logo"} alt={"logo"} className={"h-10"} src={logo} />}
 					</div>
 
 					{!sidebarCollapsed.status && (
 						<div
+							data-testid={"sidebar-collapsed-trigger"}
 							onKeyDown={() => {}}
 							className={"size-5 text-sidebar-item-active-color cursor-pointer"}
 							onClick={handleSidebarCollapse}
@@ -106,7 +111,7 @@ export const Sidebar = ({ logo, collapsedLogo, menus }: ISidebar) => {
 						</div>
 					)}
 				</div>
-				<ul data-sidebar-collapsed={sidebarCollapsed.status}>
+				<ul data-testid={"sidebar-menu-list"}>
 					<SidebarMenus menus={menus} hasRendered={hasRendered} />
 				</ul>
 			</div>

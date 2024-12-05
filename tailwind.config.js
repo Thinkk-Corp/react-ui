@@ -1,5 +1,5 @@
 import { screens } from "./src/styles/tailwind/Screens.ts";
-import { shadow } from "./src/styles/tailwind/Shadow.ts";
+import { boxShadow } from "./src/styles/tailwind/Shadow.ts";
 import { action } from "./src/styles/tailwind/colors/Action.ts";
 import { blue } from "./src/styles/tailwind/colors/Blue.ts";
 import { color } from "./src/styles/tailwind/colors/Color.ts";
@@ -64,7 +64,7 @@ const backgroundRegex = new RegExp(bgRegExp);
 const borderRegex = new RegExp(borderRegExp);
 
 export default {
-	content: ["./index.html", "./src/**/*.{ts,tsx,ts,tsx}"],
+	content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
 	darkMode: ["class", '[data-mode="dark"]'],
 	safelist: [
 		{
@@ -75,6 +75,9 @@ export default {
 		},
 		{
 			pattern: borderRegex,
+		},
+		{
+			pattern: /rounded-(sm|md|lg|xl|2xl|3xl|full|none)/,
 		},
 		{
 			pattern: /w-(\d+\/\d+|full|screen|auto)/,
@@ -135,7 +138,7 @@ export default {
 			},
 			screens,
 			colors,
-			shadow,
+			boxShadow,
 			textColor: {
 				DEFAULT: "var(--primary)",
 			},

@@ -1,7 +1,6 @@
 export const sidebar = {
 	default: "var(--sidebar)",
 	color: "var(--sidebar-color)",
-	border: "var(--sidebar-border)",
 	"group-title-color": "var(--side-group-title-color)",
 	"item-color": "var(--sidebar-item-color)",
 	"item-hover": "var(--sidebar-item-hover)",

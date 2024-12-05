@@ -1,4 +1,4 @@
-import type { ICustomStylesConfig } from "@/interfaces/components/dropdown/IDropdown.ts";
+import type { ICustomStylesConfig } from "@/interfaces/types/ICustomStyleConfig.ts";
 import type { ReactNode } from "react";
 
 export interface IDropdownItem {

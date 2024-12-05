@@ -14,7 +14,8 @@ const changeAttribute = (newTheme: string) => {
 };
 
 const getInitialTheme = (): ITheme => {
-	const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+	const prefersDarkScheme =
+		typeof window.matchMedia === "function" ? window.matchMedia("(prefers-color-scheme: dark)").matches : "dark";
 	const savedTheme = localStorage.getItem(storageTypes.THEME_STORAGE);
 
 	if (savedTheme && themeTypes.includes(savedTheme)) {

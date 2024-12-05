@@ -24,14 +24,13 @@ export default defineConfig({
 		sourcemap: true, // Generates source maps for debugging.
 		emptyOutDir: true,
 	},
-
+	optimizeDeps: {
+		exclude: ["react-hook-form", "zod"],
+	},
 	resolve: {
 		alias: {
 			"@": path.resolve(__dirname, "./src"),
 		},
-	},
-	server: {
-		port: 3000,
 	},
 	plugins: [
 		react({

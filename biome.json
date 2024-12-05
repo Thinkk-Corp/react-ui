@@ -42,7 +42,7 @@
 					"level": "error"
 				},
 				"noConsoleLog": {
-					"level": "error"
+					"level": "info"
 				}
 			}
 		}

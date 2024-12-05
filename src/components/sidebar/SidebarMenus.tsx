@@ -1,9 +1,9 @@
-import { IconBox } from "@/components/iconbox/IconBox.tsx";
+import { IconBox } from "@/components/icon-box/IconBox.tsx";
 import { SidebarItem } from "@/components/sidebar/SidebarItem.tsx";
 import type { ISidebarMenu, ISidebarMenuItem } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
 import { icons } from "@/plugins/Icons.tsx";
 import { useUIStore } from "@/stores/UIStore.ts";
-import { mediaQueryUtil } from "@/utils/MediaQueryUtil.ts";
+import { mediaQueryUtil } from "@/utils/media-query-util/MediaQueryUtil.ts";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 export const SidebarMenus = ({
 	menus,
 	hasRendered,
-}: { menus: ISidebarMenu[]; hasRendered: boolean }): (JSX.Element | null)[] | undefined => {
+}: { menus: ISidebarMenu[]; hasRendered?: boolean }): (JSX.Element | null)[] | undefined => {
 	// Sidebar'ın çökme durumunu store'dan alıyoruz
 	const sidebarCollapsed = useUIStore((state) => state.sidebarCollapsed);
 	const [isMdScreen, setIsMdScreen] = useState<boolean>(true);
@@ -43,6 +43,7 @@ export const SidebarMenus = ({
 						{/* Sidebar açıldığında, etiketin görünmesini sağlıyoruz */}
 						{!sidebarCollapsed.status || (!isMdScreen && sidebarCollapsed.status) ? (
 							<motion.div
+								data-testid={"isLabel-menu"}
 								initial={{ opacity: 0, height: 0 }}
 								animate={{ opacity: 1, height: "auto" }}
 								exit={{ opacity: 0, height: 0 }}
@@ -58,15 +59,15 @@ export const SidebarMenus = ({
 		}
 
 		// Menüde çocuklar (alt menüler) varsa, bunları detaylı şekilde gösteriyoruz
-		if ("children" in menu && menu.children) {
+		if ("children" in menu && menu.children && !sidebarCollapsed.status) {
 			return (
 				<details
-					open={sidebarCollapsed.status ? false : undefined}
+					data-testid={"dropdown-menu"}
 					key={index.toString()}
 					className="mb-4 group [&_summary::-webkit-details-marker]:hidden"
 				>
 					<summary
-						data-sidebar-collapsed={sidebarCollapsed.status}
+						data-testid={"dropdown-menu-trigger"}
 						className={classNames(
 							"flex cursor-pointer items-center rounded-lg mb-1 mt-1 px-2 py-2.5",
 							"hover:text-sidebar-item-active-color justify-between hover:bg-sidebar-item-hover text-sidebar-item-color",
@@ -75,11 +76,16 @@ export const SidebarMenus = ({
 						{/* Menü ikonu ve başlık */}
 						<div className="flex items-center overflow-hidden">
 							{menu.icon && (
-								<IconBox color={"text-sidebar-item-color"} className={"hover:text-sidebar-item-active-color"}>
+								<IconBox
+									data-testid={"dropdown-menu-trigger-icon"}
+									color={"text-sidebar-item-color"}
+									className={"hover:text-sidebar-item-active-color"}
+								>
 									{menu.icon}
 								</IconBox>
 							)}
 							<span
+								data-testid={"dropdown-menu-trigger-text"}
 								data-sidebar-collapsed={sidebarCollapsed.status}
 								className={classNames(
 									"text-nowrap truncate leading-5 text-body2 opacity-100",
@@ -93,6 +99,7 @@ export const SidebarMenus = ({
 						</div>
 						{/* Çökme durumu ve ok simgesi */}
 						<span
+							data-testid={"dropdown-menu-trigger-chevron-icon"}
 							data-sidebar-collapsed={sidebarCollapsed.status}
 							className={classNames(
 								"shrink-0 transition-all duration-300 transform size-4",
@@ -104,7 +111,7 @@ export const SidebarMenus = ({
 						</span>
 					</summary>
 					{/* Çocuk menüler (alt menüler) */}
-					<ul className="mt-1 pl-[0.79rem] space-y-1 text-sidebar-item-color">
+					<ul data-testid={"dropdown-menu-list"} className="mt-1 pl-[0.79rem] space-y-1 text-sidebar-item-color">
 						{menu.children.map((subMenu, subIndex) => (
 							<SidebarItem key={`${index.toString()}-${subIndex.toString()}`} menu={subMenu as ISidebarMenuItem} isChild={true} />
 						))}
@@ -115,7 +122,7 @@ export const SidebarMenus = ({
 
 		// Eğer menüde icon varsa, SidebarItem bileşeni ile gösteriyoruz
 		if ("icon" in menu && menu.icon) {
-			return <SidebarItem key={index.toString()} isChild={false} menu={menu} />;
+			return <SidebarItem data-test-id={"menu"} key={index.toString()} isChild={false} menu={menu} />;
 		}
 
 		// Menü geçerli değilse, null döndürüyoruz

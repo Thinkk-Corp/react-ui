@@ -1,9 +1,8 @@
 import { Button } from "@/components/button/Button"; // Gerekirse yolu ayarlayın
 import { fireEvent, render, screen } from "@testing-library/react";
-import { vi } from "vitest";
 
 describe("Button Component", () => {
-	test("renders with default props", () => {
+	it("renders with default props", () => {
 		render(<Button>Click Me</Button>);
 
 		const buttonElement = screen.getByRole("button", { name: /click me/i });
@@ -14,7 +13,7 @@ describe("Button Component", () => {
 		expect(buttonElement).toHaveClass("bg-primary-main text-white border-primary-main");
 	});
 
-	test("renders with custom size", () => {
+	it("renders with custom size", () => {
 		render(<Button size="lg">Click Me</Button>);
 
 		const buttonElement = screen.getByRole("button", { name: /click me/i });
@@ -23,7 +22,7 @@ describe("Button Component", () => {
 		expect(buttonElement).toHaveClass("px-6 py-3 text-body2");
 	});
 
-	test("renders with different color schemes", () => {
+	it("renders with different color schemes", () => {
 		render(
 			<>
 				<Button colorScheme="secondary">Secondary</Button>
@@ -40,7 +39,7 @@ describe("Button Component", () => {
 		expect(successButton).toHaveClass("bg-success-main text-white border-success-main");
 	});
 
-	test("renders with outlined variant", () => {
+	it("renders with outlined variant", () => {
 		render(<Button variant="outlined">Outlined</Button>);
 
 		const buttonElement = screen.getByRole("button", { name: /outlined/i });
@@ -49,7 +48,7 @@ describe("Button Component", () => {
 		expect(buttonElement).toHaveClass("bg-transparent border-primary-main text-primary-main");
 	});
 
-	test("renders with underlined variant", () => {
+	it("renders with underlined variant", () => {
 		render(<Button variant="underlined">Underlined</Button>);
 
 		const buttonElement = screen.getByRole("button", { name: /underlined/i });
@@ -58,7 +57,7 @@ describe("Button Component", () => {
 		expect(buttonElement).toHaveClass("bg-transparent hover:underline text-primary-main");
 	});
 
-	test("applies custom className", () => {
+	it("applies custom className", () => {
 		render(<Button className="custom-class">Click Me</Button>);
 
 		const buttonElement = screen.getByRole("button", { name: /click me/i });
@@ -67,7 +66,7 @@ describe("Button Component", () => {
 		expect(buttonElement).toHaveClass("custom-class");
 	});
 
-	test("renders children correctly", () => {
+	it("renders children correctly", () => {
 		render(<Button>Submit</Button>);
 
 		const buttonElement = screen.getByRole("button", { name: /submit/i });
@@ -76,8 +75,8 @@ describe("Button Component", () => {
 		expect(buttonElement).toHaveTextContent("Submit");
 	});
 
-	test("calls onClick handler when clicked", () => {
-		const handleClick = vi.fn();
+	it("calls onClick handler when clicked", () => {
+		const handleClick = jest.fn();
 		render(<Button onClick={handleClick}>Click Me</Button>);
 
 		const buttonElement = screen.getByRole("button", { name: /click me/i });

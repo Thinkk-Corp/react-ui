@@ -4,5 +4,5 @@ export const custom = {
 	shadow: "var(--shadow)",
 	backdrop: "var(--backdrop)",
 	divider: "var(--divider)",
-	"card-shadow": "var(--card-shadow)",
+	"card-border": "var(--card-border)",
 };

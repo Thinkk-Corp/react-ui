@@ -8,40 +8,46 @@
     box-sizing: border-box;
 }
 
+
+
 body{
     font-family: 'Inter', "Helvetica", sans-serif;
     font-size: 1rem;
+    background-color: var(--paper);
 }
 
 :root{
     --common-black: #000000;
     --common-white: #ffffff;
+    --common-paper-dark:#0d0e12;
 
-    --shadows-0: none;
-    --shadows-1: 0px 1px 2px var(--shadow);
-    --shadows-2: 0px 1px 5px var(--shadow);
-    --shadows-3: 0px 1px 8px var(--shadow);
-    --shadows-4: 0px 1px 10px var(--shadow);
-    --shadows-5: 0px 1px 14px var(--shadow);
-    --shadows-6: 0px 1px 18px var(--shadow);
-    --shadows-7: 0px 2px 16px var(--shadow);
-    --shadows-8: 0px 3px 14px var(--shadow);
-    --shadows-9: 0px 3px 16px var(--shadow);
-    --shadows-10: 0px 4px 18px var(--shadow);
-    --shadows-11: 0px 4px 20px var(--shadow);
-    --shadows-12: 0px 5px 22px var(--shadow);
-    --shadows-13: 0px 5px 24px var(--shadow);
-    --shadows-14: 0px 5px 26px var(--shadow);
-    --shadows-15: 0px 6px 28px var(--shadow);
-    --shadows-16: 0px 6px 30px var(--shadow);
-    --shadows-17: 0px 6px 32px var(--shadow);
-    --shadows-18: 0px 7px 34px var(--shadow);
-    --shadows-19: 0px 7px 36px var(--shadow);
-    --shadows-20: 0px 8px 38px var(--shadow);
-    --shadows-21: 0px 8px 40px var(--shadow);
-    --shadows-22: 0px 8px 42px var(--shadow);
-    --shadows-23: 0px 9px 44px var(--shadow);
-    --shadows-24: 0px 9px 46px var(--shadow);
+    --shadow-0: none;
+    --shadow-1: 0px 1px 2px 0px var(--shadow);
+    --shadow-2: 0px 1px 5px 0px var(--shadow);
+    --shadow-3: 0px 1px 8px 0px var(--shadow);
+    --shadow-4: 0px 1px 10px 0px var(--shadow);
+    --shadow-5: 0px 1px 14px 0px var(--shadow);
+    --shadow-6: 0px 1px 18px 0px var(--shadow);
+    --shadow-7: 0px 2px 16px 0px var(--shadow);
+    --shadow-8: 0px 3px 14px 0px var(--shadow);
+    --shadow-9: 0px 3px 16px 0px var(--shadow);
+    --shadow-10: 0px 4px 18px 0px var(--shadow);
+    --shadow-11: 0px 4px 20px 0px var(--shadow);
+    --shadow-12: 0px 5px 22px 0px var(--shadow);
+    --shadow-13: 0px 5px 24px 0px var(--shadow);
+    --shadow-14: 0px 5px 26px 0px var(--shadow);
+    --shadow-15: 0px 6px 28px 0px var(--shadow);
+    --shadow-16: 0px 6px 30px 0px var(--shadow);
+    --shadow-17: 0px 6px 32px 0px var(--shadow);
+    --shadow-18: 0px 7px 34px 0px var(--shadow);
+    --shadow-19: 0px 7px 36px 0px var(--shadow);
+    --shadow-20: 0px 8px 38px 0px var(--shadow);
+    --shadow-21: 0px 8px 40px 0px var(--shadow);
+    --shadow-22: 0px 8px 42px 0px var(--shadow);
+    --shadow-23: 0px 9px 44px 0px var(--shadow);
+    --shadow-24: 0px 9px 46px 0px var(--shadow);
+    --shadow-card: 0px 3px 4px 0px var(--shadow);
+
 
     --rgb-red-50: 254 243 242;
     --rgb-red-100: 254 228 226;
@@ -321,9 +327,8 @@ body{
     --overlays-23: linear-gradient(rgba(255 255 255 / 0.163), rgba(255 255 255 / 0.163));
     --overlays-24: linear-gradient(rgba(255 255 255 / 0.165), rgba(255 255 255 / 0.165));
 
-    --sidebar: var(--slate-800);
+    --sidebar: var(--common-paper-dark);
     --sidebar-color: var(--common-white);
-    --sidebar-border: none;
     --side-group-title-color: var(--grey-400);
     --sidebar-item-color: var(--grey-300);
     --sidebar-item-hover: rgba(255, 255, 255, 0.04);
@@ -355,7 +360,8 @@ body{
     --common-on: var(--common-black);
 
     --default: var(--common-white);
-    --paper: var(--common-white);
+    --paper:#fcfcfc;
+    --card:var(--common-white);
     --level1: var(--grey-50);
     --level2: var(--grey-100);
     --level3: var(--grey-200);
@@ -446,8 +452,7 @@ body{
     --shadow: rgba(0, 0, 0, 0.08);
     --backdrop: rgb(18, 22, 33, 0.8);
     --divider: var(--grey-200);
-    --sidebar: var(--grey-950);
-    --card-shadow:rgba(0, 0, 0, 0.04) 0px 5px 22px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    --card-border:var(--grey-100);
 }
 
 [data-mode="dark"] {
@@ -467,7 +472,8 @@ body{
     --grey-950: var(--slate-950);
 
     --default: var(--grey-950);
-    --paper: var(--grey-900);
+    --paper: #0f1014;
+    --card: #15171c;
     --level1: var(--grey-800);
     --level2: var(--grey-700);
     --level3: var(--grey-600);
@@ -575,27 +581,25 @@ body{
     --divider: var(--grey-700);
     --shadow: rgba(0, 0, 0, 0.5);
     --backdrop: rgba(0, 0, 0, 0.5);
-    --sidebar: var(--slate-800);
-    --card-shadow:rgba(0, 0, 0, 0.24) 0px 5px 22px 0px, rgba(255, 255, 255, 0.12) 0px 0px 0px 1px ;
+    --card-border:var(--grey-800);
 }
 
-/* Custom Scrollbar Styles */
 ::-webkit-scrollbar {
-  width: 6px; /* or any width you prefer */
+  width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgb(191, 193, 207); /* Track color */
+    background: rgb(191, 193, 207);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #858585; /* Scrollbar color */
-  border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+    background: #858585;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Darker scrollbar color on hover */
+    background: #555;
 }
 
 

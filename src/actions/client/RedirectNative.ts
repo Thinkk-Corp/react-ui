@@ -1,5 +1,5 @@
 import { useRouterStore } from "@/stores/RouterStore.ts";
-import { shouldBypass } from "@/utils/ShouldBypass.ts";
+import { shouldBypass } from "@/utils/should-bypass/ShouldBypass.ts";
 
 /**
  * Verilen URL'ye yönlendirme yapar.

@@ -1,9 +1,9 @@
 import { redirectNative } from "@/actions/client/RedirectNative.ts";
 import { Avatar } from "@/components/avatar/Avatar.tsx";
-import { Dropdown } from "@/components/dropdown/Dropdown.tsx";
-import { DropdownItem } from "@/components/dropdown/DropdownItem.tsx";
-import { DropdownTrigger } from "@/components/dropdown/DropdownTrigger.tsx";
-import { IconBox } from "@/components/iconbox/IconBox.tsx";
+import { DropdownItem } from "@/components/dropdown/item/DropdownItem.tsx";
+import { Dropdown } from "@/components/dropdown/main/Dropdown.tsx";
+import { DropdownTrigger } from "@/components/dropdown/trigger/DropdownTrigger.tsx";
+import { IconBox } from "@/components/icon-box/IconBox.tsx";
 import type { IDropdownStyle } from "@/interfaces/components/dropdown/IDropdown.ts";
 import type { IUserMenu } from "@/interfaces/components/navbar/IUserMenu.ts";
 import type { IUserMenuData } from "@/interfaces/components/navbar/IUserMenuData.ts";

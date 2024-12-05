@@ -14,7 +14,6 @@ export interface ISidebarMenuItem {
 
 export interface ISidebarMenuLabel {
 	isLabel: true;
-
 	text: string;
 }
 
