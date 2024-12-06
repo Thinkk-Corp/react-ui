@@ -1,7 +1,9 @@
 import type { ISizeSchema } from "@/components/form/inputs/toggle/Toggle.tsx";
+import { IconBox } from "@/components/icon-box/IconBox.tsx";
 import type { IInput } from "@/interfaces/components/form/inputs/IInput.ts";
+import { icons } from "@/plugins/Icons.tsx";
 import classNames from "classnames";
-import type { FC } from "react";
+import { type FC, useState } from "react";
 
 // Input componenti tanımlanır.
 // Kullanıcıdan gelen çeşitli özellikleri destekler ve bu özelliklere göre farklı stiller uygular.
@@ -20,6 +22,8 @@ export const Input: FC<IInput> = ({
 	className,
 	...props
 }) => {
+	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+
 	// Farklı boyutlar için CSS sınıflarını tanımlayan bir schema.
 	const sizeSchema: ISizeSchema = {
 		sm: "h-9", // Küçük boyut
@@ -27,6 +31,11 @@ export const Input: FC<IInput> = ({
 		lg: "h-11", // Büyük boyut
 		xl: "h-12", // Ekstra büyük boyut
 		"2xl": "h-14", // İki kat ekstra büyük boyut
+	};
+
+	const handlePasswordVisibilityChange = () => {
+		if (type !== "password") return;
+		setIsPasswordVisible((prev) => !prev);
 	};
 
 	return (
@@ -48,7 +57,7 @@ export const Input: FC<IInput> = ({
 			{/* Girdi alanı (input) */}
 			<input
 				data-testid={"input"} // Testlerde kullanılmak üzere `data-testid` özelliği eklendi.
-				type={type} // Girdi türü (örneğin: text, password)
+				type={isPasswordVisible ? "text" : type} // Girdi türü (örneğin: text, password)
 				onClick={onClick} // Tıklama olayını yakalar
 				value={value} // Kontrollü değer
 				onChange={onChange} // Değer değişikliği olayını yakalar
@@ -62,8 +71,19 @@ export const Input: FC<IInput> = ({
 				{...props} // Ekstra özellikler (örneğin, `aria-*` veya `data-*`)
 			/>
 			{/* Opsiyonel ikon alanı */}
-			<div data-testid={"input-icon"} className={"absolute top-1/2 -translate-y-1/2 right-3"}>
-				{icon}
+			<div
+				data-testid={"input-icon"}
+				onKeyDown={() => {}}
+				onClick={handlePasswordVisibilityChange}
+				className={"absolute top-1/2 -translate-y-1/2 right-3"}
+			>
+				{type === "password" ? (
+					<IconBox color={"color-primary"} className={"w-3"}>
+						{isPasswordVisible ? icons.outline.eye : icons.outline.eye_slash}
+					</IconBox>
+				) : (
+					icon
+				)}
 			</div>
 		</div>
 	);

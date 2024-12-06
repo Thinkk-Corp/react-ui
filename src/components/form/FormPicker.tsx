@@ -13,6 +13,7 @@ export const FormPicker = ({ field, control, isInvalid }: IInputPicker) => {
 	const renderInputByType = () => {
 		switch (type) {
 			case "text":
+			case "password":
 			case "email":
 				return <Input type={type} isInvalid={isInvalid} value={initialValue} {...restField} {...control} />;
 

@@ -46,4 +46,17 @@ describe("Input Component", () => {
 		const iconElement = screen.getByTestId("input-icon");
 		expect(iconElement).toBeInTheDocument(); // İkonun render edildiğini doğrular.
 	});
+
+	it("renders correctly and toggles password visibility", () => {
+		render(<Input icon={<span>🔍</span>} placeholder="Test input" type="password" />);
+		const input = screen.getByTestId("input") as HTMLInputElement;
+		fireEvent.change(input, { target: { value: "test" } });
+		expect(input.value).toBe("test");
+		const iconElement = screen.getByTestId("input-icon");
+		expect(iconElement).toBeInTheDocument();
+		fireEvent.click(iconElement);
+		expect(input.type).toBe("text");
+		fireEvent.click(iconElement);
+		expect(input.type).toBe("password");
+	});
 });
