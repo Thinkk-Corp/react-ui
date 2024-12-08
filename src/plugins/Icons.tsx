@@ -10,6 +10,8 @@ import {
 	ChevronUpIcon,
 	Cog6ToothIcon,
 	CurrencyDollarIcon,
+	EyeIcon,
+	EyeSlashIcon,
 	HomeIcon,
 	MagnifyingGlassIcon,
 	MinusCircleIcon,
@@ -22,6 +24,8 @@ import {
 export const icons = {
 	outline: {
 		bell: <BellIcon />,
+		eye: <EyeIcon />,
+		eye_slash: <EyeSlashIcon />,
 		search: <MagnifyingGlassIcon />,
 		chevron_down: <ChevronDownIcon />,
 		chevron_up: <ChevronUpIcon />,

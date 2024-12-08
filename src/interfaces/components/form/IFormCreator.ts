@@ -8,7 +8,7 @@ import type { z } from "zod";
 export type IFormFieldValueTypes = boolean | string | number | undefined;
 
 export interface IDefaultFormField {
-	type: "text" | "email" | "select" | "checkbox" | "radiobox" | "toggle" | "textarea";
+	type: "text" | "email" | "select" | "checkbox" | "radiobox" | "toggle" | "textarea" | "password";
 	label: string;
 	disabled?: boolean;
 	checked?: boolean;

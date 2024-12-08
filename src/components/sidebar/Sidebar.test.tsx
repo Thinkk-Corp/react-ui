@@ -2,7 +2,7 @@ import { Sidebar } from "@/components/sidebar/Sidebar.tsx";
 import type { ISidebarMenuItem } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
 import { icons } from "@/plugins/Icons.tsx";
 import { useUIStore } from "@/stores/UIStore.ts";
-import { screenSizeUtilForTest } from "@/utils/test/ScreenSizeUtilForTest.ts";
+import { screenSizeUtilForTest } from "@/utils/ScreenSizeUtilForTest.ts";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 // Test için kullanılacak menü öğeleri
