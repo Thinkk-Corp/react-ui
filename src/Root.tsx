@@ -16,11 +16,12 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
  * @param {IRoot} param0 - `routes` ve `languageTranslations` özelliklerini içeren yapılandırma nesnesi.
  * @returns {JSX.Element} - Root bileşeni.
  */
-export const Root = ({ routes, languageTranslations }: IRoot): JSX.Element => {
+export const Root = ({ routes, languageTranslations, configs }: IRoot): JSX.Element => {
 	const setRouter = useRouterStore((state) => state.setRouter);
 	const router = useRouterStore((state) => state.router);
 	const initTheme = useThemeStore((state) => state.initTheme);
 	const initSidebarCollapsedStatus = useUIStore((state) => state.initSidebarCollapsedStatus);
+	const pageTitlePrefix = configs.pageTitlePrefix;
 
 	useEffect(() => {
 		/**
@@ -60,7 +61,7 @@ export const Root = ({ routes, languageTranslations }: IRoot): JSX.Element => {
 			window.removeEventListener("unhandledrejection", handlePromiseRejections);
 			window.removeEventListener("rejectionhandled", handlePromiseRejections);
 		};
-	}, [routes, languageTranslations, setRouter, initTheme, initSidebarCollapsedStatus]);
+	}, [routes, setRouter, initTheme, initSidebarCollapsedStatus]);
 
 	useEffect(() => {
 		if (!router) return;
@@ -82,13 +83,13 @@ export const Root = ({ routes, languageTranslations }: IRoot): JSX.Element => {
 			const crumb = handle?.crumb;
 			if (!crumb?.title?.trim() || !crumb?.path?.trim()) return;
 
-			document.title = crumb.title;
+			document.title = `${pageTitlePrefix} | ${crumb.title}`;
 		};
 
 		handlePageTitle(router.state);
 
 		router.subscribe((state) => handlePageTitle(state));
-	}, [router]);
+	}, [router, pageTitlePrefix]);
 
 	return (
 		<ErrorBoundary fallback={<div>Bir hata oluştu</div>}>
