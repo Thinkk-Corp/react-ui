@@ -111,7 +111,7 @@ export const SidebarMenus = ({
 						</span>
 					</summary>
 					{/* Çocuk menüler (alt menüler) */}
-					<ul data-testid={"dropdown-menu-list"} className="mt-1 pl-[0.79rem] space-y-1 text-sidebar-item-color">
+					<ul data-testid={"dropdown-menu-list"} className="mt-2 pl-[0.79rem] space-y-1 text-sidebar-item-color">
 						{menu.children.map((subMenu, subIndex) => (
 							<SidebarItem key={`${index.toString()}-${subIndex.toString()}`} menu={subMenu as ISidebarMenuItem} isChild={true} />
 						))}

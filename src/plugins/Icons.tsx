@@ -7,6 +7,7 @@ import {
 	BellIcon,
 	CheckIcon,
 	ChevronDownIcon,
+	ChevronRightIcon,
 	ChevronUpIcon,
 	Cog6ToothIcon,
 	CurrencyDollarIcon,
@@ -23,6 +24,7 @@ import {
 
 export const icons = {
 	outline: {
+		chevron_right: <ChevronRightIcon />,
 		bell: <BellIcon />,
 		eye: <EyeIcon />,
 		eye_slash: <EyeSlashIcon />,

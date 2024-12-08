@@ -30,6 +30,7 @@ export { CardBody } from "@/components/card/body/CardBody.tsx";
 export { CardAction } from "@/components/card/action/CardAction.tsx";
 export { FormCreator } from "@/components/form/creator/FormCreator.tsx";
 export { FormControl } from "@/components/form/control/FormControl.tsx";
+export { Breadcrumb } from "@/components/breadcrumb/Breadcrumb.tsx";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
@@ -38,6 +39,7 @@ export type { IDropdownStyle } from "@/interfaces/components/dropdown/IDropdown"
 export type { ISize, IRounded } from "@/interfaces/types/IMetrics.ts";
 export type { ICustomStylesConfig } from "@/interfaces/types/ICustomStyleConfig.ts";
 export type { IFormFields, IFormField, IFormButton } from "@/interfaces/components/form/IFormCreator.ts";
+export type { ICustomRouteObject } from "@/interfaces/plugin/ICustomRouteObject.ts";
 
 // Utils
 export { redirectNative } from "@/actions/client/RedirectNative.ts";
@@ -59,4 +61,4 @@ export { useThemeStore } from "@/stores/ThemeStore.ts";
 export { create } from "zustand";
 export { z as zod } from "zod";
 export { useForm, Controller } from "react-hook-form";
-export { type UIMatch, type RouteObject, type LoaderFunction, Navigate } from "react-router-dom";
+export { type LoaderFunction, Navigate } from "react-router-dom";
