@@ -8,4 +8,5 @@ module.exports = {
 		hash: "",
 		state: null,
 	}),
+	useMatches: jest.fn(),
 };
