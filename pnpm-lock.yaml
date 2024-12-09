@@ -38,9 +38,6 @@ importers:
       i18next:
         specifier: ^24.0.5
         version: 24.0.5(typescript@5.6.3)
-      i18next-browser-languagedetector:
-        specifier: ^8.0.1
-        version: 8.0.1
       jsdom:
         specifier: ^25.0.1
         version: 25.0.1
@@ -2664,9 +2661,6 @@ packages:
   human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
-
-  i18next-browser-languagedetector@8.0.1:
-    resolution: {integrity: sha512-z9ZuWA7qxbww+cPtdJTgV0O2H9+qlLpQnb37RpnwfsWnUmrO+q92gbVKVtfBL7jRvxfmVMOUKxKGg6VBqO49Pg==}
 
   i18next@24.0.5:
     resolution: {integrity: sha512-1jSdEzgFPGLZRsQwydoMFCBBaV+PmrVEO5WhANllZPX4y2JSGTxUjJ+xVklHIsiS95uR8gYc/y0hYZWevucNjg==}
@@ -7536,10 +7530,6 @@ snapshots:
       - supports-color
 
   human-signals@2.1.0: {}
-
-  i18next-browser-languagedetector@8.0.1:
-    dependencies:
-      '@babel/runtime': 7.26.0
 
   i18next@24.0.5(typescript@5.6.3):
     dependencies:

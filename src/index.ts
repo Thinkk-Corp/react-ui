@@ -36,10 +36,11 @@ export { Breadcrumb } from "@/components/breadcrumb/Breadcrumb.tsx";
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
 export type { IUserMenuData } from "@/interfaces/components/navbar/IUserMenuData.ts";
 export type { IDropdownStyle } from "@/interfaces/components/dropdown/IDropdown";
+export type { ILanguage } from "@/interfaces/ILanguage";
 export type { ISize, IRounded } from "@/interfaces/types/IMetrics.ts";
 export type { ICustomStylesConfig } from "@/interfaces/types/ICustomStyleConfig.ts";
 export type { IFormFields, IFormField, IFormButton } from "@/interfaces/components/form/IFormCreator.ts";
-export type { ICustomRouteObject } from "@/interfaces/plugin/ICustomRouteObject.ts";
+export type { ICustomRouteObject } from "@/interfaces/plugins/ICustomRouteObject";
 
 // Utils
 export { redirectNative } from "@/actions/client/RedirectNative.ts";
@@ -49,6 +50,7 @@ export { shouldBypass } from "@/utils/should-bypass/ShouldBypass.ts";
 // Plugins
 export { icons } from "@/plugins/Icons";
 export { emitter } from "@/plugins/Mitt";
+export { handleLanguageChange } from "@/plugins/i18n/I18N";
 
 // Events
 export { dialogEvents } from "@/events/DialogEvents";
@@ -62,3 +64,5 @@ export { create } from "zustand";
 export { z as zod } from "zod";
 export { useForm, Controller } from "react-hook-form";
 export { type LoaderFunction, Navigate } from "react-router-dom";
+export type { ResourceLanguage } from "i18next";
+export { useTranslation } from "react-i18next";

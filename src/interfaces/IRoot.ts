@@ -1,5 +1,5 @@
 import type { ILanguage } from "@/interfaces/ILanguage.ts";
-import type { ICustomRouteObject } from "@/interfaces/plugin/ICustomRouteObject.ts";
+import type { ICustomRouteObject } from "@/interfaces/plugins/ICustomRouteObject";
 
 export interface IRootConfigs {
 	pageTitlePrefix: string;
