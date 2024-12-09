@@ -1,5 +1,7 @@
 import type { IRoot } from "@/interfaces/IRoot.ts";
 import type { ICustomHandle } from "@/interfaces/plugin/ICustomRouteObject.ts";
+import { initI18n } from "@/plugins/I18N.ts";
+import { useLanguageStore } from "@/stores/LanguageStore.ts";
 import { useRouterStore } from "@/stores/RouterStore.ts";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
 import { useUIStore } from "@/stores/UIStore.ts";
@@ -7,7 +9,7 @@ import { promiseRejectionErrorHandler } from "@/utils/PromiseRejectionErrorHandl
 import type { RouterState } from "@remix-run/router";
 import { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { type RouteObject, RouterProvider, createBrowserRouter } from "react-router-dom";
 
 /**
  * Uygulamanın kök bileşeni. Temalar, dil seçenekleri ve yönlendirme gibi
@@ -21,9 +23,22 @@ export const Root = ({ routes, languageTranslations, configs }: IRoot): JSX.Elem
 	const router = useRouterStore((state) => state.router);
 	const initTheme = useThemeStore((state) => state.initTheme);
 	const initSidebarCollapsedStatus = useUIStore((state) => state.initSidebarCollapsedStatus);
+	const setLanguages = useLanguageStore((state) => state.setLanguages);
 	const pageTitlePrefix = configs.pageTitlePrefix;
 
 	useEffect(() => {
+		const initializeLocalization = async () => {
+			if (!languageTranslations || languageTranslations.length === 0) return;
+
+			const setterLanguages = languageTranslations.map((lang) => ({ name: lang.name, slug: lang.slug, flag: lang.flag }));
+
+			setLanguages(setterLanguages);
+
+			await initI18n(languageTranslations);
+		};
+
+		initializeLocalization();
+
 		/**
 		 * Uygulama başlatma işlevi. Temalar, dil yapılandırması ve yönlendirmeyi başlatır.
 		 */
@@ -33,7 +48,7 @@ export const Root = ({ routes, languageTranslations, configs }: IRoot): JSX.Elem
 			initSidebarCollapsedStatus();
 
 			// Yeni Router'ı oluştur
-			const newRouter = createBrowserRouter(routes, {
+			const newRouter = createBrowserRouter(routes as RouteObject[], {
 				future: {
 					v7_relativeSplatPath: true,
 					v7_fetcherPersist: true,
@@ -89,7 +104,7 @@ export const Root = ({ routes, languageTranslations, configs }: IRoot): JSX.Elem
 		handlePageTitle(router.state);
 
 		router.subscribe((state) => handlePageTitle(state));
-	}, [router, pageTitlePrefix]);
+	}, [router, pageTitlePrefix, languageTranslations]);
 
 	return (
 		<ErrorBoundary fallback={<div>Bir hata oluştu</div>}>
