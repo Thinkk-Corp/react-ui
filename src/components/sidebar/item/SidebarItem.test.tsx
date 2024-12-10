@@ -1,5 +1,5 @@
 import { redirectNative } from "@/actions/client/RedirectNative.ts";
-import { SidebarItem } from "@/components/sidebar/SidebarItem.tsx";
+import { SidebarItem } from "@/components/sidebar/item/SidebarItem";
 import { icons } from "@/plugins/Icons.tsx";
 import { useUIStore } from "@/stores/UIStore.ts";
 import { fireEvent, render, waitFor } from "@testing-library/react";

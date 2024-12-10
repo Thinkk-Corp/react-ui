@@ -1,4 +1,4 @@
-import { SidebarMenus } from "@/components/sidebar/SidebarMenus.tsx";
+import { SidebarMenus } from "@/components/sidebar/menu/SidebarMenus";
 import type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
 import { icons } from "@/plugins/Icons.tsx";
 import { useUIStore } from "@/stores/UIStore.ts";

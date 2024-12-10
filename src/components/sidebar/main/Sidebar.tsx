@@ -1,4 +1,4 @@
-import { SidebarMenus } from "@/components/sidebar/SidebarMenus.tsx";
+import { SidebarMenus } from "@/components/sidebar/menu/SidebarMenus";
 import type { ISidebar } from "@/interfaces/components/sidebar/ISidebar.ts";
 import { icons } from "@/plugins/Icons.tsx";
 import { useUIStore } from "@/stores/UIStore.ts";
@@ -79,42 +79,38 @@ export const Sidebar = ({ logo, collapsedLogo, menus }: ISidebar) => {
 	return (
 		<div
 			data-testid={"sidebar"}
-			className="flex h-screen flex-col justify-between border-e border-custom-card-border bg-sidebar-default"
+			className="h-screen flex flex-col gap-10 py-6 overflow-hidden border-e border-custom-card-border bg-sidebar-default"
 			onMouseEnter={() => handleSidebarHover(true)}
 			onMouseLeave={() => handleSidebarHover(false)}
 		>
-			<div className="px-4 py-6">
-				<div
-					data-testid={"sidebar-header"}
-					data-sidebar-collapsed={sidebarCollapsed.status}
-					className={classNames(
-						"duration-300 flex items-center mb-10 md:justify-center",
-						"data-[sidebar-collapsed='false']:justify-between",
-					)}
-				>
-					<div>
-						{sidebarCollapsed.status && isMdScreen
-							? collapsedLogo && (
-									<img alt={"logo"} data-testid={"sidebar-collapsed-logo"} className={"h-10"} src={collapsedLogo} />
-								)
-							: logo && <img data-testid={"sidebar-logo"} alt={"logo"} className={"h-10"} src={logo} />}
-					</div>
-
-					{!sidebarCollapsed.status && (
-						<div
-							data-testid={"sidebar-collapsed-trigger"}
-							onKeyDown={() => {}}
-							className={"size-5 text-sidebar-item-active-color cursor-pointer"}
-							onClick={handleSidebarCollapse}
-						>
-							{icons.outline[!isMdScreen ? "x" : sidebarCollapsed.isLocked ? "arrows_pointing_in" : "arrows_pointing_out"]}
-						</div>
-					)}
+			<div
+				data-testid={"sidebar-header"}
+				data-sidebar-collapsed={sidebarCollapsed.status}
+				className={classNames(
+					"duration-300 px-4 flex items-center md:justify-center",
+					"data-[sidebar-collapsed='false']:justify-between",
+				)}
+			>
+				<div>
+					{sidebarCollapsed.status && isMdScreen
+						? collapsedLogo && <img alt={"logo"} data-testid={"sidebar-collapsed-logo"} className={"h-10"} src={collapsedLogo} />
+						: logo && <img data-testid={"sidebar-logo"} alt={"logo"} className={"h-10"} src={logo} />}
 				</div>
-				<ul data-testid={"sidebar-menu-list"}>
-					<SidebarMenus menus={menus} hasRendered={hasRendered} />
-				</ul>
+
+				{!sidebarCollapsed.status && (
+					<div
+						data-testid={"sidebar-collapsed-trigger"}
+						onKeyDown={() => {}}
+						className={"size-5 text-sidebar-item-active-color cursor-pointer"}
+						onClick={handleSidebarCollapse}
+					>
+						{icons.outline[!isMdScreen ? "x" : sidebarCollapsed.isLocked ? "arrows_pointing_in" : "arrows_pointing_out"]}
+					</div>
+				)}
 			</div>
+			<ul data-testid={"sidebar-menu-list"} className="overflow-x-hidden overflow-y-auto px-4 flex-1">
+				<SidebarMenus menus={menus} hasRendered={hasRendered} />
+			</ul>
 		</div>
 	);
 };

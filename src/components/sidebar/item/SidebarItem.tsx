@@ -53,7 +53,7 @@ export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild
 				data-menu-active={isActivatedMenuItem}
 				data-is-child={isChild}
 				className={classNames(
-					"flex rounded-lg items-center w-full px-2 py-2.5 mb-4 flex-1",
+					"flex rounded-lg items-center overflow-hidden w-full px-2 py-2.5 mb-4",
 					"data-[is-child='true']:mb-0 data-[is-child='false']:mt-1",
 					"text-sidebar-item-color hover:text-sidebar-item-active-color",
 					"data-[menu-active='true']:text-sidebar-item-active-color",
