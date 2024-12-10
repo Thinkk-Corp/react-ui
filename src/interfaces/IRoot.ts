@@ -1,7 +1,12 @@
 import type { ILanguage } from "@/interfaces/ILanguage.ts";
-import type { RouteObject } from "react-router-dom";
+import type { ICustomRouteObject } from "@/interfaces/plugins/ICustomRouteObject";
+
+export interface IRootConfigs {
+	pageTitlePrefix: string;
+}
 
 export interface IRoot {
-	routes: RouteObject[];
-	languageTranslations: ILanguage[];
+	routes: ICustomRouteObject[];
+	languageTranslations?: ILanguage[];
+	configs: IRootConfigs;
 }

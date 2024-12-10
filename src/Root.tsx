@@ -1,5 +1,6 @@
 import type { IRoot } from "@/interfaces/IRoot.ts";
-import type { ICustomHandle } from "@/interfaces/plugin/ICustomRouteObject.ts";
+import type { ICustomHandle } from "@/interfaces/plugins/ICustomRouteObject";
+import { initI18n } from "@/plugins/i18n/I18N";
 import { useRouterStore } from "@/stores/RouterStore.ts";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
 import { useUIStore } from "@/stores/UIStore.ts";
@@ -7,7 +8,7 @@ import { promiseRejectionErrorHandler } from "@/utils/PromiseRejectionErrorHandl
 import type { RouterState } from "@remix-run/router";
 import { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { type RouteObject, RouterProvider, createBrowserRouter } from "react-router-dom";
 
 /**
  * Uygulamanın kök bileşeni. Temalar, dil seçenekleri ve yönlendirme gibi
@@ -16,13 +17,21 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
  * @param {IRoot} param0 - `routes` ve `languageTranslations` özelliklerini içeren yapılandırma nesnesi.
  * @returns {JSX.Element} - Root bileşeni.
  */
-export const Root = ({ routes, languageTranslations }: IRoot): JSX.Element => {
+export const Root = ({ routes, languageTranslations, configs }: IRoot): JSX.Element => {
 	const setRouter = useRouterStore((state) => state.setRouter);
 	const router = useRouterStore((state) => state.router);
 	const initTheme = useThemeStore((state) => state.initTheme);
 	const initSidebarCollapsedStatus = useUIStore((state) => state.initSidebarCollapsedStatus);
+	const pageTitlePrefix = configs.pageTitlePrefix;
 
 	useEffect(() => {
+		const initializeLocalization = async () => {
+			if (!languageTranslations || languageTranslations.length === 0) return;
+			await initI18n(languageTranslations);
+		};
+
+		initializeLocalization();
+
 		/**
 		 * Uygulama başlatma işlevi. Temalar, dil yapılandırması ve yönlendirmeyi başlatır.
 		 */
@@ -32,7 +41,7 @@ export const Root = ({ routes, languageTranslations }: IRoot): JSX.Element => {
 			initSidebarCollapsedStatus();
 
 			// Yeni Router'ı oluştur
-			const newRouter = createBrowserRouter(routes, {
+			const newRouter = createBrowserRouter(routes as RouteObject[], {
 				future: {
 					v7_relativeSplatPath: true,
 					v7_fetcherPersist: true,
@@ -60,7 +69,7 @@ export const Root = ({ routes, languageTranslations }: IRoot): JSX.Element => {
 			window.removeEventListener("unhandledrejection", handlePromiseRejections);
 			window.removeEventListener("rejectionhandled", handlePromiseRejections);
 		};
-	}, [routes, languageTranslations, setRouter, initTheme, initSidebarCollapsedStatus]);
+	}, [routes, setRouter, initTheme, initSidebarCollapsedStatus]);
 
 	useEffect(() => {
 		if (!router) return;
@@ -82,13 +91,13 @@ export const Root = ({ routes, languageTranslations }: IRoot): JSX.Element => {
 			const crumb = handle?.crumb;
 			if (!crumb?.title?.trim() || !crumb?.path?.trim()) return;
 
-			document.title = crumb.title;
+			document.title = `${pageTitlePrefix} | ${crumb.title}`;
 		};
 
 		handlePageTitle(router.state);
 
 		router.subscribe((state) => handlePageTitle(state));
-	}, [router]);
+	}, [router, pageTitlePrefix, languageTranslations]);
 
 	return (
 		<ErrorBoundary fallback={<div>Bir hata oluştu</div>}>

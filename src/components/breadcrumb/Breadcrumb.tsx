@@ -1,5 +1,5 @@
 import { IconBox } from "@/components/icon-box/IconBox.tsx";
-import type { ICustomHandle } from "@/interfaces/plugin/ICustomRouteObject.ts";
+import type { ICustomHandle } from "@/interfaces/plugins/ICustomRouteObject";
 import { icons } from "@/plugins/Icons.tsx";
 import { useEffect, useState } from "react";
 import { Link, useMatches } from "react-router-dom";

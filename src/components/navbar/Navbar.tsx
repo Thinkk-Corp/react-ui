@@ -1,10 +1,12 @@
 import { Input } from "@/components/form/inputs/input/Input.tsx";
 import { IconBox } from "@/components/icon-box/IconBox.tsx";
+import { LanguageChanger } from "@/components/navbar/LanguageChanger.tsx";
 import { Notifications } from "@/components/navbar/Notifications.tsx";
 import { ThemeChanger } from "@/components/navbar/ThemeChanger.tsx";
 import { UserMenu } from "@/components/navbar/UserMenu.tsx";
 import type { INavbar } from "@/interfaces/components/navbar/INavbar.ts";
 import { icons } from "@/plugins/Icons.tsx";
+import { useLanguageStore } from "@/stores/LanguageStore.ts";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
 import { useUIStore } from "@/stores/UIStore.ts";
 import classNames from "classnames";
@@ -13,6 +15,7 @@ export const Navbar = ({ extraComponents, isThemeSwitcherActive = true, userMenu
 	const setSidebarCollapsed = useUIStore((state) => state.setSidebarCollapsed);
 	const sidebarCollapsed = useUIStore((state) => state.sidebarCollapsed);
 	const currentTheme = useThemeStore((state) => state.theme);
+	const languages = useLanguageStore((state) => state.languages);
 
 	const handleMobileMenuTriggerClick = () => {
 		setSidebarCollapsed({ isLocked: sidebarCollapsed.isLocked, status: !sidebarCollapsed.status });
@@ -40,6 +43,7 @@ export const Navbar = ({ extraComponents, isThemeSwitcherActive = true, userMenu
 				{isThemeSwitcherActive && <ThemeChanger />}
 				{notifications && <Notifications />}
 				{userMenus && userMenus.menus.length > 0 && <UserMenu data={userMenus} />}
+				{languages && languages.length > 0 && <LanguageChanger />}
 				{extraComponents?.map((content) => content)}
 			</div>
 		</div>
