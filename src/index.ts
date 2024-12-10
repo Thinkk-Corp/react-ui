@@ -5,7 +5,7 @@ import "@/styles/index.css";
 
 // Components
 export { DefaultLayout } from "@/components/layouts/default-layout/DefaultLayout.tsx";
-export { Sidebar } from "@/components/sidebar/Sidebar";
+export { Sidebar } from "@/components/sidebar/main/Sidebar";
 export { Navbar } from "@/components/navbar/Navbar";
 export { Input } from "@/components/form/inputs/input/Input.tsx";
 export { Avatar } from "@/components/avatar/Avatar.tsx";
