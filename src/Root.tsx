@@ -9,6 +9,8 @@ import type { RouterState } from "@remix-run/router";
 import { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { type RouteObject, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 /**
  * Uygulamanın kök bileşeni. Temalar, dil seçenekleri ve yönlendirme gibi
@@ -102,6 +104,7 @@ export const Root = ({ routes, languageTranslations, configs }: IRoot): JSX.Elem
 	return (
 		<ErrorBoundary fallback={<div>Bir hata oluştu</div>}>
 			{router ? <RouterProvider future={{ v7_startTransition: true }} router={router} /> : null}
+			<ToastContainer />
 		</ErrorBoundary>
 	);
 };

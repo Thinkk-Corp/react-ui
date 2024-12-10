@@ -65,6 +65,9 @@ importers:
       react-router-dom:
         specifier: ^6.27.0
         version: 6.28.0(react-dom@19.0.0-rc-8b08e99e-20240713(react@19.0.0-rc-8b08e99e-20240713))(react@19.0.0-rc-8b08e99e-20240713)
+      react-toastify:
+        specifier: ^10.0.6
+        version: 10.0.6(react-dom@19.0.0-rc-8b08e99e-20240713(react@19.0.0-rc-8b08e99e-20240713))(react@19.0.0-rc-8b08e99e-20240713)
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -1881,6 +1884,10 @@ packages:
   cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
@@ -3776,6 +3783,12 @@ packages:
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
+
+  react-toastify@10.0.6:
+    resolution: {integrity: sha512-yYjp+omCDf9lhZcrZHKbSq7YMuK0zcYkDFTzfRFgTXkTFHZ1ToxwAonzA4JI5CxA91JpjFLmwEsZEgfYfOqI1A==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
 
   react@19.0.0-rc-8b08e99e-20240713:
     resolution: {integrity: sha512-j56t3i/sMNftehdO/cA0kFeKDh9Pi1FxKba6u0sRgzZ73HVWii64oUbFxkUmf6I/C9uCmovY3HnFpT7/0UTIaw==}
@@ -6651,6 +6664,8 @@ snapshots:
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
 
+  clsx@2.1.1: {}
+
   co@4.6.0: {}
 
   collect-v8-coverage@1.0.2: {}
@@ -8823,6 +8838,12 @@ snapshots:
     dependencies:
       '@remix-run/router': 1.21.0
       react: 19.0.0-rc-8b08e99e-20240713
+
+  react-toastify@10.0.6(react-dom@19.0.0-rc-8b08e99e-20240713(react@19.0.0-rc-8b08e99e-20240713))(react@19.0.0-rc-8b08e99e-20240713):
+    dependencies:
+      clsx: 2.1.1
+      react: 19.0.0-rc-8b08e99e-20240713
+      react-dom: 19.0.0-rc-8b08e99e-20240713(react@19.0.0-rc-8b08e99e-20240713)
 
   react@19.0.0-rc-8b08e99e-20240713: {}
 

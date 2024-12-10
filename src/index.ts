@@ -51,6 +51,7 @@ export { shouldBypass } from "@/utils/should-bypass/ShouldBypass.ts";
 export { icons } from "@/plugins/Icons";
 export { emitter } from "@/plugins/Mitt";
 export { handleLanguageChange } from "@/plugins/i18n/I18N";
+export { toaster } from "@/plugins/Toaster";
 
 // Events
 export { dialogEvents } from "@/events/DialogEvents";
