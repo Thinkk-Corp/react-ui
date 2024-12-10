@@ -1,7 +1,7 @@
+import { storageTypes } from "@/enums/Storage";
 import type { ILanguage } from "@/interfaces/ILanguage.ts";
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
-import { storageTypes } from "@/enums/Storage";
 
 /**
  * Seçili dili localStorage'dan alır.
@@ -9,7 +9,8 @@ import { storageTypes } from "@/enums/Storage";
  * @returns {string | null} Seçili dil veya null.
  */
 export const getSelectedLanguage = (): string | null => {
-	return localStorage.getItem(storageTypes.LANGUAGE_STORAGE);
+	const language = localStorage.getItem(storageTypes.LANGUAGE_STORAGE);
+	return language !== "" ? language : null;
 };
 
 /**
