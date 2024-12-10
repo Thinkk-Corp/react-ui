@@ -1,8 +1,10 @@
 import type { ILanguage } from "@/interfaces/ILanguage.ts";
 
+export type ILanguageData = Omit<ILanguage, "is_default" | "is_fallback" | "translations">;
+
 export interface ILanguageStore {
-	languages: ILanguage[] | null;
-	selectedLanguage: ILanguage | null;
-	setSelectedLanguage(selectedLanguage: ILanguage): void;
-	setLanguages: (languages: ILanguage[]) => void;
+	languages: ILanguageData[] | null;
+	selectedLanguage: ILanguageData | null;
+	setSelectedLanguage(selectedLanguage: ILanguageData): void;
+	setLanguages: (languages: ILanguageData[]) => void;
 }

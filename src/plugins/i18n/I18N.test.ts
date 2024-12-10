@@ -1,15 +1,33 @@
 import { storageTypes } from "@/enums/Storage";
 import type { ILanguage } from "@/interfaces/ILanguage.ts";
-import { initI18n } from "@/plugins/i18n/I18N.ts";
+import {
+	initI18n,
+	detectBrowserLanguage,
+	getSelectedLanguage,
+	saveSelectedLanguage,
+	handleLanguageChange,
+} from "@/plugins/i18n/I18N.ts";
 import i18next from "i18next";
-
-const { getSelectedLanguage } = initI18n([]);
 
 // Jest ile Storage API'lerini izlemek için spy tanımlamaları
 jest.spyOn(Storage.prototype, "getItem");
 jest.spyOn(Storage.prototype, "setItem");
 
+const mockLanguageTranslations: ILanguage[] = [
+	{ name: "English", flag: "", slug: "en", translations: { greeting: "Hello" }, is_default: true, is_fallback: false },
+	{ name: "French", flag: "", slug: "fr", translations: { greeting: "Bonjour" }, is_default: false, is_fallback: true },
+];
+
+const storeFormatTranslator = (data: ILanguage) => {
+	const storeObj = { state: data, version: 0 };
+	return JSON.stringify(storeObj);
+};
+
 describe("i18n utility functions", () => {
+	beforeEach(() => {
+		localStorage.clear();
+	});
+
 	// Test: Tarayıcı dilini doğru şekilde algılar
 	it("detects browser language correctly", () => {
 		// Tarayıcı dilini manuel olarak "en-US" olarak ayarla
@@ -25,10 +43,10 @@ describe("i18n utility functions", () => {
 	// Test: LocalStorage'dan seçili dili doğru şekilde alır
 	it("retrieves selected language from localStorage", () => {
 		// LocalStorage'a bir dil kaydedilir
-		localStorage.setItem(storageTypes.LANGUAGE_STORAGE, "en");
+		saveSelectedLanguage(mockLanguageTranslations, "en");
 
 		// LocalStorage'dan kaydedilen dilin doğru şekilde alındığını doğrula
-		expect(getSelectedLanguage()).toBe("en");
+		expect(getSelectedLanguage()).toStrictEqual(mockLanguageTranslations[0]);
 
 		// LocalStorage'ın doğru anahtar ile çağrıldığını kontrol et
 		expect(localStorage.getItem).toHaveBeenCalledWith(storageTypes.LANGUAGE_STORAGE);
@@ -37,25 +55,19 @@ describe("i18n utility functions", () => {
 	// Test: Seçili dili LocalStorage'a doğru şekilde kaydeder
 	it("saves selected language to localStorage", () => {
 		// "fr" dilini LocalStorage'a kaydet
-		saveSelectedLanguage("fr");
+		saveSelectedLanguage(mockLanguageTranslations, "fr");
 
 		// LocalStorage'ın doğru anahtar ve değer ile çağrıldığını kontrol et
-		expect(localStorage.setItem).toHaveBeenCalledWith(storageTypes.LANGUAGE_STORAGE, "fr");
+		expect(localStorage.setItem).toHaveBeenCalledWith(
+			storageTypes.LANGUAGE_STORAGE,
+			storeFormatTranslator(mockLanguageTranslations[1]),
+		);
 	});
 
 	// Test: i18next yapılandırmasını doğru parametrelerle başlatır
 	it("initializes i18n with correct configuration", async () => {
-		// LocalStorage'daki dil bilgisini temizle
-		localStorage.setItem(storageTypes.LANGUAGE_STORAGE, "");
-
-		// Test için örnek dil çeviri verisi
-		const languageTranslations: ILanguage[] = [
-			{ name: "English", flag: "", slug: "en", translations: { greeting: "Hello" }, is_default: true, is_fallback: false },
-			{ name: "French", flag: "", slug: "fr", translations: { greeting: "Bonjour" }, is_default: false, is_fallback: true },
-		];
-
 		// i18n başlatılır
-		await initI18n(languageTranslations);
+		await initI18n(mockLanguageTranslations);
 
 		// i18next'in doğru yapılandırma parametreleri ile çağrıldığını doğrula
 		expect(i18next.init).toHaveBeenCalledWith({
@@ -80,14 +92,17 @@ describe("i18n utility functions", () => {
 		expect(i18next.changeLanguage).toHaveBeenCalledWith("fr");
 
 		// LocalStorage'ın doğru değer ile güncellendiğini kontrol et
-		expect(localStorage.setItem).toHaveBeenCalledWith(storageTypes.LANGUAGE_STORAGE, "fr");
+		expect(localStorage.setItem).toHaveBeenCalledWith(
+			storageTypes.LANGUAGE_STORAGE,
+			storeFormatTranslator(mockLanguageTranslations[1]),
+		);
 	});
 
 	// Test: Otomatik dil algılama ile dil değişimini işler
 	it("handles auto language detection on language change", () => {
 		// Tarayıcı dilini manuel olarak "es-ES" olarak ayarla
 		Object.defineProperty(window.navigator, "language", {
-			value: "es-ES",
+			value: "en-EN",
 			writable: true,
 		});
 
@@ -95,9 +110,12 @@ describe("i18n utility functions", () => {
 		handleLanguageChange("auto");
 
 		// i18next'in tarayıcıdan algılanan dil ile çağrıldığını kontrol et
-		expect(i18next.changeLanguage).toHaveBeenCalledWith("es");
+		expect(i18next.changeLanguage).toHaveBeenCalledWith("en");
 
 		// LocalStorage'ın doğru değer ile güncellendiğini kontrol et
-		expect(localStorage.setItem).toHaveBeenCalledWith(storageTypes.LANGUAGE_STORAGE, "es");
+		expect(localStorage.setItem).toHaveBeenCalledWith(
+			storageTypes.LANGUAGE_STORAGE,
+			storeFormatTranslator(mockLanguageTranslations[0]),
+		);
 	});
 });

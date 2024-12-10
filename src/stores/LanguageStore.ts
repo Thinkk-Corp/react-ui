@@ -3,19 +3,22 @@ import type { ILanguageData, ILanguageStore } from "@/interfaces/stores/ILanguag
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+const getInitialSelectedLanguage = (): ILanguageData | null => {
+	const storedLanguage = localStorage.getItem(storageTypes.LANGUAGE_STORAGE);
+	return storedLanguage ? JSON.parse(storedLanguage).state : null;
+};
+
 export const useLanguageStore = create<ILanguageStore>()(
 	persist(
 		(set) => ({
 			languages: null,
-			selectedLanguage: null,
-			setSelectedLanguage: (selectedLanguage: ILanguageData) => set({ selectedLanguage }), // Sadece selectedLanguage güncellenir
-			setLanguages: (languages: ILanguageData[] | null) => set({ languages }), // Bu, storage'e kaydedilmez
+			selectedLanguage: getInitialSelectedLanguage(),
+			setSelectedLanguage: (selectedLanguage: ILanguageData) => set({ selectedLanguage }),
+			setLanguages: (languages: ILanguageData[] | null) => set({ languages }),
 		}),
 		{
-			name: storageTypes.LANGUAGE_STORAGE, // localStorage anahtarı
-			partialize: (state) => {
-				return state.selectedLanguage; // Sadece selectedLanguage saklanır
-			},
+			name: storageTypes.LANGUAGE_STORAGE,
+			partialize: (state) => state.selectedLanguage,
 		},
 	),
 );

@@ -1,7 +1,6 @@
 import type { IRoot } from "@/interfaces/IRoot.ts";
 import type { ICustomHandle } from "@/interfaces/plugins/ICustomRouteObject";
 import { initI18n } from "@/plugins/i18n/I18N";
-import { useLanguageStore } from "@/stores/LanguageStore.ts";
 import { useRouterStore } from "@/stores/RouterStore.ts";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
 import { useUIStore } from "@/stores/UIStore.ts";
@@ -23,13 +22,11 @@ export const Root = ({ routes, languageTranslations, configs }: IRoot): JSX.Elem
 	const router = useRouterStore((state) => state.router);
 	const initTheme = useThemeStore((state) => state.initTheme);
 	const initSidebarCollapsedStatus = useUIStore((state) => state.initSidebarCollapsedStatus);
-	const setLanguages = useLanguageStore((state) => state.setLanguages);
 	const pageTitlePrefix = configs.pageTitlePrefix;
 
 	useEffect(() => {
 		const initializeLocalization = async () => {
 			if (!languageTranslations || languageTranslations.length === 0) return;
-			setLanguages(languageTranslations);
 			await initI18n(languageTranslations);
 		};
 
