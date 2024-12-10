@@ -7,6 +7,6 @@ export interface IRootConfigs {
 
 export interface IRoot {
 	routes: ICustomRouteObject[];
-	languageTranslations: ILanguage[];
+	languageTranslations?: ILanguage[];
 	configs: IRootConfigs;
 }

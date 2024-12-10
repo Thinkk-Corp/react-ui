@@ -1,13 +1,9 @@
 import { storageTypes } from "@/enums/Storage";
 import type { ILanguage } from "@/interfaces/ILanguage.ts";
-import {
-	detectBrowserLanguage,
-	getSelectedLanguage,
-	handleLanguageChange,
-	initI18n,
-	saveSelectedLanguage,
-} from "@/plugins/i18n/I18N.ts";
+import { initI18n } from "@/plugins/i18n/I18N.ts";
 import i18next from "i18next";
+
+const { getSelectedLanguage } = initI18n([]);
 
 // Jest ile Storage API'lerini izlemek için spy tanımlamaları
 jest.spyOn(Storage.prototype, "getItem");

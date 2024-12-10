@@ -29,11 +29,7 @@ export const Root = ({ routes, languageTranslations, configs }: IRoot): JSX.Elem
 	useEffect(() => {
 		const initializeLocalization = async () => {
 			if (!languageTranslations || languageTranslations.length === 0) return;
-
-			const setterLanguages = languageTranslations.map((lang) => ({ name: lang.name, slug: lang.slug, flag: lang.flag }));
-
-			setLanguages(setterLanguages);
-
+			setLanguages(languageTranslations);
 			await initI18n(languageTranslations);
 		};
 
