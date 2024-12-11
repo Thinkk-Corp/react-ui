@@ -11,12 +11,13 @@ import { ErrorBoundary } from "react-error-boundary";
 import { type RouteObject, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Tooltip } from "react-tooltip";
 
 /**
  * Uygulamanın kök bileşeni. Temalar, dil seçenekleri ve yönlendirme gibi
  * temel yapılandırmaları içerir.
  *
- * @param {IRoot} param0 - `routes` ve `languageTranslations` özelliklerini içeren yapılandırma nesnesi.
+ * @param {IRoot} - `routes` ve `languageTranslations` özelliklerini içeren yapılandırma nesnesi.
  * @returns {JSX.Element} - Root bileşeni.
  */
 export const Root = ({ routes, languageTranslations, configs }: IRoot): JSX.Element => {
@@ -105,6 +106,7 @@ export const Root = ({ routes, languageTranslations, configs }: IRoot): JSX.Elem
 		<ErrorBoundary fallback={<div>Bir hata oluştu</div>}>
 			{router ? <RouterProvider future={{ v7_startTransition: true }} router={router} /> : null}
 			<ToastContainer />
+			<Tooltip positionStrategy="fixed" place="bottom" id="global-tooltip" />
 		</ErrorBoundary>
 	);
 };
