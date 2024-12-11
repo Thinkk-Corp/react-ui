@@ -18,7 +18,7 @@ const sidebarMenus: ISidebarMenu[] = [
 	},
 ];
 
-jest.mock("@/components/sidebar/SidebarItem.tsx", () => ({
+jest.mock("@/components/sidebar/item/SidebarItem.tsx", () => ({
 	SidebarItem: ({ children }: { children: ReactNode }) => <div data-testid={"sidebar-item-container"}>{children}</div>,
 }));
 

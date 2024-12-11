@@ -1,11 +1,11 @@
 import { redirectNative } from "@/actions/client/RedirectNative.ts";
 import { IconBox } from "@/components/icon-box/IconBox.tsx";
-import type { ISidebarMenuAction, ISidebarMenuItem } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
+import type { ISidebarItem } from "@/interfaces/components/sidebar/ISidebarItem";
+import type { ISidebarMenuAction } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
 import { useUIStore } from "@/stores/UIStore.ts";
 import { keyboardUtil } from "@/utils/KeyboardUtil.ts";
 import classNames from "classnames";
-import { useCallback, useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import { useCallback } from "react";
 
 /**
  * Menüyü render eden yardımcı fonksiyon. Menü öğelerini sıralı bir liste olarak render eder.
@@ -14,15 +14,8 @@ import { useLocation } from "react-router-dom";
  * @param isChild
  * @returns {JSX.Element} Menü öğesi elemanını döner.
  */
-export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild?: boolean }): JSX.Element => {
-	const location = useLocation();
+export const SidebarItem = ({ isActivated = false, menu, isChild = false }: ISidebarItem): JSX.Element => {
 	const sidebarCollapsed = useUIStore((s) => s.sidebarCollapsed);
-
-	// Menü öğesinin etkin olup olmadığını kontrol etmek için `useMemo` kullanımı
-	const isActivatedMenuItem = useMemo(() => {
-		if (typeof menu.action !== "string") return false;
-		return menu.action === location.pathname;
-	}, [menu.action, location.pathname]);
 
 	// Menü öğesine tıklandığında yönlendirme işlemi için `useCallback` kullanımı
 	const handleMenuClick = useCallback((action?: ISidebarMenuAction) => {
@@ -42,31 +35,31 @@ export const SidebarItem = ({ menu, isChild }: { menu: ISidebarMenuItem; isChild
 			<div
 				data-testid={"sidebar-item-child-dot"}
 				data-is-child={isChild}
-				data-menu-active={isActivatedMenuItem}
+				data-activated={isActivated}
 				className={classNames(
 					"hidden min-w-3 min-h-3 border border-primary-main rounded-full",
-					"data-[menu-active='true']:bg-primary-main data-[is-child='true']:block",
+					"data-[activated='true']:bg-primary-main data-[is-child='true']:block",
 				)}
 			/>
 			<div
 				data-testid={"sidebar-item"}
-				data-menu-active={isActivatedMenuItem}
+				data-activated={isActivated}
 				data-is-child={isChild}
 				className={classNames(
 					"flex rounded-lg items-center overflow-hidden w-full px-2 py-2.5 mb-4",
 					"data-[is-child='true']:mb-0 data-[is-child='false']:mt-1",
 					"text-sidebar-item-color hover:text-sidebar-item-active-color",
-					"data-[menu-active='true']:text-sidebar-item-active-color",
-					"data-[menu-active='true']:bg-sidebar-item-active",
-					"data-[menu-active='false']:hover:bg-sidebar-item-hover",
+					"data-[activated='true']:text-sidebar-item-active-color",
+					"data-[activated='true']:bg-sidebar-item-active",
+					"data-[activated='false']:hover:bg-sidebar-item-hover",
 				)}
 			>
 				{menu.icon && (
 					<IconBox
 						data-testid={"sidebar-item-icon"}
-						data-menu-active={isActivatedMenuItem}
+						data-activated={isActivated}
 						color={"text-sidebar-item-color"}
-						className={"data-[menu-active='true']:text-sidebar-item-active-color hover:text-sidebar-item-active-color"}
+						className={"data-[activated='true']:text-sidebar-item-active-color hover:text-sidebar-item-active-color"}
 					>
 						{menu.icon}
 					</IconBox>

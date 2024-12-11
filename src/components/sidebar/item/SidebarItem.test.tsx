@@ -3,17 +3,13 @@ import { SidebarItem } from "@/components/sidebar/item/SidebarItem";
 import { icons } from "@/plugins/Icons.tsx";
 import { useUIStore } from "@/stores/UIStore.ts";
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import { useLocation } from "react-router-dom";
 
 const mockRedirectNative = redirectNative as jest.Mock;
-const mockUseLocation = useLocation as jest.Mock;
 
 const setSidebarCollapsed = useUIStore.getState().setSidebarCollapsed;
 
 describe("SidebarItem Component", () => {
 	beforeEach(() => {
-		// Her testten önce Jest mock'ları sıfırlanır ve varsayılan `useLocation` değeri ayarlanır.
-		mockUseLocation.mockReturnValue({ pathname: "/" });
 		jest.clearAllMocks();
 	});
 
@@ -65,12 +61,9 @@ describe("SidebarItem Component", () => {
 	});
 
 	it("should apply correct classes and attributes to sidebar item dot when isChild is true and menu is active", async () => {
-		// Mevcut konumu test etmek için mock değeri "/test-menu" olarak ayarlanır.
-		mockUseLocation.mockReturnValue({ pathname: "/test-menu" });
-
 		// `isChild` özelliği ile bir SidebarItem bileşeni render edilir.
 		const { getByTestId } = render(
-			<SidebarItem isChild menu={{ text: "Menu 2", icon: icons.outline.x, action: "/test-menu" }} />,
+			<SidebarItem isActivated isChild menu={{ text: "Menu 2", icon: icons.outline.x, action: "/test-menu" }} />,
 		);
 
 		// Çocuk noktanın uygun sınıfları içerip içermediği kontrol edilir.
@@ -80,47 +73,45 @@ describe("SidebarItem Component", () => {
 
 		// Menü aktif durumunda çocuk noktanın ek sınıf ve niteliklere sahip olup olmadığı kontrol edilir.
 		await waitFor(() => {
-			expect(sidebarItemChildDot).toHaveAttribute("data-menu-active", "true");
-			expect(sidebarItemChildDot).toHaveClass("data-[menu-active='true']:bg-primary-main");
+			expect(sidebarItemChildDot).toHaveAttribute("data-activated", "true");
+			expect(sidebarItemChildDot).toHaveClass("data-[activated='true']:bg-primary-main");
 		});
 	});
 
 	it("should apply correct classes and attributes to sidebar item when menu is active and isChild is true", async () => {
 		// `isChild` ve aktif menü için bir test yapılır.
-		mockUseLocation.mockReturnValue({ pathname: "/test-menu" });
-
 		const { getByTestId } = render(
-			<SidebarItem isChild menu={{ text: "Menu 2", icon: icons.outline.x, action: "/test-menu" }} />,
+			<SidebarItem isActivated isChild menu={{ text: "Menu 2", icon: icons.outline.x, action: "/test-menu" }} />,
 		);
 
 		// SidebarItem'ın uygun sınıflara sahip olup olmadığını kontrol eder.
 		const sidebarItem = getByTestId("sidebar-item");
 
 		expect(sidebarItem).toHaveClass(
-			"data-[menu-active='true']:bg-sidebar-item-active data-[menu-active='true']:text-sidebar-item-active-color",
+			"data-[activated='true']:bg-sidebar-item-active data-[activated='true']:text-sidebar-item-active-color",
 		);
 		expect(sidebarItem).toHaveAttribute("data-is-child", "true");
 
 		// Menü aktif durumunda ek sınıflar ve niteliklere sahip olup olmadığını kontrol eder.
 		await waitFor(() => {
-			expect(sidebarItem).toHaveAttribute("data-menu-active", "true");
+			expect(sidebarItem).toHaveAttribute("data-activated", "true");
 		});
 	});
 
 	it("should render icon correctly with appropriate classes and attributes to sidebar item icon when menu is active", async () => {
 		// Aktif menü durumunda ikonun görünümünü test eder.
-		mockUseLocation.mockReturnValue({ pathname: "/test-menu" });
-
-		const { getByTestId } = render(<SidebarItem menu={{ text: "Menu 2", icon: icons.outline.x, action: "/test-menu" }} />);
+		const { getByTestId } = render(
+			<SidebarItem isActivated menu={{ text: "Menu 2", icon: icons.outline.x, action: "/test-menu" }} />,
+		);
 
 		// İkonun SVG içerip içermediğini ve uygun sınıflara sahip olup olmadığını kontrol eder.
 		const sidebarItemIcon = getByTestId("sidebar-item-icon");
 		expect(sidebarItemIcon.querySelector("svg")).toBeInTheDocument();
-		expect(sidebarItemIcon).toHaveClass("data-[menu-active='true']:text-sidebar-item-active-color");
+		expect(sidebarItemIcon).toHaveClass("data-[activated='true']:text-sidebar-item-active-color");
 
 		// Menü aktif durumunda niteliklere sahip olup olmadığını kontrol eder.
 		await waitFor(() => {
-			expect(sidebarItemIcon).toHaveAttribute("data-menu-active", "true");
+			expect(sidebarItemIcon).toHaveAttribute("data-activated", "true");
 		});
 	});
 

@@ -7,6 +7,7 @@ import { mediaQueryUtil } from "@/utils/media-query-util/MediaQueryUtil.ts";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 /**
  * Sidebar menülerini listeleyen ve menülerin durumuna göre alt menüleri gösteren bileşen.
@@ -21,7 +22,15 @@ export const SidebarMenus = ({
 }: { menus: ISidebarMenu[]; hasRendered?: boolean }): (JSX.Element | null)[] | undefined => {
 	// Sidebar'ın çökme durumunu store'dan alıyoruz
 	const sidebarCollapsed = useUIStore((state) => state.sidebarCollapsed);
+
+	const location = useLocation();
+
 	const [isMdScreen, setIsMdScreen] = useState<boolean>(true);
+
+	const isActivatedMenuItem = (menu: ISidebarMenuItem | Pick<ISidebarMenuItem, "text" | "action">) => {
+		if (typeof menu.action !== "string") return false;
+		return menu.action === location.pathname;
+	};
 
 	useEffect(() => {
 		const handleScreenSize = () => {
@@ -67,10 +76,15 @@ export const SidebarMenus = ({
 					className="mb-4 group [&_summary::-webkit-details-marker]:hidden"
 				>
 					<summary
+						data-activated={isActivatedMenuItem(menu)}
 						data-testid={"dropdown-menu-trigger"}
 						className={classNames(
+							"data-[activated='true']:bg-primary-main",
+							"data-[activated='true']:text-sidebar-item-active-color",
+							"data-[activated='false']:text-sidebar-item-color",
+							"data-[activated='false']:hover:text-sidebar-item-active-color",
 							"flex cursor-pointer items-center rounded-lg mb-1 mt-1 px-2 py-2.5",
-							"hover:text-sidebar-item-active-color justify-between hover:bg-sidebar-item-hover text-sidebar-item-color",
+							"justify-between hover:bg-sidebar-item-hover",
 						)}
 					>
 						{/* Menü ikonu ve başlık */}
@@ -79,7 +93,7 @@ export const SidebarMenus = ({
 								<IconBox
 									data-testid={"dropdown-menu-trigger-icon"}
 									color={"text-sidebar-item-color"}
-									className={"hover:text-sidebar-item-active-color"}
+									className={"transition-all duration-300 hover:text-sidebar-item-active-color"}
 								>
 									{menu.icon}
 								</IconBox>
@@ -113,7 +127,12 @@ export const SidebarMenus = ({
 					{/* Çocuk menüler (alt menüler) */}
 					<ul data-testid={"dropdown-menu-list"} className="mt-2 pl-[0.79rem] space-y-1 text-sidebar-item-color">
 						{menu.children.map((subMenu, subIndex) => (
-							<SidebarItem key={`${index.toString()}-${subIndex.toString()}`} menu={subMenu as ISidebarMenuItem} isChild={true} />
+							<SidebarItem
+								key={`${index.toString()}-${subIndex.toString()}`}
+								isActivated={isActivatedMenuItem(subMenu)}
+								menu={subMenu as ISidebarMenuItem}
+								isChild={true}
+							/>
 						))}
 					</ul>
 				</details>
@@ -122,7 +141,15 @@ export const SidebarMenus = ({
 
 		// Eğer menüde icon varsa, SidebarItem bileşeni ile gösteriyoruz
 		if ("icon" in menu && menu.icon) {
-			return <SidebarItem data-test-id={"menu"} key={index.toString()} isChild={false} menu={menu} />;
+			return (
+				<SidebarItem
+					data-test-id={"menu"}
+					key={index.toString()}
+					isActivated={isActivatedMenuItem(menu)}
+					isChild={false}
+					menu={menu}
+				/>
+			);
 		}
 
 		// Menü geçerli değilse, null döndürüyoruz
