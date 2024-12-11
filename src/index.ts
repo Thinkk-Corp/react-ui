@@ -31,6 +31,7 @@ export { CardAction } from "@/components/card/action/CardAction.tsx";
 export { FormCreator } from "@/components/form/creator/FormCreator.tsx";
 export { FormControl } from "@/components/form/control/FormControl.tsx";
 export { Breadcrumb } from "@/components/breadcrumb/Breadcrumb.tsx";
+export { Tab } from "@/components/tab/Tab";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
@@ -41,6 +42,7 @@ export type { ISize, IRounded } from "@/interfaces/types/IMetrics.ts";
 export type { ICustomStylesConfig } from "@/interfaces/types/ICustomStyleConfig.ts";
 export type { IFormFields, IFormField, IFormButton } from "@/interfaces/components/form/IFormCreator.ts";
 export type { ICustomRouteObject } from "@/interfaces/plugins/ICustomRouteObject";
+export type { ITabItem } from "@/interfaces/components/ITab";
 
 // Utils
 export { redirectNative } from "@/actions/client/RedirectNative.ts";
