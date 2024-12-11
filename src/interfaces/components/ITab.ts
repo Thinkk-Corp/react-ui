@@ -6,6 +6,7 @@ export interface ITabItem {
 }
 
 export interface ITab {
+	direction?: "horizontal" | "vertical";
 	tabs: ITabItem[];
 	size?: ISize;
 	className?: string;

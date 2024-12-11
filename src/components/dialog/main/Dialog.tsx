@@ -252,9 +252,10 @@ export const Dialog = ({
 										ref={dialogRef}
 										style={{ zIndex: zIndex + 1 }}
 										className={classNames(
-											"bg-paper-level2 overflow-hidden h-[90%] p-4 flex flex-col gap-8",
+											"bg-paper-level2 overflow-hidden p-4 flex flex-col gap-8",
 											{
-												"rounded-lg": type === "modal",
+												"h-full": type !== "modal",
+												"rounded-lg h-[90%]": type === "modal",
 												"w-full mx-4": type === "modal" && !isMdScreen,
 												"w-full": type !== "modal" || isMdScreen,
 											},

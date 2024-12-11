@@ -138,11 +138,7 @@ export const Select = ({
 	}, [isOpen]);
 
 	return (
-		<div
-			data-toggle={isOpen}
-			data-testid="select-container"
-			className={classNames("relative group min-w-60 inline-block", className)}
-		>
+		<div data-toggle={isOpen} data-testid="select-container" className={classNames("relative group inline-block", className)}>
 			{/* Seçim veya Arama Alanı */}
 			<Input
 				readOnly={!isSearchable}
