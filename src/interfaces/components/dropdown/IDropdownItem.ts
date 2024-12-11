@@ -3,5 +3,6 @@ import type { ReactNode } from "react";
 
 export interface IDropdownItem {
 	children: ReactNode;
+	isActivated?: boolean;
 	style?: ICustomStylesConfig;
 }

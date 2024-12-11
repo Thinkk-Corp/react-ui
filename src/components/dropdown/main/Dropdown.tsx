@@ -80,7 +80,7 @@ export const Dropdown = ({
 	}, [handleClick, closeToClickOutside]);
 
 	useEffect(() => {
-		setInternalIsOpen(isOpen); // Ensure internal state matches external prop
+		setInternalIsOpen(isOpen);
 	}, [isOpen]);
 
 	return (
@@ -103,7 +103,7 @@ export const Dropdown = ({
 					className={classNames(
 						"absolute",
 						{
-							[`bg-paper-card divide-y divide-custom-divider rounded-lg border border-custom-card-border ${theme === "light" && " shadow-card"}`]:
+							[`bg-paper-card divide-y divide-custom-divider overflow-hidden rounded-lg border border-custom-card-border ${theme === "light" && " shadow-card"}`]:
 								typeof styles?.menu?.defaultStyleActive === "undefined" || styles?.menu?.defaultStyleActive === null
 									? true
 									: styles?.menu?.defaultStyleActive,
