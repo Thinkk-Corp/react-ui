@@ -2,6 +2,7 @@ import type { ITab } from "@/interfaces/components/ITab";
 import classNames from "classnames";
 import { useState, useEffect } from "react";
 import type { ISizeSchema } from "@/components/form/inputs/toggle/Toggle";
+import { keyboardUtil } from "@/utils/KeyboardUtil";
 
 export const Tab = ({ tabs, size = "md", className = "", selectedTab, onChange }: ITab) => {
 	const [internalSelectedTab, setInternalSelectedTab] = useState<string>(selectedTab);
@@ -30,12 +31,27 @@ export const Tab = ({ tabs, size = "md", className = "", selectedTab, onChange }
 		return internalSelectedTab === tabValue;
 	};
 
+	const handleKeyDown = (key: "ArrowLeft" | "ArrowRight") => {
+		const getTabIndex = tabs.findIndex((tab) => tab.value === internalSelectedTab);
+
+		if (key === "ArrowLeft" && getTabIndex > 0) {
+			setInternalSelectedTab(tabs[getTabIndex - 1].value);
+		}
+		if (key === "ArrowRight" && getTabIndex < tabs.length - 1) {
+			setInternalSelectedTab(tabs[getTabIndex + 1].value);
+		}
+	};
+
 	return (
 		<nav className={classNames("flex gap-6 overflow-x-hidden overflow-y-auto", className)} aria-label="Tabs" data-testid="tab">
 			{tabs?.map((tab, index) => (
-				<p
+				<button
+					type="button"
 					key={index.toString()}
-					onKeyDown={() => {}}
+					onKeyDown={(e) => {
+						keyboardUtil({ e, key: "ArrowLeft", callback: () => handleKeyDown("ArrowLeft") });
+						keyboardUtil({ e, key: "ArrowRight", callback: () => handleKeyDown("ArrowRight") });
+					}}
 					data-testid="tab-item"
 					data-activated={isTabActive(tab.value)}
 					onClick={() => handleTabClick(tab.value)}
@@ -50,7 +66,7 @@ export const Tab = ({ tabs, size = "md", className = "", selectedTab, onChange }
 					)}
 				>
 					{tab.label}
-				</p>
+				</button>
 			))}
 		</nav>
 	);
