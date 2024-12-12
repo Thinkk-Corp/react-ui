@@ -15,11 +15,11 @@ import { Children, type ReactElement, cloneElement, isValidElement } from "react
  * @param {ICard} props - Card bileşenine aktarılan özellikler.
  * @param {string} [props.size="md"] - Kartın boyutu. (Örneğin: sm, md, lg)
  * @param {ReactNode} props.children - Kartın içinde yer alacak alt bileşenler.
- * @param {object} [props.styles] - Kart ve alt bileşenler için özelleştirilmiş stil seçenekleri.
+ * @param {object} [props.styleClass] - Kart ve alt bileşenler için özelleştirilmiş stil seçenekleri.
  * @param {string} [props.className] - Ekstra CSS sınıfları.
  * @returns {JSX.Element} - Card bileşeni JSX çıktısı.
  */
-export const Card = ({ size = "md", children, styles, className = "" }: ICard): JSX.Element => {
+export const Card = ({ size = "md", children, styleClass, className = "" }: ICard): JSX.Element => {
 	const allowedComponents = [CardHeader, CardBody, CardAction];
 
 	const theme = useThemeStore((state) => state.theme);
@@ -38,10 +38,10 @@ export const Card = ({ size = "md", children, styles, className = "" }: ICard): 
 	const cardStyle = classNames(
 		{
 			[`flex flex-col gap-8 p-5 bg-paper-card border border-custom-card-border ${theme === "light" && "shadow-card"} rounded-lg ${className}`]:
-				!styles?.card || styles?.card?.defaultStyleActive,
+				!styleClass?.card || styleClass?.card?.defaultStyleActive,
 		},
 		sizeScheme[size],
-		styles?.card?.customStyle,
+		styleClass?.card?.customStyle,
 	);
 
 	return (
@@ -58,18 +58,18 @@ export const Card = ({ size = "md", children, styles, className = "" }: ICard): 
 				const customStyle = () => {
 					switch (child.type) {
 						case CardHeader:
-							return styles?.cardHeader;
+							return styleClass?.cardHeader;
 						case CardBody:
-							return styles?.cardBody;
+							return styleClass?.cardBody;
 						case CardAction:
-							return styles?.cardAction;
+							return styleClass?.cardAction;
 						default:
 							return undefined;
 					}
 				};
 
 				// Alt bileşeni klonlayarak özel stil uygular.
-				return cloneElement(child as ReactElement, { style: customStyle() });
+				return cloneElement(child as ReactElement, { styleClass: customStyle() });
 			})}
 		</div>
 	);

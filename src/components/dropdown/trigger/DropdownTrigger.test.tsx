@@ -11,7 +11,7 @@ describe("DropdownTrigger Bileşeni", () => {
 		};
 
 		render(
-			<DropdownTrigger isOpen={false} setIsOpen={mockSetIsOpen} style={style}>
+			<DropdownTrigger isOpen={false} setIsOpen={mockSetIsOpen} styleClass={style}>
 				Test Trigger
 			</DropdownTrigger>,
 		);

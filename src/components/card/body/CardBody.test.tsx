@@ -27,7 +27,7 @@ describe("CardBody Component", () => {
 
 	// `style` prop'u ile özel stil verildiğinde, bu stilin uygulanıp uygulanmadığını test ediyoruz.
 	test("applies customStyle if provided in style prop", () => {
-		render(<CardBody style={{ customStyle: "custom-class", defaultStyleActive: false }}>Custom Style</CardBody>);
+		render(<CardBody styleClass={{ customStyle: "custom-class", defaultStyleActive: false }}>Custom Style</CardBody>);
 		const cardBody = screen.getByTestId("card-body");
 
 		// Özel stilin ve varsayılan stilin uygulanmadığını kontrol ediyoruz
@@ -48,7 +48,7 @@ describe("CardBody Component", () => {
 	// `style` ve `className` prop'larının birlikte doğru şekilde birleştiğini test ediyoruz.
 	test("combines customStyle and className correctly", () => {
 		render(
-			<CardBody style={{ customStyle: "custom-style-class", defaultStyleActive: true }} className="additional-class">
+			<CardBody styleClass={{ customStyle: "custom-style-class", defaultStyleActive: true }} className="additional-class">
 				Combined Classes
 			</CardBody>,
 		);

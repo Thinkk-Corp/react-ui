@@ -24,7 +24,7 @@ export const Dropdown = ({
 	isOpen = false,
 	closeToClickOutside = true,
 	closeToClickInside = true,
-	styles,
+	styleClass,
 	children,
 	size = "md",
 	position = "bottom-right",
@@ -92,7 +92,7 @@ export const Dropdown = ({
 				return cloneElement(child as ReactElement, {
 					isOpen: internalIsOpen,
 					setIsOpen: setInternalIsOpen,
-					style: styles?.trigger,
+					styleClass: styleClass?.trigger,
 					ref: triggerRef,
 				});
 			})}
@@ -104,12 +104,12 @@ export const Dropdown = ({
 						"absolute",
 						{
 							[`bg-paper-card divide-y divide-custom-divider overflow-hidden rounded-lg border border-custom-card-border ${theme === "light" && " shadow-card"}`]:
-								typeof styles?.menu?.defaultStyleActive === "undefined" || styles?.menu?.defaultStyleActive === null
+								typeof styleClass?.menu?.defaultStyleActive === "undefined" || styleClass?.menu?.defaultStyleActive === null
 									? true
-									: styles?.menu?.defaultStyleActive,
+									: styleClass?.menu?.defaultStyleActive,
 						},
 						sizeSchema[size],
-						styles?.menu?.customStyle,
+						styleClass?.menu?.customStyle,
 						positionSchema[position],
 					)}
 					role="menu"
@@ -117,7 +117,7 @@ export const Dropdown = ({
 					{Children.toArray(children).map((child) => {
 						// Sadece DropdownItem bileşenini render et
 						if (!isValidElement(child) || child.type !== DropdownItem) return null;
-						return cloneElement(child as ReactElement, { style: styles?.item }); // DropdownItem'ı olduğu gibi render et
+						return cloneElement(child as ReactElement, { styleClass: styleClass?.item }); // DropdownItem'ı olduğu gibi render et
 					})}
 				</div>
 			)}

@@ -1,6 +1,6 @@
 import { Input } from "@/components/form/inputs/input/Input.tsx";
 import { IconBox } from "@/components/icon-box/IconBox.tsx";
-import { LanguageChanger } from "@/components/navbar/LanguageChanger.tsx";
+import { LanguageChanger } from "@/components/navbar/LanguageChanger";
 import { Notifications } from "@/components/navbar/Notifications.tsx";
 import { ThemeChanger } from "@/components/navbar/ThemeChanger.tsx";
 import { UserMenu } from "@/components/navbar/UserMenu.tsx";

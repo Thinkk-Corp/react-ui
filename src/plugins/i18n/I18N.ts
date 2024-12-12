@@ -2,8 +2,9 @@ import { storageTypes } from "@/enums/Storage";
 import type { ILanguage } from "@/interfaces/ILanguage.ts";
 import type { ILanguageData } from "@/interfaces/stores/ILanguageStore";
 import { useLanguageStore } from "@/stores/LanguageStore.ts";
-import i18next from "i18next";
+import i18next, { type Resource } from "i18next";
 import { initReactI18next } from "react-i18next";
+import { toaster } from "@/plugins/Toaster";
 
 // Zustand store erişimleri
 const { setSelectedLanguage, setLanguages } = useLanguageStore.getState();
@@ -14,8 +15,13 @@ const { setSelectedLanguage, setLanguages } = useLanguageStore.getState();
  * @returns {ILanguageData | null} Seçili dil veya null.
  */
 export const getSelectedLanguage = (): ILanguageData | null => {
-	const language = localStorage.getItem(storageTypes.LANGUAGE_STORAGE);
-	return language ? JSON.parse(language).state : null;
+	try {
+		const language = localStorage.getItem(storageTypes.LANGUAGE_STORAGE);
+		return language ? JSON.parse(language).state : null;
+	} catch (error) {
+		console.error("LocalStorage okunamadı:", error);
+		return null;
+	}
 };
 
 /**
@@ -26,7 +32,10 @@ export const getSelectedLanguage = (): ILanguageData | null => {
  */
 export const saveSelectedLanguage = (languages: ILanguageData[], slug: string): void => {
 	const selectedLanguage = languages.find((lang) => lang.slug === slug);
-	if (!selectedLanguage) return;
+	if (!selectedLanguage) {
+		console.warn(`Belirtilen slug için dil bulunamadı: ${slug}`);
+		return;
+	}
 	setSelectedLanguage(selectedLanguage);
 };
 
@@ -35,7 +44,9 @@ export const saveSelectedLanguage = (languages: ILanguageData[], slug: string): 
  *
  * @returns {string} Tespit edilen dil kodu (örn: "en").
  */
-export const detectBrowserLanguage = (): string => navigator.language.split("-")[0];
+export const detectBrowserLanguage = (): string => {
+	return (navigator.language || "en").split("-")[0];
+};
 
 /**
  * i18n yapılandırmasını başlatan fonksiyon.
@@ -61,16 +72,16 @@ export const initI18n = async (languageTranslations: ILanguage[]): Promise<void>
 			fallbackLng: fallbackLanguage,
 			supportedLngs: supportedLanguages,
 			interpolation: { escapeValue: false },
+			resources: languageTranslations.reduce((acc, { slug, translations }) => {
+				acc[slug] = { translation: translations };
+				return acc;
+			}, {} as Resource),
 		});
-
-		for (const { slug, translations } of languageTranslations) {
-			i18next.addResources(slug, "translation", translations);
-		}
 
 		// Dil değişimi dinleyicisi
 		i18next.on("languageChanged", (lang) => {
-			console.log("dil değişti", lang);
 			saveSelectedLanguage(formattedLanguages, lang);
+			toaster({ type: "info", message: i18next.t("theme.messages.language_changed") });
 		});
 	} catch (error) {
 		console.error("i18n yapılandırma hatası:", error);
@@ -87,6 +98,6 @@ export const handleLanguageChange = (selectedLanguage: string): void => {
 		const languageToSet = selectedLanguage === "auto" ? detectBrowserLanguage() : selectedLanguage;
 		i18next.changeLanguage(languageToSet);
 	} catch (error) {
-		console.error("Dil değişimi hatası:", error);
+		console.error("Dil değişimi sırasında bir hata oluştu:", error);
 	}
 };

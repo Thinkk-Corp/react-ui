@@ -18,7 +18,7 @@ describe("Select Component", () => {
 	it("should render correctly with default props", () => {
 		render(<Select options={defaultOptions} />);
 		expect(screen.getByTestId("select-container")).toBeInTheDocument();
-		expect(screen.getByTestId("select-input")).toHaveValue("Seçiniz");
+		expect(screen.getByTestId("select-input")).toHaveValue("theme.select.no_select_label");
 	});
 
 	// Dropdown açıldığında seçeneklerin görüntülendiğini kontrol eder
@@ -76,10 +76,10 @@ describe("Select Component", () => {
 	});
 
 	// Hiç seçenek olmadığında 'İçerik Bulunamadı' yazısının gösterildiğini kontrol eder
-	it("should display 'İçerik Bulunamadı' if no options are available", () => {
+	it("should display no option found message if no options are available", () => {
 		render(<Select options={[]} />);
 		fireEvent.click(screen.getByTestId("select-input"));
-		expect(screen.getByText("İçerik Bulunamadı")).toBeInTheDocument();
+		expect(screen.getByText("theme.select_no_option_found_label")).toBeInTheDocument();
 	});
 
 	// Blur olayında arama değerinin sıfırlandığını kontrol eder

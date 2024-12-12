@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 export interface ICard {
 	children: ReactNode;
 	size?: ISize | "full";
-	styles?: {
+	styleClass?: {
 		card?: ICustomStylesConfig;
 		cardHeader?: ICustomStylesConfig;
 		cardBody?: ICustomStylesConfig;

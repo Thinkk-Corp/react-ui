@@ -29,7 +29,7 @@ describe("CardAction Component", () => {
 
 	// `style` prop'u ile özel stil verildiğinde, bu stilin uygulanıp uygulanmadığını test ediyoruz.
 	test("applies customStyle if provided in style prop", () => {
-		render(<CardAction style={{ customStyle: "custom-class", defaultStyleActive: false }}>Custom Style</CardAction>);
+		render(<CardAction styleClass={{ customStyle: "custom-class", defaultStyleActive: false }}>Custom Style</CardAction>);
 		const cardAction = screen.getByTestId("card-action");
 
 		// Özel stilin ve varsayılan stilin uygulanmadığını kontrol ediyoruz
@@ -52,7 +52,7 @@ describe("CardAction Component", () => {
 	// `style` ve `className` prop'larının birlikte doğru şekilde birleştiğini test ediyoruz.
 	test("combines customStyle and className correctly", () => {
 		render(
-			<CardAction style={{ customStyle: "custom-style-class", defaultStyleActive: true }} className="additional-class">
+			<CardAction styleClass={{ customStyle: "custom-style-class", defaultStyleActive: true }} className="additional-class">
 				Combined Classes
 			</CardAction>,
 		);

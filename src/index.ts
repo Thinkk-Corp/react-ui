@@ -1,6 +1,5 @@
 // Core
 export { Root } from "@/Root";
-
 import "@/styles/index.css";
 
 // Components
@@ -54,6 +53,10 @@ export { icons } from "@/plugins/Icons";
 export { emitter } from "@/plugins/Mitt";
 export { handleLanguageChange } from "@/plugins/i18n/I18N";
 export { toaster } from "@/plugins/Toaster";
+
+// Locales
+export {enTranslations as themeEnTranslations} from "@/locales/en/translations"
+export {trTranslations as themeTrTranslations} from "@/locales/tr/translations"
 
 // Events
 export { dialogEvents } from "@/events/DialogEvents";

@@ -10,7 +10,7 @@ describe("DropdownItem Bileşeni", () => {
 			customStyle: "jest-config-custom-style",
 		};
 
-		render(<DropdownItem style={style}>Test Item</DropdownItem>);
+		render(<DropdownItem styleClass={style}>Test Item</DropdownItem>);
 
 		const dropdownItem = screen.getByTestId("dropdown-item");
 
@@ -27,7 +27,7 @@ describe("DropdownItem Bileşeni", () => {
 			customStyle: "jest-config-custom-style",
 		};
 
-		render(<DropdownItem style={style}>Test Item</DropdownItem>);
+		render(<DropdownItem styleClass={style}>Test Item</DropdownItem>);
 
 		const dropdownItem = screen.getByTestId("dropdown-item");
 
@@ -43,7 +43,7 @@ describe("DropdownItem Bileşeni", () => {
 			customStyle: "jest-config-custom-style",
 		};
 
-		render(<DropdownItem style={style}>Test Item</DropdownItem>);
+		render(<DropdownItem styleClass={style}>Test Item</DropdownItem>);
 
 		const dropdownItem = screen.getByTestId("dropdown-item");
 
@@ -61,5 +61,13 @@ describe("DropdownItem Bileşeni", () => {
 		// Varsayılan stillerin doğru şekilde uygulanıp uygulanmadığını kontrol et
 		expect(dropdownItem).toHaveClass("text-color-primary text-body2 hover:bg-action-hover p-3");
 		expect(dropdownItem).not.toHaveClass("jest-config-custom-style");
+	});
+
+	it("Dropdown item isActivated propu doğru kontrol ediliyormu", () => {
+		const { rerender } = render(<DropdownItem isActivated>Test Item</DropdownItem>);
+		const dropdownItem = screen.getByTestId("dropdown-item");
+		expect(dropdownItem).toHaveClass("bg-primary-main text-white");
+		rerender(<DropdownItem>Test Item</DropdownItem>);
+		expect(dropdownItem).toHaveClass("hover:bg-action-hover text-color-primary");
 	});
 });

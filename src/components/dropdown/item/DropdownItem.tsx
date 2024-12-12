@@ -1,7 +1,7 @@
 import type { IDropdownItem } from "@/interfaces/components/dropdown/IDropdownItem.ts";
 import classNames from "classnames";
 
-export const DropdownItem = ({ isActivated = false, style, children }: IDropdownItem) => {
+export const DropdownItem = ({ isActivated = false, styleClass, children, ...props }: IDropdownItem) => {
 	return (
 		<div
 			data-testid={"dropdown-item"}
@@ -9,12 +9,13 @@ export const DropdownItem = ({ isActivated = false, style, children }: IDropdown
 			className={classNames(
 				{
 					[`text-body2 p-3 ${isActivated ? "bg-primary-main text-white" : "hover:bg-action-hover text-color-primary"} `]:
-						typeof style?.defaultStyleActive === "undefined" || style?.defaultStyleActive === null
+						typeof styleClass?.defaultStyleActive === "undefined" || styleClass?.defaultStyleActive === null
 							? true
-							: style.defaultStyleActive,
+							: styleClass.defaultStyleActive,
 				},
-				style?.customStyle,
+				styleClass?.customStyle,
 			)}
+			{...props}
 		>
 			{children}
 		</div>

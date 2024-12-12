@@ -1,8 +1,8 @@
 import type { ICustomStylesConfig } from "@/interfaces/types/ICustomStyleConfig.ts";
-import type { ReactNode } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 
-export interface IDropdownItem {
+export interface IDropdownItem extends HTMLAttributes<HTMLDivElement> {
 	children: ReactNode;
 	isActivated?: boolean;
-	style?: ICustomStylesConfig;
+	styleClass?: ICustomStylesConfig;
 }
