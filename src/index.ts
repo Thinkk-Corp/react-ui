@@ -32,6 +32,7 @@ export { FormControl } from "@/components/form/control/FormControl.tsx";
 export { Breadcrumb } from "@/components/breadcrumb/Breadcrumb.tsx";
 export { Tab } from "@/components/tab/Tab";
 export { Dropzone } from "@/components/form/inputs/dropzone/Dropzone";
+export { Pill } from "@/components/pill/Pill";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
@@ -72,4 +73,6 @@ export { z as zod } from "zod";
 export { useForm, Controller } from "react-hook-form";
 export { type LoaderFunction, Navigate } from "react-router-dom";
 export type { ResourceLanguage } from "i18next";
+export { default as classNames } from "classnames";
+export { motion, AnimatePresence } from "framer-motion";
 export { useTranslation } from "react-i18next";
