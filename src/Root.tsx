@@ -106,7 +106,7 @@ export const Root = ({ routes, languageTranslations, configs }: IRoot): JSX.Elem
 		<ErrorBoundary fallback={<div>Bir hata oluştu</div>}>
 			{router ? <RouterProvider future={{ v7_startTransition: true }} router={router} /> : null}
 			<ToastContainer />
-			<Tooltip positionStrategy="fixed" place="bottom" id="global-tooltip" />
+			<Tooltip style={{ zIndex: 9999 }} positionStrategy="fixed" place="bottom" id="global-tooltip" />
 		</ErrorBoundary>
 	);
 };

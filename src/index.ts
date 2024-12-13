@@ -31,6 +31,7 @@ export { FormCreator } from "@/components/form/creator/FormCreator.tsx";
 export { FormControl } from "@/components/form/control/FormControl.tsx";
 export { Breadcrumb } from "@/components/breadcrumb/Breadcrumb.tsx";
 export { Tab } from "@/components/tab/Tab";
+export { Dropzone } from "@/components/form/inputs/dropzone/Dropzone";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
@@ -55,8 +56,8 @@ export { handleLanguageChange } from "@/plugins/i18n/I18N";
 export { toaster } from "@/plugins/Toaster";
 
 // Locales
-export {enTranslations as themeEnTranslations} from "@/locales/en/translations"
-export {trTranslations as themeTrTranslations} from "@/locales/tr/translations"
+export { enTranslations as themeEnTranslations } from "@/locales/en/translations";
+export { trTranslations as themeTrTranslations } from "@/locales/tr/translations";
 
 // Events
 export { dialogEvents } from "@/events/DialogEvents";

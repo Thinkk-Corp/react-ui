@@ -79,7 +79,7 @@ describe("Select Component", () => {
 	it("should display no option found message if no options are available", () => {
 		render(<Select options={[]} />);
 		fireEvent.click(screen.getByTestId("select-input"));
-		expect(screen.getByText("theme.select_no_option_found_label")).toBeInTheDocument();
+		expect(screen.getByText("theme.select.no_option_found_label")).toBeInTheDocument();
 	});
 
 	// Blur olayında arama değerinin sıfırlandığını kontrol eder

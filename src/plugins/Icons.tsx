@@ -3,6 +3,7 @@ import {
 	ArrowRightCircleIcon,
 	ArrowsPointingInIcon,
 	ArrowsPointingOutIcon,
+	ArrowUpTrayIcon,
 	Bars3Icon,
 	BellIcon,
 	CheckIcon,
@@ -24,6 +25,7 @@ import {
 
 export const icons = {
 	outline: {
+		upload: <ArrowUpTrayIcon />,
 		chevron_right: <ChevronRightIcon />,
 		bell: <BellIcon />,
 		eye: <EyeIcon />,
