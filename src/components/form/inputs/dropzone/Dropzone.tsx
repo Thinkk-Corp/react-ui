@@ -7,6 +7,20 @@ import { icons } from "@/plugins/Icons";
 import { AnimatePresence, motion } from "framer-motion";
 import type { IDropzone } from "@/interfaces/components/form/inputs/IDropzone";
 
+/**
+ * Dropzone bileşeni, dosya yükleme işlemleri için bir kullanıcı arayüzü sağlar.
+ *
+ * @param {IDropzone} props - Dropzone bileşenine ait özellikler.
+ * @param {(files: File[]) => void} props.onFilesAccepted - Kabul edilen dosyalar için çağrılan callback fonksiyonu.
+ * @param {number} [props.minSize] - Yüklenebilecek dosyaların minimum boyutu (byte cinsinden).
+ * @param {number} [props.maxSize] - Yüklenebilecek dosyaların maksimum boyutu (byte cinsinden).
+ * @param {number} [props.maxFiles] - Maksimum yüklenebilecek dosya sayısı.
+ * @param {string[]} [props.acceptedFormats] - Kabul edilen dosya formatları.
+ * @param {string} [props.className] - Ek CSS sınıfları.
+ * @param {Object} [props.validationMessages] - Özelleştirilmiş doğrulama mesajları.
+ *
+ * @returns {JSX.Element} Dropzone bileşeni.
+ */
 export const Dropzone = ({
 	onFilesAccepted,
 	minSize,
@@ -16,20 +30,30 @@ export const Dropzone = ({
 	className = "",
 	validationMessages,
 }: IDropzone) => {
+	// Kabul edilen dosyalar.
 	const [acceptedFiles, setAcceptedFiles] = useState<File[]>([]);
+	// Tüm bırakılan dosyalar (kabul edilen ve reddedilen).
 	const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
+	// Reddedilen dosyalar ve nedenleri.
 	const [fileRejections, setFileRejections] = useState<IFileRejection[]>([]);
 
 	const { t } = useTranslation();
 
+	// Kabul edilen dosyaları işleyen fonksiyon.
 	const handleDropAccepted = (files: File[]) => {
 		setAcceptedFiles(files);
 	};
 
+	// Reddedilen dosyaları işleyen fonksiyon.
 	const handleDropRejected = (rejections: IFileRejection[]) => {
 		setFileRejections(rejections);
 	};
 
+	/**
+	 * Bir dosya adına ait hata mesajlarını döner.
+	 * @param {string} fileName - Dosya adı.
+	 * @returns {string | null} Hata mesajlarını içeren HTML veya null.
+	 */
 	const fileError = (fileName: string) => {
 		const errors = fileRejections.find((rejection) => rejection.file.name === fileName)?.error.map((err) => err.message);
 
@@ -40,15 +64,29 @@ export const Dropzone = ({
 		return `<ul>${htmlContent}</ul>`;
 	};
 
+	/**
+	 * Byte cinsinden verilen bir boyutu megabayta çevirir.
+	 * @param {number} size - Boyut (byte).
+	 * @returns {number} Boyut (MB).
+	 */
 	const sizeToMb = (size: number): number => {
 		return Number.parseFloat((size / (1024 * 1024)).toFixed(3));
 	};
 
+	/**
+	 * Bir dosyayı siler.
+	 * @param {File} removedFile - Silinecek dosya.
+	 * @param {(file: File) => void} callback - Silme işlemi sonrası çağrılacak fonksiyon.
+	 */
 	const removeFile = (removedFile: File, callback: (file: File) => void) => {
 		if (!droppedFiles || droppedFiles.length === 0) return;
 		callback(removedFile);
 	};
 
+	/**
+	 * Yükleme kurallarıyla ilgili metni oluşturur.
+	 * @returns {string | null} Kurallar metni veya null.
+	 */
 	const ruleTextGenerator = () => {
 		const ruleTexts: string[] = [];
 
@@ -73,10 +111,12 @@ export const Dropzone = ({
 		return ruleTexts.join(" - ");
 	};
 
+	// Kabul edilen dosyalar değiştiğinde callback'i çağırır.
 	useEffect(() => {
 		onFilesAccepted?.(acceptedFiles);
 	}, [acceptedFiles]);
 
+	// Kabul edilen, reddedilen ve tüm bırakılan dosyaları günceller.
 	useEffect(() => {
 		if (acceptedFiles.length === 0 && fileRejections.length === 0 && droppedFiles.length === 0) return;
 		const fileToFileRejections = fileRejections.map((rejection) => rejection.file);
