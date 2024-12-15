@@ -1,6 +1,6 @@
 // Core
 export { Root } from "@/Root";
-import "@/styles/index.css";
+import "@/styles/theme.css";
 
 // Components
 export { DefaultLayout } from "@/components/layouts/default-layout/DefaultLayout.tsx";
