@@ -6,7 +6,7 @@ import { useThemeStore } from "@/stores/ThemeStore.ts";
 import { useUIStore } from "@/stores/UIStore.ts";
 import { promiseRejectionErrorHandler } from "@/utils/PromiseRejectionErrorHandler.ts";
 import type { RouterState } from "@remix-run/router";
-import { useEffect } from "react";
+import { type JSX, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { type RouteObject, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";

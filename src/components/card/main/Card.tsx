@@ -2,9 +2,10 @@ import { CardAction } from "@/components/card/action/CardAction.tsx";
 import { CardBody } from "@/components/card/body/CardBody.tsx";
 import { CardHeader } from "@/components/card/header/CardHeader.tsx";
 import type { ICard } from "@/interfaces/components/card/ICard.ts";
+import type { ICustomStylesConfig } from "@/interfaces/types/ICustomStyleConfig";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
 import classNames from "classnames";
-import { Children, type ReactElement, cloneElement, isValidElement } from "react";
+import { Children, type JSX, type ReactElement, cloneElement, isValidElement } from "react";
 
 /**
  * Card bileşeni
@@ -69,7 +70,7 @@ export const Card = ({ size = "md", children, styleClass, className = "" }: ICar
 				};
 
 				// Alt bileşeni klonlayarak özel stil uygular.
-				return cloneElement(child as ReactElement, { styleClass: customStyle() });
+				return cloneElement(child as ReactElement<{ styleClass?: ICustomStylesConfig }>, { styleClass: customStyle() });
 			})}
 		</div>
 	);

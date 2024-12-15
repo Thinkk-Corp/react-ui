@@ -59,7 +59,7 @@ export const Dropzone = ({
 
 		if (!errors || errors.length === 0) return null;
 
-		const htmlContent = errors.map((err) => `<li>${err}</li>`).join(""); // HTML içeriği oluşturuluyor
+		const htmlContent = errors.map((err: string) => `<li>${err}</li>`).join(""); // HTML içeriği oluşturuluyor
 
 		return `<ul>${htmlContent}</ul>`;
 	};

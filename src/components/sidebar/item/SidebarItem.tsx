@@ -5,7 +5,7 @@ import type { ISidebarMenuAction } from "@/interfaces/components/sidebar/ISideba
 import { useUIStore } from "@/stores/UIStore.ts";
 import { keyboardUtil } from "@/utils/KeyboardUtil.ts";
 import classNames from "classnames";
-import { useCallback } from "react";
+import { type JSX, useCallback } from "react";
 
 /**
  * Menüyü render eden yardımcı fonksiyon. Menü öğelerini sıralı bir liste olarak render eder.

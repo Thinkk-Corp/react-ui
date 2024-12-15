@@ -1,10 +1,23 @@
 import { DropdownItem } from "@/components/dropdown/item/DropdownItem.tsx";
 import { DropdownTrigger } from "@/components/dropdown/trigger/DropdownTrigger.tsx";
 import type { IDropdown } from "@/interfaces/components/dropdown/IDropdown.ts";
+import type { ICustomStylesConfig } from "@/interfaces/types/ICustomStyleConfig";
 import type { IPosition, ISize } from "@/interfaces/types/IMetrics.ts";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
 import classNames from "classnames";
-import { Children, type ReactElement, cloneElement, isValidElement, useCallback, useEffect, useRef, useState } from "react";
+import {
+	type Dispatch,
+	type ReactElement,
+	type RefObject,
+	type SetStateAction,
+	Children,
+	cloneElement,
+	isValidElement,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 
 export const positionSchema: Record<IPosition, string> = {
 	top: "bottom-full mb-3 left-1/2 -translate-x-1/2",
@@ -89,12 +102,20 @@ export const Dropdown = ({
 			{Children.toArray(children).map((child) => {
 				// Sadece DropdownTrigger bileşenini render et
 				if (!isValidElement(child) || child.type !== DropdownTrigger) return null;
-				return cloneElement(child as ReactElement, {
-					isOpen: internalIsOpen,
-					setIsOpen: setInternalIsOpen,
-					styleClass: styleClass?.trigger,
-					ref: triggerRef,
-				});
+				return cloneElement(
+					child as ReactElement<{
+						isOpen: boolean;
+						setIsOpen: Dispatch<SetStateAction<boolean>>;
+						styleClass?: ICustomStylesConfig;
+						ref: RefObject<HTMLDivElement | null>;
+					}>,
+					{
+						isOpen: internalIsOpen,
+						setIsOpen: setInternalIsOpen,
+						styleClass: styleClass?.trigger,
+						ref: triggerRef,
+					},
+				);
 			})}
 			{/* Eğer Dropdown açık ise, item'ları render et */}
 			{internalIsOpen && (
@@ -117,7 +138,7 @@ export const Dropdown = ({
 					{Children.toArray(children).map((child) => {
 						// Sadece DropdownItem bileşenini render et
 						if (!isValidElement(child) || child.type !== DropdownItem) return null;
-						return cloneElement(child as ReactElement, { styleClass: styleClass?.item }); // DropdownItem'ı olduğu gibi render et
+						return cloneElement(child as ReactElement<{ styleClass?: ICustomStylesConfig }>, { styleClass: styleClass?.item }); // DropdownItem'ı olduğu gibi render et
 					})}
 				</div>
 			)}
