@@ -7,7 +7,12 @@ export const trTranslations = {
 		dropzone: {
 			drag_active_label: "Dosyaları buraya bırakabilirsiniz!",
 			drag_inactive_label: "Dosyaları sürükleyip bırakın veya buraya tıklayın",
-			accepted_formats_text: "Kabul edilen formatlar: {{formats}} - Maksimum boyut {{size}} MB",
+			rules_text: {
+				accepted_formats: "Kabul edilen formatlar: {{formats}}",
+				max_size: "Kabul edilen en fazla boyut: {{maxSize}} MB",
+				min_size: "Kabul edilen en az boyut: {{minSize}} MB",
+				max_files: "Kabul edilen en fazla dosya sayısı: {{maxFiles}}",
+			},
 			errors: {
 				file_rejected: "Dosya reddedildi: {{error}}",
 				too_many_file: "En fazla {{maxFiles}} dosya yükleyebilirsiniz.",

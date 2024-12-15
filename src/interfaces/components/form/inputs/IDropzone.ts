@@ -1,7 +1,11 @@
+import type { IFileError } from "dropzone-kit";
+
 export interface IDropzone {
-	onFilesAccepted: (files: File[]) => void; // Geçerli dosyaları iletmek için bir callback
-	maxFiles?: number; // Maksimum dosya sayısı
-	maxSize?: number; // Maksimum dosya boyutu (bayt cinsinden)
-	acceptedFormats?: string[]; // Kabul edilen dosya formatları
+	onFilesAccepted?: (files: File[]) => void;
+	maxSize?: number;
+	minSize?: number;
+	maxFiles?: number;
+	acceptedFormats?: string[];
+	validationMessages?: IFileError[];
 	className?: string;
 }

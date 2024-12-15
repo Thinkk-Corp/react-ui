@@ -76,3 +76,4 @@ export type { ResourceLanguage } from "i18next";
 export { default as classNames } from "classnames";
 export { motion, AnimatePresence } from "framer-motion";
 export { useTranslation } from "react-i18next";
+export type { IFileError } from "dropzone-kit";
