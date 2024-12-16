@@ -1,5 +1,5 @@
 import { storageTypes } from "@/enums/Storage.ts";
-import { themeTypes } from "@/enums/Theme.ts";
+import { themeModeAttrName, themeTypes } from "@/enums/Theme.ts";
 import type { IThemeStore } from "@/interfaces/stores/IThemeStore.ts";
 import type { ITheme } from "@/interfaces/types/ITheme.ts";
 import { create } from "zustand";
@@ -8,14 +8,18 @@ const html = document.querySelector("html");
 
 const changeAttribute = (newTheme: string) => {
 	if (!html) return;
-	html.removeAttribute("data-mode");
-	html.setAttribute("data-mode", newTheme);
+	html.removeAttribute(themeModeAttrName);
+	html.setAttribute(themeModeAttrName, newTheme);
 	html.classList.add("bg-paper-default");
 };
 
 const getInitialTheme = (): ITheme => {
 	const prefersDarkScheme =
-		typeof window.matchMedia === "function" ? window.matchMedia("(prefers-color-scheme: dark)").matches : "dark";
+		typeof window.matchMedia === "function"
+			? window.matchMedia("(prefers-color-scheme: dark)").matches
+				? "dark"
+				: "light"
+			: "dark";
 	const savedTheme = localStorage.getItem(storageTypes.THEME_STORAGE);
 
 	if (savedTheme && themeTypes.includes(savedTheme)) {

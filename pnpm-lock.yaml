@@ -48,8 +48,8 @@ importers:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
       react-dropzone-kit:
-        specifier: link:..\react-dropzone-kit
-        version: link:../react-dropzone-kit
+        specifier: ^1.0.19
+        version: 1.0.19(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-error-boundary:
         specifier: ^4.1.2
         version: 4.1.2(react@19.0.0)
@@ -3672,6 +3672,12 @@ packages:
     resolution: {integrity: sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==}
     peerDependencies:
       react: ^19.0.0
+
+  react-dropzone-kit@1.0.19:
+    resolution: {integrity: sha512-mHEYvib+Enj2dXqIZ22O/GjN0gNEaBvT26ppNARlHyED/8rjL9LiKEh3Ypjj0/C5UmrOFjlcuqbm5yClPioMvA==}
+    peerDependencies:
+      react: ^19.0.0
+      react-dom: ^19.0.0
 
   react-error-boundary@4.1.2:
     resolution: {integrity: sha512-GQDxZ5Jd+Aq/qUxbCm1UtzmL/s++V7zKgE8yMktJiCQXCCFZnMZh9ng+6/Ne6PjNSXH0L9CjeOEREfRnq6Duag==}
@@ -8683,6 +8689,11 @@ snapshots:
     dependencies:
       react: 19.0.0
       scheduler: 0.25.0
+
+  react-dropzone-kit@1.0.19(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
 
   react-error-boundary@4.1.2(react@19.0.0):
     dependencies:

@@ -33,6 +33,7 @@ export { Breadcrumb } from "@/components/breadcrumb/Breadcrumb.tsx";
 export { Tab } from "@/components/tab/Tab";
 export { Dropzone } from "@/components/form/inputs/dropzone/Dropzone";
 export { Pill } from "@/components/pill/Pill";
+export { Table } from "@/components/table/Table";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
@@ -44,6 +45,7 @@ export type { ICustomStylesConfig } from "@/interfaces/types/ICustomStyleConfig.
 export type { IFormFields, IFormField, IFormButton } from "@/interfaces/components/form/IFormCreator.ts";
 export type { ICustomRouteObject } from "@/interfaces/plugins/ICustomRouteObject";
 export type { ITabItem } from "@/interfaces/components/ITab";
+export type { ICellRenderer, ITableColumn } from "@/interfaces/components/ITable";
 
 // Utils
 export { redirectNative } from "@/actions/client/RedirectNative.ts";

@@ -27,7 +27,7 @@
     "i18next": "^24.1.0",
     "lodash": "^4.17.21",
     "mitt": "^3.0.1",
-    "react-dropzone-kit": "link:..\\react-dropzone-kit",
+    "react-dropzone-kit": "^1.0.19",
     "react-error-boundary": "^4.1.2",
     "react-hook-form": "^7.54.1",
     "react-i18next": "^15.2.0",
