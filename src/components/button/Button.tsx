@@ -1,5 +1,6 @@
 import type { IButton } from "@/interfaces/components/IButton.ts";
 import type { IColorVariants, ISize } from "@/interfaces/types/IMetrics.ts";
+import { useThemeStore } from "@/stores/ThemeStore";
 import classNames from "classnames";
 
 export const Button = ({
@@ -19,12 +20,14 @@ export const Button = ({
 		"2xl": "px-10 py-6 text-subtitle1",
 	};
 
+	const theme = useThemeStore(state => state.theme)
+
 	// Buton renk ve stil varyantları
 	const colorScheme: Record<"contained" | "outlined" | "underlined", Record<IColorVariants, string>> = {
 		contained: {
 			primary: "bg-primary-main hover:bg-primary-dark text-white border border-primary-main hover:border-primary-hovered",
 			secondary:
-				"bg-secondary-main hover:bg-secondary-dark text-white border border-secondary-main hover:border-secondary-hovered",
+				`bg-secondary-main hover:bg-secondary-dark ${theme === "light" ? "text-white": "text-black"} text-white border border-secondary-main hover:border-secondary-hovered`,
 			success: "bg-success-main hover:bg-success-dark text-white border border-success-main hover:border-success-hovered",
 			warning: "bg-warning-main hover:bg-warning-dark text-white border border-warning-main hover:border-warning-hovered",
 			error: "bg-error-main hover:bg-error-dark text-white border border-error-main hover:border-error-hovered",

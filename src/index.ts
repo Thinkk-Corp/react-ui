@@ -1,7 +1,6 @@
 // Core
 export { Root } from "@/Root";
-
-import "@/styles/index.css";
+import "./styles/theme.css"; // CSS dosyanızın yolu
 
 // Components
 export { DefaultLayout } from "@/components/layouts/default-layout/DefaultLayout.tsx";
@@ -32,6 +31,8 @@ export { FormCreator } from "@/components/form/creator/FormCreator.tsx";
 export { FormControl } from "@/components/form/control/FormControl.tsx";
 export { Breadcrumb } from "@/components/breadcrumb/Breadcrumb.tsx";
 export { Tab } from "@/components/tab/Tab";
+export { Dropzone } from "@/components/form/inputs/dropzone/Dropzone";
+export { Pill } from "@/components/pill/Pill";
 
 // Interfaces
 export type { ISidebarMenu } from "@/interfaces/components/sidebar/ISidebarMenu.ts";
@@ -55,6 +56,10 @@ export { emitter } from "@/plugins/Mitt";
 export { handleLanguageChange } from "@/plugins/i18n/I18N";
 export { toaster } from "@/plugins/Toaster";
 
+// Locales
+export { enTranslations as themeEnTranslations } from "@/locales/en/translations";
+export { trTranslations as themeTrTranslations } from "@/locales/tr/translations";
+
 // Events
 export { dialogEvents } from "@/events/DialogEvents";
 
@@ -68,4 +73,7 @@ export { z as zod } from "zod";
 export { useForm, Controller } from "react-hook-form";
 export { type LoaderFunction, Navigate } from "react-router-dom";
 export type { ResourceLanguage } from "i18next";
+export { default as classNames } from "classnames";
+export { motion, AnimatePresence } from "framer-motion";
 export { useTranslation } from "react-i18next";
+export type { IFileError } from "react-dropzone-kit";

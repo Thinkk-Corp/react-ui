@@ -8,7 +8,17 @@ import { mediaQueryUtil } from "@/utils/media-query-util/MediaQueryUtil.ts";
 import { createMutationObserver } from "@/utils/observer-util/ObserverUtil.ts";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
-import { Children, type ReactElement, cloneElement, isValidElement, useCallback, useEffect, useRef, useState } from "react";
+import {
+	Children,
+	type JSX,
+	type ReactElement,
+	cloneElement,
+	isValidElement,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { createPortal } from "react-dom";
 
 // Boyutlar için şema tanımlanıyor
@@ -252,9 +262,10 @@ export const Dialog = ({
 										ref={dialogRef}
 										style={{ zIndex: zIndex + 1 }}
 										className={classNames(
-											"bg-paper-level2 overflow-hidden h-[90%] p-4 flex flex-col gap-8",
+											"bg-paper-level2 overflow-hidden p-4 flex flex-col gap-8",
 											{
-												"rounded-lg": type === "modal",
+												"h-full": type !== "modal",
+												"rounded-lg h-[90%]": type === "modal",
 												"w-full mx-4": type === "modal" && !isMdScreen,
 												"w-full": type !== "modal" || isMdScreen,
 											},
@@ -263,7 +274,7 @@ export const Dialog = ({
 									>
 										{Children.toArray(children).map((child) => {
 											if (isValidElement(child) && childList.includes((child as ReactElement).type as any)) {
-												return cloneElement(child as ReactElement, { handleDialogClose });
+												return cloneElement(child as ReactElement<{ handleDialogClose: () => void }>, { handleDialogClose });
 											}
 											return null;
 										})}

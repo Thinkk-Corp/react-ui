@@ -2,7 +2,7 @@ import type { ICustomStylesConfig } from "@/interfaces/types/ICustomStyleConfig.
 import type { ReactNode } from "react";
 
 export interface ICardChild {
-	style?: ICustomStylesConfig;
+	styleClass?: ICustomStylesConfig;
 	children: ReactNode;
 	className?: string;
 }

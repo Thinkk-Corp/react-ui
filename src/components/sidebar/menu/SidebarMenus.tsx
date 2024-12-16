@@ -6,7 +6,7 @@ import { useUIStore } from "@/stores/UIStore.ts";
 import { mediaQueryUtil } from "@/utils/media-query-util/MediaQueryUtil.ts";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { type JSX, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 /**

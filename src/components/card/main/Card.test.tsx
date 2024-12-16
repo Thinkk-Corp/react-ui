@@ -61,7 +61,7 @@ describe("Card Component", () => {
 	test("applies custom styles for Card and its child components", () => {
 		render(
 			<Card
-				styles={{
+				styleClass={{
 					card: { customStyle: "custom-card-class" },
 					cardHeader: { customStyle: "custom-header-class" },
 					cardBody: { customStyle: "custom-body-class" },

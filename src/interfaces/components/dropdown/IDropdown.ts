@@ -16,6 +16,6 @@ export interface IDropdown {
 	onOpened?: () => void;
 	onClosed?: () => void;
 	size?: ISize;
-	styles?: IDropdownStyle;
+	styleClass?: IDropdownStyle;
 	position?: IPosition;
 }

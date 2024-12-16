@@ -7,6 +7,7 @@ import { keyboardUtil } from "@/utils/KeyboardUtil.ts";
 import classNames from "classnames";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const Select = ({
 	options: optionsProp,
@@ -17,10 +18,13 @@ export const Select = ({
 	value,
 	onChange,
 	onClick,
+	noSelectLabel = "theme.select.no_select_label",
+	noOptionFoundLabel = "theme.select.no_option_found_label",
 	onBlur,
 	isSearchable = false,
 }: ISelect) => {
-	const defaultOption = { value: "", label: "Seçiniz" };
+	const { t } = useTranslation();
+	const defaultOption = { value: "", label: t(noSelectLabel) };
 	const [isOpen, setIsOpen] = useState(false);
 	const [options, setOptions] = useState<IOption[]>([defaultOption]);
 	const [selectedValue, setSelectedValue] = useState<string>("");
@@ -138,11 +142,7 @@ export const Select = ({
 	}, [isOpen]);
 
 	return (
-		<div
-			data-toggle={isOpen}
-			data-testid="select-container"
-			className={classNames("relative group min-w-60 inline-block", className)}
-		>
+		<div data-toggle={isOpen} data-testid="select-container" className={classNames("relative group inline-block", className)}>
 			{/* Seçim veya Arama Alanı */}
 			<Input
 				readOnly={!isSearchable}
@@ -205,7 +205,7 @@ export const Select = ({
 					))
 				) : (
 					<li data-testid={"select-no-option"} className="px-3 py-2 text-body2">
-						İçerik Bulunamadı
+						{t(noOptionFoundLabel)}
 					</li>
 				)}
 			</ul>

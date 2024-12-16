@@ -75,9 +75,11 @@ export const FormCreator = <T extends FieldValues>({
 		button.action?.();
 	};
 
+	
+
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} noValidate>
-			<Card data-testid={"form-creator"} size={size} className={className} styles={cardStyles}>
+			<Card data-testid={"form-creator"} size={size} className={className} styleClass={cardStyles}>
 				{(header || icon) && (
 					<CardHeader data-testid={"form-header-section"} className="flex items-center gap-3">
 						{icon && (

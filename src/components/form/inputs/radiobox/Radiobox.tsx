@@ -1,6 +1,7 @@
 import type { IRadioBox } from "@/interfaces/components/form/inputs/IRadioBox.ts";
 import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import classNames from "classnames";
+import type { JSX } from "react";
 
 /**
  * `Radiobox` componenti, özelleştirilebilir bir radyo düğmesi sağlar.

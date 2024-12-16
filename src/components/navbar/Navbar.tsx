@@ -1,6 +1,6 @@
 import { Input } from "@/components/form/inputs/input/Input.tsx";
 import { IconBox } from "@/components/icon-box/IconBox.tsx";
-import { LanguageChanger } from "@/components/navbar/LanguageChanger.tsx";
+import { LanguageChanger } from "@/components/navbar/LanguageChanger";
 import { Notifications } from "@/components/navbar/Notifications.tsx";
 import { ThemeChanger } from "@/components/navbar/ThemeChanger.tsx";
 import { UserMenu } from "@/components/navbar/UserMenu.tsx";
@@ -42,8 +42,8 @@ export const Navbar = ({ extraComponents, isThemeSwitcherActive = true, userMenu
 			<div className={"flex items-center gap-2 md:gap-4 border-l border-custom-divider pl-4"}>
 				{isThemeSwitcherActive && <ThemeChanger />}
 				{notifications && <Notifications />}
-				{userMenus && userMenus.menus.length > 0 && <UserMenu data={userMenus} />}
 				{languages && languages.length > 0 && <LanguageChanger />}
+				{userMenus && userMenus.menus.length > 0 && <UserMenu data={userMenus} />}
 				{extraComponents?.map((content) => content)}
 			</div>
 		</div>

@@ -202,7 +202,7 @@ describe("Dropdown Component", () => {
 			},
 		};
 		render(
-			<Dropdown styles={mockStyles} isOpen={true}>
+			<Dropdown styleClass={mockStyles} isOpen={true}>
 				<DropdownTrigger>test</DropdownTrigger>
 				<DropdownItem>item 1</DropdownItem>
 				<DropdownItem>item 2</DropdownItem>

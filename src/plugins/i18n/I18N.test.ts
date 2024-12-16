@@ -74,13 +74,20 @@ describe("i18n utility functions", () => {
 			lng: "en", // Varsayılan dil
 			fallbackLng: "fr", // Yedek dil
 			supportedLngs: ["en", "fr"], // Desteklenen diller
-			interpolation: { escapeValue: false }, // React ile uyumlu
+			interpolation: { escapeValue: false }, // React ile uyumlu,
+			resources: {
+				en: {
+					translation: {
+						greeting: "Hello",
+					},
+				},
+				fr: {
+					translation: {
+						greeting: "Bonjour",
+					},
+				},
+			},
 		});
-
-		// Çeviri kaynaklarının doğru şekilde eklendiğini kontrol et
-		expect(i18next.addResources).toHaveBeenCalledTimes(2); // İki dil kaynağı eklenmeli
-		expect(i18next.addResources).toHaveBeenCalledWith("en", "translation", { greeting: "Hello" });
-		expect(i18next.addResources).toHaveBeenCalledWith("fr", "translation", { greeting: "Bonjour" });
 	});
 
 	// Test: Dil değişimini doğru şekilde işler

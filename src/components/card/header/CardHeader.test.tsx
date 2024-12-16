@@ -27,7 +27,7 @@ describe("CardHeader Component", () => {
 
 	// `style` prop'u ile özel stil verildiğinde, bu stilin uygulanıp uygulanmadığını test ediyoruz.
 	test("applies customStyle if provided in style prop", () => {
-		render(<CardHeader style={{ customStyle: "custom-class", defaultStyleActive: false }}>Custom Style</CardHeader>);
+		render(<CardHeader styleClass={{ customStyle: "custom-class", defaultStyleActive: false }}>Custom Style</CardHeader>);
 		const cardHeader = screen.getByTestId("card-header");
 
 		// Özel stilin ve varsayılan stilin uygulanmadığını kontrol ediyoruz
@@ -48,7 +48,7 @@ describe("CardHeader Component", () => {
 	// `style` ve `className` prop'larının birlikte doğru şekilde birleştiğini test ediyoruz.
 	test("combines customStyle and className correctly", () => {
 		render(
-			<CardHeader style={{ customStyle: "custom-style-class", defaultStyleActive: true }} className="additional-class">
+			<CardHeader styleClass={{ customStyle: "custom-style-class", defaultStyleActive: true }} className="additional-class">
 				Combined Classes
 			</CardHeader>,
 		);

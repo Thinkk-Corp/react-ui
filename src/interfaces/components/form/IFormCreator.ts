@@ -5,10 +5,10 @@ import type { ReactNode } from "react";
 import type { DefaultValues } from "react-hook-form";
 import type { z } from "zod";
 
-export type IFormFieldValueTypes = boolean | string | number | undefined;
+export type IFormFieldValueTypes = boolean | string | number | undefined | File[];
 
 export interface IDefaultFormField {
-	type: "text" | "email" | "select" | "checkbox" | "radiobox" | "toggle" | "textarea" | "password";
+	type: "text" | "email" | "select" | "checkbox" | "radiobox" | "toggle" | "textarea" | "password" | "dropzone";
 	label: string;
 	disabled?: boolean;
 	checked?: boolean;
@@ -20,6 +20,13 @@ export interface IDefaultFormField {
 		options?: IOption[];
 		isSearchable?: boolean;
 		endpoint?: string;
+	};
+	dropzoneSettings?: {
+		multiple?: boolean;
+		maxFiles?: number;
+		maxSize?: number;
+		minSize?: number;
+		acceptedFormats?: string[];
 	};
 }
 
@@ -46,7 +53,7 @@ export type IFormFields = Record<string, IFormField>;
 export interface IFormCreator<T> {
 	size?: ISize | "full";
 	fields: IFormFields;
-	onSubmit: () => Promise<void> | void;
+	onSubmit: (data: T) => Promise<void> | void;
 	initialValues?: DefaultValues<T>;
 	header?: string;
 	validationSchema: z.ZodObject<Record<string, z.ZodTypeAny>>;

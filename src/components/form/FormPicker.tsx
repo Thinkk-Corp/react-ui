@@ -6,9 +6,10 @@ import { Textarea } from "@/components/form/inputs/textarea/Textarea.tsx";
 import { Toggle } from "@/components/form/inputs/toggle/Toggle.tsx";
 import type { IDefaultFormField } from "@/interfaces/components/form/IFormCreator.ts";
 import type { IInputPicker } from "@/interfaces/components/form/IInputPicker.ts";
+import { Dropzone } from "@/components/form/inputs/dropzone/Dropzone";
 
 export const FormPicker = ({ field, control, isInvalid }: IInputPicker) => {
-	const { type, initialValue, ...restField } = field as IDefaultFormField;
+	const { dropzoneSettings, type, initialValue, ...restField } = field as IDefaultFormField;
 
 	const renderInputByType = () => {
 		switch (type) {
@@ -31,6 +32,17 @@ export const FormPicker = ({ field, control, isInvalid }: IInputPicker) => {
 
 			case "textarea":
 				return <Textarea value={initialValue} {...restField} {...control} />;
+
+			case "dropzone":
+				return (
+					<Dropzone
+						onBlur={control.onBlur}
+						onClick={control.onClick}
+						initialFiles={initialValue as File[]}
+						onFilesAccepted={(files: File[]) => control.onChange(files)}
+						{...dropzoneSettings}
+					/>
+				);
 			default:
 				return null;
 		}

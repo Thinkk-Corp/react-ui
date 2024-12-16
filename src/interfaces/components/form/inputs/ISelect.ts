@@ -7,6 +7,8 @@ export interface IOption {
 
 export interface ISelect {
 	id?: string;
+	noSelectLabel?:string;
+	noOptionFoundLabel?:string;
 	options?: IOption[];
 	onBlur?: () => void;
 	value?: string;

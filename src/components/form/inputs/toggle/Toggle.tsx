@@ -1,7 +1,7 @@
 import type { IRadioBox } from "@/interfaces/components/form/inputs/IRadioBox.ts";
 import type { ISize } from "@/interfaces/types/IMetrics.ts";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { type JSX, useEffect, useState } from "react";
 
 export type ISizeSchema = Record<ISize, string>;
 

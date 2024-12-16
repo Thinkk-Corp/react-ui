@@ -28,11 +28,11 @@ export const UserMenu = ({ data }: { data: IUserMenuData }) => {
 	};
 
 	return (
-		<Dropdown size={"lg"} styles={dropdownStyleConfig} position={"bottom-left"}>
+		<Dropdown size={"lg"} styleClass={dropdownStyleConfig} position={"bottom-left"}>
 			<DropdownTrigger>
 				<Avatar className={"hidden md:block"} image={data.avatar ?? "/media/man2.webp"} alt={"user"} />
 			</DropdownTrigger>
-			<DropdownItem style={{ defaultStyleActive: false, customStyle: "p-3" }}>
+			<DropdownItem styleClass={{ defaultStyleActive: false, customStyle: "p-3" }}>
 				<h4 className={"text-h4"}>{data.username}</h4>
 				<p className={"text-subtitle2"}>{data.email}</p>
 			</DropdownItem>
