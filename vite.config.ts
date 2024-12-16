@@ -2,6 +2,8 @@ import path from "node:path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
 import { peerDependencies } from "./package.json";
 
@@ -20,7 +22,11 @@ export default defineConfig({
 		},
 		rollupOptions: {
 			external: [...Object.keys(peerDependencies)], // Defines external dependencies for Rollup bundling.
+			output: {
+				assetFileNames: "theme.css", // CSS dosyasının adını belirtiyoruz.
+			},
 		},
+
 		sourcemap: true, // Generates source maps for debugging.
 		emptyOutDir: true,
 	},
@@ -40,4 +46,9 @@ export default defineConfig({
 		}),
 		dts(),
 	],
+	css: {
+		postcss: {
+			plugins: [tailwindcss(), autoprefixer()],
+		},
+	},
 });

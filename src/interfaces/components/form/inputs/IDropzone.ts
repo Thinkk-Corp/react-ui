@@ -1,9 +1,12 @@
-import type { IFileError } from "dropzone-kit";
+import type { HTMLAttributes } from "react";
+import type { IFileError } from "react-dropzone-kit";
 
-export interface IDropzone {
+export interface IDropzone extends Omit<HTMLAttributes<HTMLInputElement>, "onDrop" | "children"> {
 	onFilesAccepted?: (files: File[]) => void;
 	maxSize?: number;
 	minSize?: number;
+	initialFiles?: File[];
+	multiple?: boolean;
 	maxFiles?: number;
 	acceptedFormats?: string[];
 	validationMessages?: IFileError[];

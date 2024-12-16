@@ -1,6 +1,6 @@
 // Core
 export { Root } from "@/Root";
-import "@/styles/theme.css";
+import "./styles/theme.css"; // CSS dosyanızın yolu
 
 // Components
 export { DefaultLayout } from "@/components/layouts/default-layout/DefaultLayout.tsx";
@@ -76,4 +76,4 @@ export type { ResourceLanguage } from "i18next";
 export { default as classNames } from "classnames";
 export { motion, AnimatePresence } from "framer-motion";
 export { useTranslation } from "react-i18next";
-export type { IFileError } from "dropzone-kit";
+export type { IFileError } from "react-dropzone-kit";

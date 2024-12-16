@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { type IFileRejection, Dropzone as DropzoneKit } from "dropzone-kit";
+import { type IFileRejection, Dropzone as DropzoneKit } from "react-dropzone-kit";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 import { IconBox } from "@/components/icon-box/IconBox";
@@ -22,13 +22,16 @@ import type { IDropzone } from "@/interfaces/components/form/inputs/IDropzone";
  * @returns {JSX.Element} Dropzone bileşeni.
  */
 export const Dropzone = ({
+	initialFiles = [],
 	onFilesAccepted,
 	minSize,
 	maxSize,
 	maxFiles,
 	acceptedFormats,
+	multiple,
 	className = "",
 	validationMessages,
+	...props
 }: IDropzone) => {
 	// Kabul edilen dosyalar.
 	const [acceptedFiles, setAcceptedFiles] = useState<File[]>([]);
@@ -41,11 +44,13 @@ export const Dropzone = ({
 
 	// Kabul edilen dosyaları işleyen fonksiyon.
 	const handleDropAccepted = (files: File[]) => {
+		if (files.length === acceptedFiles.length) return;
 		setAcceptedFiles(files);
 	};
 
 	// Reddedilen dosyaları işleyen fonksiyon.
 	const handleDropRejected = (rejections: IFileRejection[]) => {
+		if (rejections.length === 0 && fileRejections.length === 0) return;
 		setFileRejections(rejections);
 	};
 
@@ -132,9 +137,13 @@ export const Dropzone = ({
 			maxSize={maxSize}
 			maxFiles={maxFiles}
 			minSize={minSize}
+			initialFiles={initialFiles}
+			multiple={multiple}
+			{...props}
 		>
 			{({ containerProps, inputProps, handleFileDelete, isDragActive }) => (
 				<div
+					data-testid={"dropzone-outer-container"}
 					className={classNames(
 						"cursor-pointer border-2 overflow-hidden w-full border-dashed bg-action-hover duration-200 rounded-lg text-center",
 						{
@@ -144,18 +153,20 @@ export const Dropzone = ({
 						className,
 					)}
 				>
-					<div {...containerProps} className="p-6">
-						<input {...inputProps} />
+					<div {...containerProps} className="p-6" data-testid="dropzone-container">
+						<input data-testid="dropzone-input" {...inputProps} />
 						<div className="flex justify-center items-center">
 							<IconBox color="color-primary" size="2xl">
 								{icons.outline.upload}
 							</IconBox>
 						</div>
-						<p className="text-body2 mt-4 text-color-primary">
+						<p data-testid="dropzone-drag-text" className="text-body2 mt-4 text-color-primary">
 							{isDragActive ? t("theme.dropzone.drag_active_label") : t("theme.dropzone.drag_inactive_label")}
 						</p>
 						{ruleTextGenerator() && (
-							<span className="text-color-primary text-caption opacity-80 mt-2">{ruleTextGenerator()}</span>
+							<span data-testid="dropzone-rules-text" className="text-color-primary text-caption opacity-80 mt-2">
+								{ruleTextGenerator()}
+							</span>
 						)}
 					</div>
 					<div className="flex items-center gap-3 p-2 pt-0 overflow-auto">
@@ -163,6 +174,7 @@ export const Dropzone = ({
 							{droppedFiles.length > 0 &&
 								droppedFiles.map((file) => (
 									<motion.div
+										data-testid="dropzone-file"
 										data-tooltip-id="global-tooltip"
 										data-tooltip-html={fileError(file.name)}
 										data-tooltip-hidden={!fileError(file.name)}
@@ -171,19 +183,21 @@ export const Dropzone = ({
 										animate={{ opacity: 1 }}
 										exit={{ opacity: 0 }}
 										transition={{ duration: 0.3 }}
+										className={classNames("border rounded flex items-center gap-2 p-2 text-caption text-color-primary", {
+											"border-error-dark bg-error-hovered": fileError(file.name),
+											"border-custom-divider bg-action-hover": !fileError(file.name),
+										})}
 									>
-										<div
-											className={classNames("border rounded flex items-center gap-2 p-2 text-caption text-color-primary", {
-												"border-error-dark bg-error-hovered": fileError(file.name),
-												"border-custom-divider bg-action-hover": !fileError(file.name),
-											})}
-										>
-											<span className="text-nowrap">{file.name}</span>
-											<span className="opacity-80 text-nowrap">{`${sizeToMb(file.size)} MB`}</span>
-											<IconBox size="sm" onClick={() => removeFile(file, handleFileDelete)} color="error-dark">
-												{icons.outline.x}
-											</IconBox>
-										</div>
+										<span data-testid="dropzone-file-name-text" className="text-nowrap">
+											{file.name}
+										</span>
+										<span
+											data-testid="dropzone-file-size-text"
+											className="opacity-80 text-nowrap"
+										>{`${sizeToMb(file.size)} MB`}</span>
+										<IconBox size="sm" onClick={() => removeFile(file, handleFileDelete)} color="error-dark">
+											{icons.outline.x}
+										</IconBox>
 									</motion.div>
 								))}
 						</AnimatePresence>
