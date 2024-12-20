@@ -1,4 +1,4 @@
-import { IconBox } from "@/components/icon-box/IconBox.tsx";
+import { IconBox } from "@/components/IconBox";
 import { icons } from "@/plugins/Icons.tsx";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
 

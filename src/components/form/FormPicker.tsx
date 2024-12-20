@@ -1,12 +1,12 @@
-import { Checkbox } from "@/components/form/inputs/checkbox/Checkbox.tsx";
-import { Input } from "@/components/form/inputs/input/Input.tsx";
-import { Radiobox } from "@/components/form/inputs/radiobox/Radiobox.tsx";
-import { Select } from "@/components/form/inputs/select/Select.tsx";
-import { Textarea } from "@/components/form/inputs/textarea/Textarea.tsx";
-import { Toggle } from "@/components/form/inputs/toggle/Toggle.tsx";
+import { Dropzone } from "@/components/form/Dropzone";
+import { Checkbox } from "@/components/form/inputs/Checkbox";
+import { Input } from "@/components/form/inputs/Input";
+import { Radiobox } from "@/components/form/inputs/Radiobox";
+import { Select } from "@/components/form/inputs/Select";
+import { Textarea } from "@/components/form/inputs/Textarea";
+import { Toggle } from "@/components/form/inputs/Toggle";
 import type { IDefaultFormField } from "@/interfaces/components/form/IFormCreator.ts";
 import type { IInputPicker } from "@/interfaces/components/form/IInputPicker.ts";
-import { Dropzone } from "@/components/form/inputs/dropzone/Dropzone";
 
 export const FormPicker = ({ field, control, isInvalid }: IInputPicker) => {
 	const { dropzoneSettings, type, initialValue, ...restField } = field as IDefaultFormField;

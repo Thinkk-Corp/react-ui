@@ -1,10 +1,10 @@
-import { useLanguageStore } from "@/stores/LanguageStore.ts";
-import { Dropdown } from "@/components/dropdown/main/Dropdown";
-import { DropdownTrigger } from "@/components/dropdown/trigger/DropdownTrigger";
-import { IconBox } from "@/components/icon-box/IconBox";
-import { DropdownItem } from "@/components/dropdown/item/DropdownItem";
-import { handleLanguageChange } from "@/plugins/i18n/I18N";
+import { IconBox } from "@/components/IconBox";
+import { Dropdown } from "@/components/dropdown/Dropdown";
+import { DropdownItem } from "@/components/dropdown/DropdownItem";
+import { DropdownTrigger } from "@/components/dropdown/DropdownTrigger";
 import type { IDropdownStyle } from "@/interfaces/components/dropdown/IDropdown";
+import { handleLanguageChange } from "@/plugins/I18N";
+import { useLanguageStore } from "@/stores/LanguageStore.ts";
 
 /**
  * Dil değiştirme bileşeni.

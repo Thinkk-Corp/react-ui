@@ -1,5 +1,5 @@
-import { Input } from "@/components/form/inputs/input/Input.tsx";
-import { IconBox } from "@/components/icon-box/IconBox.tsx";
+import { IconBox } from "@/components/IconBox";
+import { Input } from "@/components/form/inputs/Input";
 import { LanguageChanger } from "@/components/navbar/LanguageChanger";
 import { Notifications } from "@/components/navbar/Notifications.tsx";
 import { ThemeChanger } from "@/components/navbar/ThemeChanger.tsx";

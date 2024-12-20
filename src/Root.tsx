@@ -1,6 +1,6 @@
 import type { IRoot } from "@/interfaces/IRoot.ts";
 import type { ICustomHandle } from "@/interfaces/plugins/ICustomRouteObject";
-import { initI18n } from "@/plugins/i18n/I18N";
+import { initI18n } from "@/plugins/I18N";
 import { useRouterStore } from "@/stores/RouterStore.ts";
 import { useThemeStore } from "@/stores/ThemeStore.ts";
 import { useUIStore } from "@/stores/UIStore.ts";
